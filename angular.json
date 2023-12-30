@@ -16,18 +16,38 @@
             "outputPath": "dist/angular-metronic",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/styles.css"
+              "./src/styles.css",
+              "./src/assets/plugins/font-awesome/css/font-awesome.min.css",
+              "./src/assets/plugins/simple-line-icons/simple-line-icons.min.css",
+              "./src/assets/plugins/bootstrap/css/bootstrap.min.css",
+              "./src/assets/plugins/bootstrap-switch/css/bootstrap-switch.min.css",
+              "./src/assets/global/css/components.min.css",
+              "./src/assets/global/css/plugins.min.css",
+              "./src/assets/layouts/layout/css/layout.min.css",
+              "./src/assets/layouts/layout/css/themes/blue.min.css",
+              "src/assets/global/plugins/select2/css/select2.min.css",
+              "src/assets/global/plugins/select2/css/select2-bootstrap.min.css",
+              "src/assets/global/css/components.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./src/assets/global/plugins/jquery.min.js",
+              "./src/assets/global/plugins/bootstrap/js/bootstrap.min.js",
+              "./src/assets/global/plugins/js.cookie.min.js",
+              "./src/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js",
+              "./src/assets/global/plugins/jquery.blockui.min.js",
+              "./src/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js",
+              "./src/assets/global/scripts/app.min.js",
+              "./src/assets/layouts/layout/scripts/layout.min.js",
+              "./src/assets/layouts/layout/scripts/demo.min.js",
+              "./src/assets/layouts/global/scripts/quick-sidebar.min.js",
+              "src/assets/global/plugins/jquery-validation/js/jquery.validate.min.js",
+              "src/assets/global/plugins/select2/js/select2.full.min.js",
+              "src/assets/pages/scripts/login.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -74,22 +94,17 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.css"],
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
