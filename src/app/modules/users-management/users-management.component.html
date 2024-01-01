@@ -3,6 +3,7 @@
     <button
       type="button"
       class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-52 tw-h-12 tw-flex tw-items-center tw-justify-center tw-gap-4"
+      (click)="addNewUser()"
     >
       <i class="fa fa-plus"></i>
       <span class="tw-leading-none">Add User</span>
@@ -33,7 +34,11 @@
           </th>
           <td class="tw-px-6 tw-py-4">{{ user.displayName }}</td>
           <td class="tw-px-6 tw-py-4">{{ user.fullName }}</td>
-          <td class="tw-px-6 tw-py-4">{{ user.description }}</td>
+          <td class="tw-px-6 tw-py-4">
+            <span class="tw-max-w-[300px] tw-line-clamp-3">
+              {{ user.description }}
+            </span>
+          </td>
           <td class="tw-px-6 tw-py-4">
             <span
               class="tw-inline-flex tw-items-center tw-font-medium tw-px-2.5 tw-py-0.5 !tw-rounded-full !tw-text-base tw-text-white"
@@ -52,6 +57,7 @@
             <a
               href="javascript:;"
               class="btn btn-outline btn-circle btn-sm purple"
+              (click)="editUser(user)"
             >
               <i class="fa fa-edit"></i> Edit
             </a>
@@ -131,5 +137,15 @@
       </ul>
     </nav>
   </div>
-  <app-add-edit-user-form></app-add-edit-user-form>
+  <app-modal
+    [modalTitle]="mode === 'add' ? 'add new user' : 'edit user'"
+    [openModal]="isModalOpen"
+    (changeModal)="closeModal($event)"
+  >
+    <app-add-edit-user-form
+      [mode]="mode"
+      [user]="editedUser"
+      (submitUser)="updateOrAddUser($event)"
+    ></app-add-edit-user-form>
+  </app-modal>
 </div>

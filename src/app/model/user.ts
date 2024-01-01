@@ -6,6 +6,7 @@ export enum USER_STATUS {
 }
 
 export interface IUser {
+  id?: number;
   displayName: string;
   username: string;
   fullName: string;
