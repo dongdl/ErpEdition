@@ -1,0 +1,87 @@
+<app-modal [openModal]="false" modalTitle="Add new user">
+  <form class="tw-px-10 tw-pb-8 tw-pt-4 tw-w-full">
+    <div class="tw-grid tw-gap-4 tw-mb-4 tw-grid-cols-2">
+      <div class="tw-col-span-2">
+        <label
+          for="username"
+          class="tw-block tw-mb-2 tw-font-medium tw-text-gray-900"
+          >User name</label
+        >
+        <input
+          type="text"
+          name="username"
+          id="username"
+          class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+          placeholder="Type user name"
+        />
+        <p class="tw-my-0 !tw-text-base tw-text-red-600">
+          <span class="tw-font-medium">Oops!</span> Username already taken!
+        </p>
+      </div>
+      <div class="tw-col-span-2">
+        <label
+          for="displayName"
+          class="tw-block tw-mb-2 tw-font-medium tw-text-gray-900"
+          >Display name</label
+        >
+        <input
+          type="text"
+          name="displayName"
+          id="displayName"
+          class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+          placeholder="Type display name"
+        />
+        <p class="tw-my-0 !tw-text-base tw-text-red-600">
+          <span class="tw-font-medium">Oops!</span> Username already taken!
+        </p>
+      </div>
+      <div class="tw-col-span-2">
+        <label
+          for="fullName"
+          class="tw-block tw-mb-2 tw-font-medium tw-text-gray-900"
+          >Full name</label
+        >
+        <input
+          type="text"
+          name="fullName"
+          id="fullName"
+          class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+          placeholder="Type full name"
+        />
+        <p class="tw-my-0 !tw-text-base tw-text-red-600">
+          <span class="tw-font-medium">Oops!</span> Username already taken!
+        </p>
+      </div>
+      <div class="tw-col-span-2">
+        <label
+          for="description"
+          class="tw-block tw-mb-2 tw-font-medium tw-text-gray-900"
+          >Description</label
+        >
+        <textarea
+          id="description"
+          rows="8"
+          class="tw-block tw-p-2.5 tw-w-full tw-text-gray-900 tw-bg-gray-50 !tw-rounded-md tw-border tw-border-gray-300 focus:tw-ring-blue-500 focus:tw-border-blue-500"
+        ></textarea>
+      </div>
+    </div>
+    <button
+      type="submit"
+      class="tw-text-white tw-inline-flex tw-items-center tw-bg-primary hover:tw-bg-blue-400 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-px-5 tw-py-2.5 tw-text-center"
+    >
+      <svg
+        class="tw-me-1 -tw-ms-1 tw-w-8 tw-h-8"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+          clip-rule="evenodd"
+        ></path>
+      </svg>
+      Add user
+    </button>
+  </form>
+</app-modal>

@@ -3,7 +3,11 @@ module.exports = {
   prefix: "tw-",
   content: ["./src/**/*.{html,ts}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#2D5F8B",
+      },
+    },
   },
   plugins: [],
 };

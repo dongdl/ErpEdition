@@ -4,6 +4,7 @@ import { SideBarComponent } from './components/side-bar/side-bar.component';
 import { RouterLink, RouterModule } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { PageBarComponent } from './components/page-bar/page-bar.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 @NgModule({
   declarations: [],
@@ -17,6 +18,7 @@ import { PageBarComponent } from './components/page-bar/page-bar.component';
     NgClass,
     RouterLink,
     SideBarComponent,
+    ModalComponent,
   ],
   exports: [
     RouterModule,
@@ -26,6 +28,7 @@ import { PageBarComponent } from './components/page-bar/page-bar.component';
     NgForOf,
     NgIf,
     NgClass,
+    ModalComponent,
   ],
 })
 export class SharedModule {}
