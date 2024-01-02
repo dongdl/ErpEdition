@@ -13,11 +13,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'nhan-su',
+        redirectTo: 'thong-tin-tuyen-dung',
         pathMatch: 'full',
       },
       {
-        path: 'nhan-su',
+        path: 'thong-tin-tuyen-dung',
         loadChildren: () =>
           import('./users-management/users-management-routing.module').then(
             (module) => module.UsersManagementRoutingModule
@@ -26,6 +26,10 @@ const routes: Routes = [
       {
         path: 'ho-so-nhan-su',
         component: HrRecordsComponent,
+      },
+      {
+        path: 'duyet-thong-tin',
+        component: VerifyRecordComponent,
       },
       {
         path: 'xac-nhan-thong-tin',

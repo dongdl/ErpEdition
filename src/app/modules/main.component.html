@@ -1,5 +1,7 @@
-<div class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
-  <div class="page-wrapper">
+<div
+  class="page-header-fixed page-sidebar-closed-hide-logo page-content-white tw-overflow-y-hidden"
+>
+  <div class="page-wrapper tw-overflow-y-hidden">
     <!-- BEGIN HEADER -->
     <app-header></app-header>
     <!-- END HEADER -->
@@ -7,14 +9,17 @@
     <div class="clearfix"></div>
     <!-- END HEADER & CONTENT DIVIDER -->
     <!-- BEGIN CONTAINER -->
-    <div class="page-container">
+    <div class="page-container tw-overflow-y-hidden">
       <!-- BEGIN SIDEBAR -->
       <app-side-bar></app-side-bar>
       <!-- END SIDEBAR -->
       <!-- BEGIN CONTENT -->
-      <div class="page-content-wrapper">
+      <div class="page-content-wrapper" style="min-height: 600px">
         <!-- BEGIN CONTENT BODY -->
-        <div class="page-content" style="height: calc(100vh - 80px)">
+        <div
+          class="page-content tw-overflow-y-scroll"
+          style="height: calc(100vh - 100px)"
+        >
           <app-page-bar></app-page-bar>
           <router-outlet></router-outlet>
         </div>
@@ -1138,7 +1143,7 @@
     </div>
     <!-- END CONTAINER -->
     <!-- BEGIN FOOTER -->
-    <div class="page-footer" style="height: auto">
+    <div class="page-footer" style="height: 30px">
       <div class="page-footer-inner">2024 © BaoViet Bank</div>
     </div>
     <!-- END FOOTER -->

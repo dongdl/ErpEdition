@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { IHrRecord } from '../../model/record';
+import records from './../../utils/users.json';
 
 @Injectable({
   providedIn: 'root',

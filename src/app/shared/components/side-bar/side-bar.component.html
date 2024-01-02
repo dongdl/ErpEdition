@@ -73,7 +73,7 @@
 
         <ul class="sub-menu">
           @for (subItem of item.subMenu; track $index) {
-          <li *ngFor="let subItem of item.subMenu" class="nav-item start">
+          <li class="nav-item start">
             <a [routerLink]="subItem.link" class="nav-link">
               <i *ngIf="subItem.icon" [ngClass]="subItem.icon"></i>
               <span class="title">{{ subItem.name }}</span>

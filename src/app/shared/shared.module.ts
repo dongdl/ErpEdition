@@ -8,8 +8,10 @@ import { ModalComponent } from './components/modal/modal.component';
 import { TabGroupComponent } from './components/tab-group/tab-group.component';
 import { TabPanelComponent } from './components/tab-panel/tab-panel.component';
 import { TabPanelContentDirective } from './components/tab-panel/tab-panel-content.directive';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 import { ProcessStepComponent } from './components/process-step/process-step.component';
+import { AddEditUserFormComponent } from '../modules/users-management/add-edit-user-form/add-edit-user-form.component';
+import { FilterListPipe } from './filter-list.pipe';
 
 @NgModule({
   declarations: [TabPanelContentDirective],
@@ -28,6 +30,9 @@ import { ProcessStepComponent } from './components/process-step/process-step.com
     TabPanelComponent,
     ReactiveFormsModule,
     ProcessStepComponent,
+    AddEditUserFormComponent,
+    FilterListPipe,
+    FormsModule,
   ],
   exports: [
     RouterModule,
@@ -43,6 +48,9 @@ import { ProcessStepComponent } from './components/process-step/process-step.com
     TabPanelContentDirective,
     ReactiveFormsModule,
     ProcessStepComponent,
+    AddEditUserFormComponent,
+    FilterListPipe,
+    FormsModule,
   ],
 })
 export class SharedModule {}

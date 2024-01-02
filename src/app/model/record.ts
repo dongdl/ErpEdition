@@ -1,4 +1,7 @@
 export interface IHrRecord {
+  id?: string | number;
+  username: string;
+  displayName: string;
   fullName: string;
   hrCode: string;
   positionCode: string;
