@@ -1,0 +1,33 @@
+<div class="tw-p-6">
+  <app-process-step [activeStep]="[1, 2]"></app-process-step>
+  <h2 class="">Xác nhận thông tin</h2>
+  <div class="tw-py-10 tw-grid tw-grid-cols-2 tw-gap-6">
+    @for (item of transformInfoRecord; track $index) {
+
+    <div class="tw-flex tw-w-full">
+      <div class="tw-w-[250px] !tw-font-bold">
+        {{ mappingInfoRecord(item.info) }}:
+      </div>
+      <div>{{ item.value }}</div>
+    </div>
+    }
+  </div>
+  <div class="tw-flex tw-w-full tw-justify-center tw-mt-10 tw-gap-4">
+    <button
+      type="button"
+      class="tw-text-md tw-text-white tw-bg-slate-400 hover:tw-bg-slate-500 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[200px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-4"
+      (click)="onEditInfo()"
+    >
+      <i class="fa fa-refresh"></i>
+      <span class="tw-leading-none">Chỉnh sửa thông tin</span>
+    </button>
+    <button
+      type="button"
+      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[170px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-4"
+      (click)="onSubmitInfo()"
+    >
+      <i class="fa fa-check"></i>
+      <span class="tw-leading-none">Gửi thông tin</span>
+    </button>
+  </div>
+</div>

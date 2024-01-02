@@ -1,0 +1,97 @@
+<ol
+  class="tw-flex tw-items-center tw-w-full tw-p-3 tw-space-x-2 tw-font-medium tw-text-center tw-text-gray-500 tw-bg-white tw-border tw-border-gray-200 tw-rounded-lg tw-shadow-sm sm:tw-p-4 sm:tw-space-x-4 rtl:tw-space-x-reverse"
+>
+  <li
+    class="tw-flex tw-items-center"
+    [ngClass]="{ 'tw-text-blue-600': activeStep.includes(1) }"
+  >
+    <span
+      class="tw-flex tw-items-center tw-justify-center tw-w-7 tw-h-7 tw-me-2 tw-border !tw-rounded-full tw-shrink-0"
+      [ngClass]="{ '!tw-border-blue-600': activeStep.includes(1) }"
+    >
+      1
+    </span>
+    Nộp hồ sơ nhân sự
+    <svg
+      class="tw-w-3 tw-h-3 tw-ms-2 sm:tw-ms-4 rtl:tw-rotate-180"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 12 10"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="m7 9 4-4-4-4M1 9l4-4-4-4"
+      />
+    </svg>
+  </li>
+  <li
+    class="tw-flex tw-items-center"
+    [ngClass]="{ 'tw-text-blue-600': activeStep.includes(2) }"
+  >
+    <span
+      class="tw-flex tw-items-center tw-justify-center tw-w-7 tw-h-7 tw-me-2 tw-border tw-border-gray-500 !tw-rounded-full tw-shrink-0"
+      [ngClass]="{ '!tw-border-blue-600': activeStep.includes(2) }"
+    >
+      2
+    </span>
+    Xác nhận thông tin
+    <svg
+      class="tw-w-3 tw-h-3 tw-ms-2 sm:tw-ms-4 rtl:tw-rotate-180"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 12 10"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="m7 9 4-4-4-4M1 9l4-4-4-4"
+      />
+    </svg>
+  </li>
+  <li
+    class="tw-flex tw-items-center"
+    [ngClass]="{ 'tw-text-blue-600': activeStep.includes(3) }"
+  >
+    <span
+      class="tw-flex tw-items-center tw-justify-center tw-w-7 tw-h-7 tw-me-2 tw-border tw-border-gray-500 !tw-rounded-full tw-shrink-0"
+      [ngClass]="{ '!tw-border-blue-600': activeStep.includes(3) }"
+    >
+      3
+    </span>
+    Kiểm duyệt thông tin
+    <svg
+      class="tw-w-3 tw-h-3 tw-ms-2 sm:tw-ms-4 rtl:tw-rotate-180"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 12 10"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="m7 9 4-4-4-4M1 9l4-4-4-4"
+      />
+    </svg>
+  </li>
+  <li
+    class="tw-flex tw-items-center"
+    [ngClass]="{ 'tw-text-blue-600': activeStep.includes(4) }"
+  >
+    <span
+      class="tw-flex tw-items-center tw-justify-center tw-w-7 tw-h-7 tw-me-2 tw-border tw-border-gray-500 !tw-rounded-full tw-shrink-0"
+      [ngClass]="{ '!tw-border-blue-600': activeStep.includes(4) }"
+    >
+      4
+    </span>
+    Thông tin được lưu thành công
+  </li>
+</ol>

@@ -6,7 +6,7 @@
       (click)="addNewUser()"
     >
       <i class="fa fa-plus"></i>
-      <span class="tw-leading-none">Add User</span>
+      <span class="tw-leading-none">Thêm nhân sự</span>
     </button>
   </div>
   <div class="tw-relative tw-overflow-x-auto sm:tw-rounded-lg">
@@ -15,12 +15,12 @@
     >
       <thead class="tw-text-md tw-text-gray-700 tw-bg-gray-50">
         <tr class="tw-border">
-          <th scope="col" class="tw-px-6 tw-py-3">User name</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Display name</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Full name</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Description</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Status</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Action</th>
+          <th scope="col" class="tw-px-6 tw-py-3">Tên truy cập</th>
+          <th scope="col" class="tw-px-6 tw-py-3">Tên hiển thị</th>
+          <th scope="col" class="tw-px-6 tw-py-3">Tên đầy đủ</th>
+          <th scope="col" class="tw-px-6 tw-py-3">Miêu tả</th>
+          <th scope="col" class="tw-px-6 tw-py-3">Trạng thái</th>
+          <th scope="col" class="tw-px-6 tw-py-3">Hành động</th>
         </tr>
       </thead>
       <tbody>
@@ -138,7 +138,7 @@
     </nav>
   </div>
   <app-modal
-    [modalTitle]="mode === 'add' ? 'add new user' : 'edit user'"
+    [modalTitle]="mode === 'add' ? 'Thêm nhân sự' : 'Chỉnh sửa nhân sứ'"
     [openModal]="isModalOpen"
     (changeModal)="closeModal($event)"
   >

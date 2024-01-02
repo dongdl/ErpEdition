@@ -1,0 +1,30 @@
+<div class="tw-font-medium tw-text-gray-500">
+  <ul class="tw-flex tw-flex-wrap -tw-mb-px">
+    @for (tab of tabPanelList; track $index) {
+    <li class="tw-me-2" (click)="selectItem($index)">
+      <a
+        href="javascript:;"
+        class="tw-inline-block tw-p-2 tw-border-b-2 tw-border-transparent tw-rounded-t-lg hover:tw-text-gray-600 hover:tw-border-gray-300 !tw-no-underline"
+        [ngClass]="{
+          'tw-text-primary tw-border-b-primary': $index === tabActiveIndex
+        }"
+        >{{ tab.title }}</a
+      >
+    </li>
+    }
+  </ul>
+  <div class="tab-body">
+    @for (tab of tabPanelList; track $index) {
+    <ng-container>
+      <!-- @if ($index === tabActiveIndex) { -->
+      <div
+        [ngClass]="{
+          'tw-hidden': $index !== tabActiveIndex,
+          'tw-block': $index === tabActiveIndex
+        }"
+      >
+        <ng-container *ngTemplateOutlet="tab.panelBody"></ng-container>
+      </div> </ng-container
+    >}
+  </div>
+</div>

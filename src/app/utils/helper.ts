@@ -47,3 +47,17 @@ export const mappingStatusUser = (status: USER_STATUS) => {
       return '';
   }
 };
+
+export const mappingInfo = {
+  fullName: 'Họ và tên',
+  hrCode: 'Mã nhân sự',
+  positionCode: 'Mã vị trí',
+  level: 'Cấp bậc',
+  departmentCode: 'Mã đơn vị',
+  zone: 'Vùng',
+  region: 'Miền',
+  taxCode: 'Mã số thuế thu nhập cá nhân',
+  bankAccount: 'Số tài khoản BVB',
+  status: 'Trạng thái',
+  insuranceNumber: 'Số sổ bảo hiểm',
+};

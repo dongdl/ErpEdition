@@ -13,27 +13,26 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class SideBarComponent {
   menuList: MenuItem[] = [
     {
-      name: 'users',
+      name: 'Nhân sự',
       id: '1',
       icon: 'icon-users',
-      link: '/main/users',
       active: true,
       open: true,
       subMenu: [
         {
-          name: 'Add users',
+          name: 'Quản lý nhân sự',
           id: '1-1',
           icon: 'icon-add',
-          link: '/login',
+          link: '/nhan-su',
           active: false,
         },
       ],
     },
     {
-      name: 'client',
+      name: 'Nộp hồ sơ nhân sự',
       id: '2',
       icon: 'icon-users',
-      link: '/main/users',
+      link: '/ho-so-nhan-su',
     },
   ];
 

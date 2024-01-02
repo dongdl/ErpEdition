@@ -1,0 +1,16 @@
+<div class="tw-p-6">
+  <app-process-step [activeStep]="[1, 2, 3]"></app-process-step>
+  <h2 class="">Chờ hồ sơ được duyệt</h2>
+  <div class="tw-py-10 tw-grid tw-grid-cols-2 tw-gap-6">
+    @for (item of transformInfoRecord; track $index) {
+
+    <div class="tw-flex tw-w-full">
+      <div class="tw-w-[250px] !tw-font-bold">
+        {{ mappingInfoRecord(item.info) }}:
+      </div>
+      <div>{{ item.value }}</div>
+    </div>
+    }
+  </div>
+  <div class="tw-flex tw-w-full tw-justify-center tw-mt-10 tw-gap-4"></div>
+</div>

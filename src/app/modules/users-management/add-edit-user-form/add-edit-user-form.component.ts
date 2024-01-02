@@ -16,11 +16,12 @@ import {
 } from '@angular/forms';
 import { ModalComponent } from '../../../shared/components/modal/modal.component';
 import { IUser, USER_STATUS } from '../../../model/user';
+import { SharedModule } from '../../../shared/shared.module';
 
 @Component({
   selector: 'app-add-edit-user-form',
   standalone: true,
-  imports: [ModalComponent, NgIf, ReactiveFormsModule],
+  imports: [ModalComponent, NgIf, ReactiveFormsModule, SharedModule],
   templateUrl: './add-edit-user-form.component.html',
   styleUrl: './add-edit-user-form.component.css',
 })

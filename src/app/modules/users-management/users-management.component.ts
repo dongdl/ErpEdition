@@ -5,11 +5,12 @@ import { IUser, USER_STATUS } from '../../model/user';
 import { NgClass } from '@angular/common';
 import { AddEditUserFormComponent } from './add-edit-user-form/add-edit-user-form.component';
 import { ModalComponent } from '../../shared/components/modal/modal.component';
+import { SharedModule } from '../../shared/shared.module';
 
 @Component({
   selector: 'app-users-management',
   standalone: true,
-  imports: [NgClass, AddEditUserFormComponent, ModalComponent],
+  imports: [NgClass, AddEditUserFormComponent, ModalComponent, SharedModule],
   templateUrl: './users-management.component.html',
   styleUrl: './users-management.component.css',
 })

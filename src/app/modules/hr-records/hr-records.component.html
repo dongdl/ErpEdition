@@ -1,0 +1,580 @@
+<div class="tw-mx-auto tw-py-4 tw-overflow-y-auto tw-h-calc(100vh-90px)">
+  <app-process-step [activeStep]="[1]"></app-process-step>
+  <form [formGroup]="formRecord" (ngSubmit)="onSubmit()">
+    <app-tab-group>
+      <app-tab-panel title="Thông tin chung">
+        <ng-template tabPanelContent>
+          <div>
+            <div class="tw-grid tw-grid-cols-2 tw-py-6 tw-gap-x-8 tw-gap-y-4">
+              <div>
+                <label
+                  for="fullName"
+                  class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                  >Họ và tên</label
+                >
+                <input
+                  type="text"
+                  name="fullName"
+                  id="fullName"
+                  class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+                  placeholder="Nhập họ và tên"
+                  formControlName="fullName"
+                />
+                @if (fulName?.dirty && fulName?.hasError('required')) {
+                <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                  Họ và tên không được bỏ trống
+                </p>
+                }
+              </div>
+              <div>
+                <label
+                  for="hrCode"
+                  class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                  >Mã nhân sự</label
+                >
+                <select
+                  id="hrCode"
+                  name="hrCode"
+                  formControlName="hrCode"
+                  class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-lg tw-focus:ring-primary-500 focus:tw-border-primary-500 tw-block tw-w-full tw-p-2.5"
+                >
+                  @for (code of CODE_LIST ; track $index) {
+                  <option [value]="code.option">{{ code.option }}</option>
+                  }
+                </select>
+                @if (hrCode?.dirty && hrCode?.hasError('required')) {
+                <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                  Mã nhân sự không được bỏ trống
+                </p>
+                }
+              </div>
+              <div>
+                <label
+                  for="positonCode"
+                  class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                  >Mã chức danh</label
+                >
+                <select
+                  id="positionCode"
+                  name="positionCode"
+                  formControlName="positionCode"
+                  class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-lg tw-focus:ring-primary-500 focus:tw-border-primary-500 tw-block tw-w-full tw-p-2.5"
+                >
+                  @for (code of POSITION_CODE ; track $index) {
+                  <option [value]="code.option">{{ code.option }}</option>
+                  }
+                </select>
+                @if (positionCode?.dirty && positionCode?.hasError('required'))
+                {
+                <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                  Mã chức danh không được bỏ trống
+                </p>
+                }
+              </div>
+              <div>
+                <label
+                  for="level"
+                  class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                  >Cấp bậc</label
+                >
+                <input
+                  type="text"
+                  name="level"
+                  id="level"
+                  class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+                  placeholder="Nhập cấp bậc"
+                  formControlName="level"
+                />
+                @if (level?.dirty && level?.hasError('required')) {
+                <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                  Cấp bậc không được bỏ trống
+                </p>
+                }
+              </div>
+              <div>
+                <label
+                  for="departmentCode"
+                  class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                  >Mã đơn vị</label
+                >
+                <select
+                  id="departmentCode"
+                  name="departmentCode"
+                  class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-lg tw-focus:ring-primary-500 focus:tw-border-primary-500 tw-block tw-w-full tw-p-2.5"
+                  formControlName="departmentCode"
+                >
+                  @for (code of DEPARTMENT_CODE ; track $index) {
+                  <option [value]="code.option">{{ code.option }}</option>
+                  }
+                </select>
+                @if (departmentCode?.dirty &&
+                departmentCode?.hasError('required')) {
+                <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                  Mã đơn vị không được bỏ trống
+                </p>
+                }
+              </div>
+              <div>
+                <label
+                  for="zone"
+                  class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                  >Vùng</label
+                >
+                <input
+                  type="text"
+                  name="zone"
+                  id="zone"
+                  class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+                  placeholder="Nhập vùng"
+                  formControlName="zone"
+                />
+                @if (zone?.dirty && zone?.hasError('required')) {
+                <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                  Vùng không được bỏ trống
+                </p>
+                }
+              </div>
+              <div>
+                <label
+                  for="region"
+                  class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                  >Miền</label
+                >
+                <input
+                  type="text"
+                  name="region"
+                  id="region"
+                  class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+                  placeholder="nhập vùng"
+                  formControlName="region"
+                />
+                @if (region?.dirty && region?.hasError('required')) {
+                <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                  Miền không được bỏ trống
+                </p>
+                }
+              </div>
+              <div>
+                <label
+                  for="taxCode"
+                  class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                  >Mã số thuế thu nhập cá nhân</label
+                >
+                <input
+                  type="text"
+                  name="taxCode"
+                  id="taxCode"
+                  class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+                  placeholder="nhập mã số thuế"
+                  formControlName="taxCode"
+                />
+                @if (taxCode?.dirty && taxCode?.hasError('required')) {
+                <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                  Mã số thuế không được bỏ trống
+                </p>
+                }
+              </div>
+              <div>
+                <label
+                  for="insuranceNumber"
+                  class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                  >Số sổ bảo hiểm</label
+                >
+                <input
+                  type="text"
+                  name="insuranceNumber"
+                  id="insuranceNumber"
+                  class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+                  placeholder="Nhập số sổ bảo hiển"
+                  formControlName="insuranceNumber"
+                />
+                @if (insuranceNumber?.dirty &&
+                insuranceNumber?.hasError('required')) {
+                <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                  Số sổ bảo hiểm không được bỏ trống
+                </p>
+                }
+              </div>
+              <div>
+                <label
+                  for="bankAccount"
+                  class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                  >Số tài khoản BVB</label
+                >
+                <input
+                  type="text"
+                  name="bankAccount"
+                  id="bankAccount"
+                  class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+                  placeholder="Nhập số tài khoảng BVB"
+                  formControlName="bankAccount"
+                />
+                @if (bankAccount?.dirty && bankAccount?.hasError('required')) {
+                <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                  Số tài khoản BVB không được bỏ trống
+                </p>
+                }
+              </div>
+              <div>
+                <label
+                  for="status"
+                  class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                  >Trạng thái</label
+                >
+                <select
+                  id="status"
+                  name="status"
+                  class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-lg tw-focus:ring-primary-500 focus:tw-border-primary-500 tw-block tw-w-full tw-p-2.5"
+                  formControlName="status"
+                >
+                  <option value="1">Cộng tác viên</option>
+                  <option value="2">Học việc</option>
+                  <option value="3">Thử việc</option>
+                  <option value="4">Chính thức</option>
+                  <option value="5">Nghỉ việc</option>
+                  <option value="6">Nghỉ không lương</option>
+                  <option value="7">Tạm nghỉ, Hoãn hợp đồng</option>
+                  <option value="99">Chưa phân loại</option>
+                </select>
+                @if (status?.dirty && status?.hasError('required')) {
+                <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                  trạng thái không được bỏ trống
+                </p>
+                }
+              </div>
+              <div>
+                <label
+                  class="tw-block tw-mb-2 tw-font-medium tw-text-gray-900 dark:text-white"
+                  for="file_input"
+                  >Tải lên hồ sơ nhân sự</label
+                >
+                <input
+                  type="file"
+                  class="tw-block tw-w-full tw-text-slate-400 file:tw-mr-4 file:tw-py-2 file:tw-px-4 !file:tw-rounded-md file:tw-border-0 file:tw-font-semibold file:tw-bg-pink-50 file:tw-text-primary hover:tw-file:bg-blue-400"
+                />
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </app-tab-panel>
+
+      <app-tab-panel title="Thông tin cá nhân">
+        <ng-template tabPanelContent>
+          <div class="tw-grid tw-grid-cols-3 tw-py-6 tw-gap-x-8 tw-gap-y-4">
+            <div>
+              <label
+                for="fullName"
+                class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                >Ngày sinh</label
+              >
+              <input
+                type="datetime-local"
+                name="fullName"
+                id="fullName"
+                class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+                formControlName="fullName"
+              />
+              <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                Họ và tên không được bỏ trống
+              </p>
+            </div>
+            <div>
+              <label
+                for="fullName"
+                class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                >Giới tính</label
+              >
+              <select
+                id="departmentCode"
+                name="departmentCode"
+                class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-lg tw-focus:ring-primary-500 focus:tw-border-primary-500 tw-block tw-w-full tw-p-2.5"
+              >
+                <option value="1">Nam</option>
+                <option value="2">Nữ</option>
+              </select>
+              <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                Họ và tên không được bỏ trống
+              </p>
+            </div>
+            <div>
+              <label
+                for="fullName"
+                class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                >Email cá nhân</label
+              >
+              <input
+                type="text"
+                name="fullName"
+                id="fullName"
+                class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+                formControlName="fullName"
+                placeholder="nhập hộ khẩu thường trú"
+              />
+              <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                Email không được bỏ trống
+              </p>
+            </div>
+            <div>
+              <label
+                for="fullName"
+                class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                >Email BVB</label
+              >
+              <input
+                type="text"
+                name="fullName"
+                id="fullName"
+                class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+                formControlName="fullName"
+                placeholder="nhập hộ khẩu thường trú"
+              />
+              <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                Email BVB không được bỏ trống
+              </p>
+            </div>
+            <div>
+              <label
+                for="fullName"
+                class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                >Tình trạng hôn nhân</label
+              >
+              <select
+                id="departmentCode"
+                name="departmentCode"
+                class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-lg tw-focus:ring-primary-500 focus:tw-border-primary-500 tw-block tw-w-full tw-p-2.5"
+              >
+                <option value="1">Đã kết hôn</option>
+                <option value="2">Chưa kết hôn</option>
+              </select>
+              <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                Tình trạng hôn nhân không được bỏ trống
+              </p>
+            </div>
+
+            <div>
+              <label
+                for="fullName"
+                class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                >Hộ khẩu thường chú</label
+              >
+              <input
+                type="text"
+                name="fullName"
+                id="fullName"
+                class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+                formControlName="fullName"
+                placeholder="nhập hộ khẩu thường trú"
+              />
+              <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                Hộ khẩu thường trú không được bỏ trống
+              </p>
+            </div>
+            <div>
+              <label
+                for="fullName"
+                class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                >Nơi ở hiện tại</label
+              >
+              <input
+                type="text"
+                name="fullName"
+                id="fullName"
+                class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+                formControlName="fullName"
+                placeholder="nhập hộ khẩu thường trú"
+              />
+              <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                Nơi ở hiện tại không được bỏ trống
+              </p>
+            </div>
+            <div>
+              <label
+                for="fullName"
+                class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                >Số CMT / thẻ căn cước
+              </label>
+              <input
+                type="text"
+                name="fullName"
+                id="fullName"
+                class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+                formControlName="fullName"
+                placeholder="nhập hộ khẩu thường trú"
+              />
+              <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                Nơi ở hiện tại không được bỏ trống
+              </p>
+            </div>
+            <div class="tw-col-span-3 tw-grid tw-grid-cols-4 tw-gap-2">
+              <div>
+                <label
+                  for="fullName"
+                  class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                  >Là đảng viên</label
+                >
+                <div class="tw-flex tw-mt-4">
+                  <div class="tw-flex tw-items-center tw-me-4">
+                    <input
+                      id="inline-radio"
+                      type="radio"
+                      value=""
+                      name="inline-radio-group"
+                      class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
+                    />
+                    <label
+                      for="inline-radio"
+                      class="tw-ms-2 tw-font-medium tw-text-gray-900 !tw-m-0 !tw-ml-1"
+                      >có</label
+                    >
+                  </div>
+                  <div class="tw-flex tw-items-center tw-me-4">
+                    <input
+                      id="inline-2-radio"
+                      type="radio"
+                      value=""
+                      name="inline-radio-group"
+                      class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
+                    />
+                    <label
+                      for="inline-2-radio"
+                      class="tw-ms-2 tw-font-medium tw-text-gray-900 !tw-m-0 !tw-ml-1"
+                      >không</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label
+                  for="fullName"
+                  class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                  >Là quân đội</label
+                >
+                <div class="tw-flex tw-mt-4">
+                  <div class="tw-flex tw-items-center tw-me-4">
+                    <input
+                      id="inline-radio"
+                      type="radio"
+                      value=""
+                      name="inline-radio-group"
+                      class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
+                    />
+                    <label
+                      for="inline-radio"
+                      class="tw-ms-2 tw-font-medium tw-text-gray-900 !tw-m-0 !tw-ml-1"
+                      >có</label
+                    >
+                  </div>
+                  <div class="tw-flex tw-items-center tw-me-4">
+                    <input
+                      id="inline-2-radio"
+                      type="radio"
+                      value=""
+                      name="inline-radio-group"
+                      class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
+                    />
+                    <label
+                      for="inline-2-radio"
+                      class="tw-ms-2 tw-font-medium tw-text-gray-900 !tw-m-0 !tw-ml-1"
+                      >không</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label
+                  for="fullName"
+                  class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                  >Là thương binh</label
+                >
+                <div class="tw-flex tw-mt-4">
+                  <div class="tw-flex tw-items-center tw-me-4">
+                    <input
+                      id="inline-radio"
+                      type="radio"
+                      value=""
+                      name="inline-radio-group"
+                      class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
+                    />
+                    <label
+                      for="inline-radio"
+                      class="tw-ms-2 tw-font-medium tw-text-gray-900 !tw-m-0 !tw-ml-1"
+                      >có</label
+                    >
+                  </div>
+                  <div class="tw-flex tw-items-center tw-me-4">
+                    <input
+                      id="inline-2-radio"
+                      type="radio"
+                      value=""
+                      name="inline-radio-group"
+                      class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
+                    />
+                    <label
+                      for="inline-2-radio"
+                      class="tw-ms-2 tw-font-medium tw-text-gray-900 !tw-m-0 !tw-ml-1"
+                      >không</label
+                    >
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label
+                  for="fullName"
+                  class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
+                  >Là con liệt sỹ</label
+                >
+                <div class="tw-flex tw-mt-4">
+                  <div class="tw-flex tw-items-center tw-me-4">
+                    <input
+                      id="inline-radio"
+                      type="radio"
+                      value=""
+                      name="inline-radio-group"
+                      class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
+                    />
+                    <label
+                      for="inline-radio"
+                      class="tw-ms-2 tw-font-medium tw-text-gray-900 !tw-m-0 !tw-ml-1"
+                      >có</label
+                    >
+                  </div>
+                  <div class="tw-flex tw-items-center tw-me-4">
+                    <input
+                      id="inline-2-radio"
+                      type="radio"
+                      value=""
+                      name="inline-radio-group"
+                      class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
+                    />
+                    <label
+                      for="inline-2-radio"
+                      class="tw-ms-2 tw-font-medium tw-text-gray-900 !tw-m-0 !tw-ml-1"
+                      >không</label
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </app-tab-panel>
+    </app-tab-group>
+    <div class="tw-flex tw-justify-center tw-gap-4 tw-mt-4">
+      <button
+        type="submit"
+        [disabled]="this.formRecord.invalid"
+        class="tw-text-md tw-text-white tw-bg-slate-400 hover:tw-bg-slate-500 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[200px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-4"
+      >
+        <i class="fa fa-refresh"></i>
+        <span class="tw-leading-none">Nhập lại thông tin</span>
+      </button>
+      <button
+        type="submit"
+        class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[250px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-4"
+      >
+        <i class="fa fa-check"></i>
+        <span class="tw-leading-none">Xác nhân thông tin đầy đủ</span>
+      </button>
+    </div>
+  </form>
+</div>
