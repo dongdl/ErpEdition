@@ -61,3 +61,14 @@ export const mappingInfo = {
   status: 'Trạng thái',
   insuranceNumber: 'Số sổ bảo hiểm',
 };
+
+export const mappingStatusRecord = {
+  '1': 'Cộng tác viên',
+  '2': 'Học việc',
+  '3': 'Thử việc',
+  '4': 'Chính thức',
+  '5': 'Nghỉ việc',
+  '6': 'Nghỉ không lương',
+  '7': 'Tạm nghỉ hoãn hợp đồng',
+  '99': 'Chưa phân loại',
+};

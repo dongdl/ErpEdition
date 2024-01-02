@@ -263,152 +263,133 @@
           <div class="tw-grid tw-grid-cols-3 tw-py-6 tw-gap-x-8 tw-gap-y-4">
             <div>
               <label
-                for="fullName"
+                for="birthDay"
                 class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
                 >Ngày sinh</label
               >
               <input
-                type="datetime-local"
-                name="fullName"
-                id="fullName"
+                type="date"
+                name="birthDay"
+                id="birthDay"
                 class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
-                formControlName="fullName"
+                formControlName="birthDay"
               />
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Họ và tên không được bỏ trống
-              </p>
+              <!-- <p class="tw-my-0 !tw-text-base tw-text-red-600">
+                Ngày sinh nhật không được bỏ trống
+              </p> -->
             </div>
             <div>
               <label
-                for="fullName"
+                for="gender"
                 class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
                 >Giới tính</label
               >
               <select
-                id="departmentCode"
-                name="departmentCode"
+                id="gender"
+                name="gender"
+                formControlName="gender"
                 class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-lg tw-focus:ring-primary-500 focus:tw-border-primary-500 tw-block tw-w-full tw-p-2.5"
               >
                 <option value="1">Nam</option>
                 <option value="2">Nữ</option>
               </select>
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Họ và tên không được bỏ trống
-              </p>
             </div>
             <div>
               <label
-                for="fullName"
+                for="email"
                 class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
                 >Email cá nhân</label
               >
               <input
                 type="text"
-                name="fullName"
-                id="fullName"
+                name="email"
+                id="email"
                 class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
-                formControlName="fullName"
-                placeholder="nhập hộ khẩu thường trú"
+                formControlName="email"
+                placeholder="nhập email cá nhân"
               />
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Email không được bỏ trống
-              </p>
             </div>
             <div>
               <label
-                for="fullName"
+                for="emailBvb"
                 class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
                 >Email BVB</label
               >
               <input
                 type="text"
-                name="fullName"
-                id="fullName"
+                name="emailBvb"
+                id="emailBvb"
                 class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
-                formControlName="fullName"
-                placeholder="nhập hộ khẩu thường trú"
+                formControlName="emailBvb"
+                placeholder="nhập email BVB"
               />
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Email BVB không được bỏ trống
-              </p>
             </div>
             <div>
               <label
-                for="fullName"
+                for="maritalStatus"
                 class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
                 >Tình trạng hôn nhân</label
               >
               <select
-                id="departmentCode"
-                name="departmentCode"
+                id="maritalStatus"
+                name="maritalStatus"
                 class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-lg tw-focus:ring-primary-500 focus:tw-border-primary-500 tw-block tw-w-full tw-p-2.5"
+                formControlName="maritalStatus"
               >
                 <option value="1">Đã kết hôn</option>
                 <option value="2">Chưa kết hôn</option>
               </select>
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Tình trạng hôn nhân không được bỏ trống
-              </p>
             </div>
 
             <div>
               <label
-                for="fullName"
+                for="permanentAddress"
                 class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
                 >Hộ khẩu thường chú</label
               >
               <input
                 type="text"
-                name="fullName"
-                id="fullName"
+                name="permanentAddress"
+                id="permanentAddress"
                 class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
-                formControlName="fullName"
+                formControlName="permanentAddress"
                 placeholder="nhập hộ khẩu thường trú"
               />
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Hộ khẩu thường trú không được bỏ trống
-              </p>
             </div>
             <div>
               <label
-                for="fullName"
+                for="currentAddress"
                 class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
                 >Nơi ở hiện tại</label
               >
               <input
                 type="text"
-                name="fullName"
-                id="fullName"
+                name="currentAddress"
+                id="currentAddress"
                 class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
-                formControlName="fullName"
-                placeholder="nhập hộ khẩu thường trú"
+                formControlName="currentAddress"
+                placeholder="nhập nơi ở hiện tại"
               />
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Nơi ở hiện tại không được bỏ trống
-              </p>
             </div>
             <div>
               <label
-                for="fullName"
+                for="cardId"
                 class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
                 >Số CMT / thẻ căn cước
               </label>
               <input
                 type="text"
-                name="fullName"
-                id="fullName"
+                name="cardId"
+                id="cardId"
                 class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
-                formControlName="fullName"
-                placeholder="nhập hộ khẩu thường trú"
+                formControlName="cardId"
+                placeholder="nhập Số CMT / thẻ căn cước"
               />
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Nơi ở hiện tại không được bỏ trống
-              </p>
             </div>
             <div class="tw-col-span-3 tw-grid tw-grid-cols-4 tw-gap-2">
               <div>
                 <label
-                  for="fullName"
+                  for="isPartyMember"
                   class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
                   >Là đảng viên</label
                 >
@@ -417,9 +398,10 @@
                     <input
                       id="inline-radio"
                       type="radio"
-                      value=""
-                      name="inline-radio-group"
+                      value="1"
+                      name="isPartyMember"
                       class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
+                      formControlName="isPartyMember"
                     />
                     <label
                       for="inline-radio"
@@ -431,9 +413,10 @@
                     <input
                       id="inline-2-radio"
                       type="radio"
-                      value=""
-                      name="inline-radio-group"
+                      value="2"
+                      name="isPartyMember"
                       class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
+                      formControlName="isPartyMember"
                     />
                     <label
                       for="inline-2-radio"
@@ -445,7 +428,7 @@
               </div>
               <div>
                 <label
-                  for="fullName"
+                  for="isArmy"
                   class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
                   >Là quân đội</label
                 >
@@ -454,8 +437,9 @@
                     <input
                       id="inline-radio"
                       type="radio"
-                      value=""
-                      name="inline-radio-group"
+                      value="1"
+                      name="isArmy"
+                      formControlName="isArmy"
                       class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
                     />
                     <label
@@ -468,8 +452,9 @@
                     <input
                       id="inline-2-radio"
                       type="radio"
-                      value=""
-                      name="inline-radio-group"
+                      value="2"
+                      name="isArmy"
+                      formControlName="isArmy"
                       class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
                     />
                     <label
@@ -482,7 +467,7 @@
               </div>
               <div>
                 <label
-                  for="fullName"
+                  for="isVeterans"
                   class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
                   >Là thương binh</label
                 >
@@ -491,8 +476,9 @@
                     <input
                       id="inline-radio"
                       type="radio"
-                      value=""
-                      name="inline-radio-group"
+                      value="1"
+                      name="isVeterans"
+                      formControlName="isVeterans"
                       class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
                     />
                     <label
@@ -505,8 +491,9 @@
                     <input
                       id="inline-2-radio"
                       type="radio"
-                      value=""
-                      name="inline-radio-group"
+                      value="2"
+                      name="isVeterans"
+                      formControlName="isVeterans"
                       class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
                     />
                     <label
@@ -519,7 +506,7 @@
               </div>
               <div>
                 <label
-                  for="fullName"
+                  for="isMartyrSon"
                   class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
                   >Là con liệt sỹ</label
                 >
@@ -528,8 +515,9 @@
                     <input
                       id="inline-radio"
                       type="radio"
-                      value=""
-                      name="inline-radio-group"
+                      value="1"
+                      name="isMartyrSon"
+                      formControlName="isMartyrSon"
                       class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
                     />
                     <label
@@ -542,8 +530,9 @@
                     <input
                       id="inline-2-radio"
                       type="radio"
-                      value=""
-                      name="inline-radio-group"
+                      value="2"
+                      name="isMartyrSon"
+                      formControlName="isMartyrSon"
                       class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
                     />
                     <label
@@ -561,9 +550,9 @@
     </app-tab-group>
     <div class="tw-flex tw-justify-center tw-gap-4 tw-mt-4">
       <button
-        type="submit"
-        [disabled]="this.formRecord.invalid"
+        type="button"
         class="tw-text-md tw-text-white tw-bg-slate-400 hover:tw-bg-slate-500 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[200px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-4"
+        (click)="onResetForm()"
       >
         <i class="fa fa-refresh"></i>
         <span class="tw-leading-none">Nhập lại thông tin</span>

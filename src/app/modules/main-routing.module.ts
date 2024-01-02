@@ -4,17 +4,18 @@ import { MainComponent } from './main.component';
 import { HrRecordsComponent } from './hr-records/hr-records.component';
 import { PreviewRecordComponent } from './preview-record/preview-record.component';
 import { VerifyRecordComponent } from './verify-record/verify-record.component';
+import { hasNoUser } from '../shared/services/authentication/authGuard.service';
 
 const routes: Routes = [
   {
     path: '',
     component: MainComponent,
     children: [
-      // {
-      //   path: '',
-      //   redirectTo: '',
-      //   pathMatch: 'full',
-      // },
+      {
+        path: '',
+        redirectTo: 'nhan-su',
+        pathMatch: 'full',
+      },
       {
         path: 'nhan-su',
         loadChildren: () =>
@@ -26,8 +27,16 @@ const routes: Routes = [
         path: 'ho-so-nhan-su',
         component: HrRecordsComponent,
       },
-      { path: 'xac-nhan-thong-tin', component: PreviewRecordComponent },
-      { path: 'kiem-duyet-thong-tin', component: VerifyRecordComponent },
+      {
+        path: 'xac-nhan-thong-tin',
+        component: PreviewRecordComponent,
+        canActivate: [hasNoUser],
+      },
+      {
+        path: 'kiem-duyet-thong-tin',
+        component: VerifyRecordComponent,
+        canActivate: [hasNoUser],
+      },
     ],
   },
   // { path: '**', component: NotFoundComponent },

@@ -55,6 +55,15 @@ export class HrRecordsComponent implements OnInit, OnDestroy {
             bankAccount: [record.bankAccount, Validators.required],
             status: [record.status, Validators.required],
             insuranceNumber: [record.insuranceNumber, Validators.required],
+            birthDay: [record.birthDay],
+            gender: [record.gender],
+            email: [record.email],
+            emailBvb: [record.emailBvb],
+            maritalStatus: [record.maritalStatus],
+            permanentAddress: [record.permanentAddress],
+            cardId: [record.cardId],
+            isPartyMember: [record.isPartyMember],
+            isArmy: [record.isArmy],
           });
         } else {
           this.formRecord = this.fb.group({
@@ -69,6 +78,18 @@ export class HrRecordsComponent implements OnInit, OnDestroy {
             bankAccount: ['', Validators.required],
             status: ['', Validators.required],
             insuranceNumber: ['', Validators.required],
+            birthDay: [new Date()],
+            gender: ['1'],
+            email: [''],
+            emailBvb: [''],
+            maritalStatus: ['1'],
+            permanentAddress: [''],
+            currentAddress: [''],
+            cardId: [''],
+            isPartyMember: ['1'],
+            isArmy: ['1'],
+            isVeterans: ['1'],
+            isMartyrSon: ['1'],
           });
         }
       });
@@ -108,6 +129,18 @@ export class HrRecordsComponent implements OnInit, OnDestroy {
   get insuranceNumber() {
     return this.formRecord.get('insuranceNumber');
   }
+  get birthData() {
+    return this.formRecord.get('birthDay');
+  }
+  get gender() {
+    return this.formRecord.get('gender');
+  }
+  get email() {
+    return this.formRecord.get('email');
+  }
+  get emailBvb() {
+    return this.formRecord.get('emailBvb');
+  }
 
   onSubmit() {
     Object.keys(this.formRecord.controls).forEach((field) => {
@@ -118,5 +151,9 @@ export class HrRecordsComponent implements OnInit, OnDestroy {
 
     this.hrRecordService.sendRecord(this.formRecord.value);
     this.router.navigate(['xac-nhan-thong-tin']);
+  }
+
+  onResetForm() {
+    this.formRecord.reset();
   }
 }

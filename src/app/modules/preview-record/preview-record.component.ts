@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { IHrRecord } from '../../model/record';
-import { mappingInfo } from '../../utils/helper';
+import { mappingInfo, mappingStatusRecord } from '../../utils/helper';
 import { HrRecordsService } from '../hr-records/hr-records.service';
 import { Router } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
@@ -38,9 +38,21 @@ export class PreviewRecordComponent implements OnInit, OnDestroy {
     return mappingInfo[key as keyof IHrRecord];
   }
 
+  mappingStatusRecord(key: string) {
+    return mappingStatusRecord[key as keyof typeof mappingStatusRecord];
+  }
+
   get transformInfoRecord() {
     if (!this.recordPreview) return [];
     return Object.keys(this.recordPreview).map((key) => {
+      if (key === 'status') {
+        return {
+          info: 'status',
+          value: this.mappingStatusRecord(
+            this.recordPreview[key as keyof IHrRecord]
+          ),
+        };
+      }
       return {
         info: key,
         value: this.recordPreview[key as keyof IHrRecord],
