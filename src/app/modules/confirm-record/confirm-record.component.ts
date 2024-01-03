@@ -175,7 +175,7 @@ export class ConfirmRecordComponent {
       .confirmCurrentTask(id)
       .pipe(catchError((err) => of(err)))
       .subscribe(() => {
-        this.router.navigate(['duyet-thong-tin-hai-mat']);
+        alert('xác nhận thông tin thành công');
       });
   }
 

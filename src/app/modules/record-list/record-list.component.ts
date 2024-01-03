@@ -188,7 +188,8 @@ export class RecordListComponent implements OnInit, OnDestroy {
     this.auth
       .confirmCurrentTask(id)
       .pipe(catchError((err) => of(err)))
-      .subscribe(() => {});
-    this.router.navigate(['xac-nhan-thong-tin']);
+      .subscribe(() => {
+        alert('Chuyển duyệt thành công')
+      });
   }
 }
