@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, catchError, of } from 'rxjs';
+import { Subscription, catchError, map, of, switchMap } from 'rxjs';
 import { IHrRecord } from '../../model/record';
 import { USER_STATUS } from '../../model/user';
 import { ModalComponent } from '../../shared/components/modal/modal.component';
@@ -160,10 +160,13 @@ export class VerifyRecordComponent {
     if (!id) return;
     this.auth
       .confirmCurrentTask(id)
+      .pipe(
+        catchError((err) => of(err)),
+        switchMap(() => this.auth.confirmCurrentTask(id))
+      )
       .pipe(catchError((err) => of(err)))
       .subscribe(() => {
-        this.router.navigate(['duyet-thong-tin-hai-mat']);
+        alert('Duyệt thông tin thành công');
       });
-    alert('Duyệt thông tin thành công');
   }
 }

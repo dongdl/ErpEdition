@@ -12,6 +12,11 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'quan-ly-nguoi-dung',
+        pathMatch: 'full',
+      },
+      {
         path: 'quan-ly-nguoi-dung',
         component: UsersManagementComponent,
       },
