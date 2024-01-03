@@ -12,6 +12,7 @@ import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 import { ProcessStepComponent } from './components/process-step/process-step.component';
 import { AddEditUserFormComponent } from '../modules/users-management/add-edit-user-form/add-edit-user-form.component';
 import { FilterListPipe } from './filter-list.pipe';
+import { AddEditRecordComponent } from '../modules/add-edit-record/add-edit-record.component';
 
 @NgModule({
   declarations: [TabPanelContentDirective],

@@ -1,4 +1,4 @@
-import { USER_STATUS } from '../model/user';
+import { USER_STATUS, USER_STATUS_2 } from '../model/user';
 
 export const createGuid = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -42,6 +42,21 @@ export const mappingStatusUser = (status: USER_STATUS) => {
     case USER_STATUS.Deleted:
       return 'Deleted';
     case USER_STATUS.Disabled:
+      return 'Disabled';
+    default:
+      return '';
+  }
+};
+
+export const mappingStatusUser2 = (status: USER_STATUS_2) => {
+  switch (status) {
+    case USER_STATUS_2.Active:
+      return 'Active';
+    case USER_STATUS_2.InActive:
+      return 'Inactive';
+    case USER_STATUS_2.Deleted:
+      return 'Deleted';
+    case USER_STATUS_2.Disabled:
       return 'Disabled';
     default:
       return '';

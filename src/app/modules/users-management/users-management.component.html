@@ -1,23 +1,12 @@
 <div class="">
-  <div class="tw-flex tw-my-4">
-    <div class="tw-flex tw-items-center">
-      <input
-        type="text"
-        name="emailBvb"
-        id="emailBvb"
-        [(ngModel)]="searchByUserName"
-        class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-p-2.5 tw-w-[300px]"
-        placeholder="Tìm kiếm bằng tên truy cập..."
-      />
-    </div>
-
+  <div class="tw-flex tw-justify-end tw-my-4">
     <button
       type="button"
-      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[200px] tw-h-12 tw-flex tw-items-center tw-justify-center tw-gap-4 tw-ml-auto"
-      (click)="addNewRecord()"
+      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-52 tw-h-12 tw-flex tw-items-center tw-justify-center tw-gap-4"
+      (click)="addNewUser()"
     >
       <i class="fa fa-plus"></i>
-      <span class="tw-leading-none">Thêm thông tin nhân sự</span>
+      <span class="tw-leading-none">Add User</span>
     </button>
   </div>
   <div class="tw-relative tw-overflow-x-auto sm:tw-rounded-lg">
@@ -26,34 +15,32 @@
     >
       <thead class="tw-text-md tw-text-gray-700 tw-bg-gray-50">
         <tr class="tw-border">
-          <th scope="col" class="tw-px-6 tw-py-3">Tên truy cập</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Tên Hiển Thị</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Mã nhân sự</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Mã đơn vị</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Trạng thái</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Hành động</th>
+          <th scope="col" class="tw-px-6 tw-py-3">User name</th>
+          <th scope="col" class="tw-px-6 tw-py-3">Display name</th>
+          <th scope="col" class="tw-px-6 tw-py-3">Full name</th>
+          <th scope="col" class="tw-px-6 tw-py-3">Description</th>
+          <th scope="col" class="tw-px-6 tw-py-3">Status</th>
+          <th scope="col" class="tw-px-6 tw-py-3">Action</th>
         </tr>
       </thead>
       <tbody>
-        @for (record of (recordList| filterList: searchByUserName ) ; track
-        $index ) {
+        @for (user of users; track $index) {
         <tr class="odd:tw-bg-white even:tw-bg-gray-50 tw-border tw-text-md">
           <th
             scope="row"
             class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white"
           >
-            {{ record.username }}
+            {{ user.username }}
           </th>
-          <td class="tw-px-6 tw-py-4">{{ record.displayName }}</td>
-          <td class="tw-px-6 tw-py-4">{{ record.fullName }}</td>
+          <td class="tw-px-6 tw-py-4">{{ user.displayName }}</td>
+          <td class="tw-px-6 tw-py-4">{{ user.fullName }}</td>
           <td class="tw-px-6 tw-py-4">
             <span class="tw-max-w-[300px] tw-line-clamp-3">
-              {{ record.displayName }}
+              {{ user.description }}
             </span>
           </td>
           <td class="tw-px-6 tw-py-4">
-            {{ record.hrCode }}
-            <!-- <span
+            <span
               class="tw-inline-flex tw-items-center tw-font-medium tw-px-2.5 tw-py-0.5 !tw-rounded-full !tw-text-base tw-text-white"
               [ngClass]="{
                 'tw-bg-green-400': user.status === STATUS.Active,
@@ -63,16 +50,16 @@
               }"
             >
               {{ generateStatusUser(user.status) }}
-            </span> -->
+            </span>
           </td>
 
           <td class="tw-px-6 tw-py-4 tw-flex tw-flex-nowrap">
             <a
               href="javascript:;"
               class="btn btn-outline btn-circle btn-sm purple"
-              (click)="confirmRecord(record)"
+              (click)="editUser(user)"
             >
-              <i class="fa fa-edit"></i> Xác nhận thông tin
+              <i class="fa fa-edit"></i> Edit
             </a>
             <a
               href="javascript:;"
@@ -150,17 +137,16 @@
       </ul>
     </nav>
   </div>
-  @if (isModalOpen) {
+  @if(isModalOpen){
   <app-modal
-    [modalTitle]="modalTitle"
+    [modalTitle]="mode === 'add' ? 'add new user' : 'edit user'"
     [openModal]="isModalOpen"
     (changeModal)="closeModal($event)"
   >
     <app-add-edit-user-form
       [mode]="mode"
-      (closeModal)="isModalOpen = $event"
-      (changeRecord)="onChangeRecord($event)"
-    ></app-add-edit-user-form>
-  </app-modal>
-  }
+      [user]="editedUser"
+      (submitUser)="updateOrAddUser($event)"
+    ></app-add-edit-user-form> </app-modal
+  >}
 </div>

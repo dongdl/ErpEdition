@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { ConfirmRecordComponent } from './confirm-record/confirm-record.component';
 import { MainComponent } from './main.component';
-import { HrRecordsComponent } from './hr-records/hr-records.component';
-import { PreviewRecordComponent } from './preview-record/preview-record.component';
+import { RecordListComponent } from './record-list/record-list.component';
+import { UsersManagementComponent } from './users-management/users-management.component';
 import { VerifyRecordComponent } from './verify-record/verify-record.component';
-import { hasNoUser } from '../shared/services/authentication/authGuard.service';
 
 const routes: Routes = [
   {
@@ -12,35 +12,31 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       {
-        path: '',
-        redirectTo: 'thong-tin-tuyen-dung',
-        pathMatch: 'full',
+        path: 'quan-ly-nguoi-dung',
+        component: UsersManagementComponent,
       },
       {
         path: 'thong-tin-tuyen-dung',
-        loadChildren: () =>
-          import('./users-management/users-management-routing.module').then(
-            (module) => module.UsersManagementRoutingModule
-          ),
-      },
-      {
-        path: 'ho-so-nhan-su',
-        component: HrRecordsComponent,
-      },
-      {
-        path: 'duyet-thong-tin',
-        component: VerifyRecordComponent,
+        component: RecordListComponent,
       },
       {
         path: 'xac-nhan-thong-tin',
-        component: PreviewRecordComponent,
-        canActivate: [hasNoUser],
+        component: ConfirmRecordComponent,
       },
       {
-        path: 'kiem-duyet-thong-tin',
+        path: 'duyet-thong-tin-hai-mat',
         component: VerifyRecordComponent,
-        canActivate: [hasNoUser],
       },
+      // {
+      //   path: 'xac-nhan-thong-tin',
+      //   component: PreviewRecordComponent,
+      //   canActivate: [hasNoUser],
+      // },
+      // {
+      //   path: 'kiem-duyet-thong-tin',
+      //   component: VerifyRecordComponent,
+      //   canActivate: [hasNoUser],
+      // },
     ],
   },
   // { path: '**', component: NotFoundComponent },

@@ -60,23 +60,30 @@
             <a
               href="javascript:;"
               class="btn btn-outline btn-circle btn-sm purple"
-              (click)="onViewDetail(record)"
+              (click)="onSendMail()"
             >
-              <i class="fa fa-street-view"></i> Xem chi tiết
+              <i class="fa fa-send"></i> Gửi mail
+            </a>
+            <a
+              href="javascript:;"
+              class="btn btn-outline btn-circle btn-sm purple"
+              (click)="onReturn(record.id)"
+            >
+              <i class="fa fa-refresh"></i> Trả lại
             </a>
             <a
               href="javascript:;"
               class="btn btn-outline btn-circle btn-sm purple"
               (click)="toConfirm()"
             >
-              <i class="fa fa-check"></i> Đồng ý
+              <i class="fa fa-send"></i> Chuyển duyệt
             </a>
             <a
               href="javascript:;"
               class="btn btn-outline btn-circle dark btn-sm black"
-              (click)="onEditRecord(record)"
+              (click)="onViewDetail(record)"
             >
-              <i class="fa fa-edit"></i> Chỉnh sửa
+              <i class="fa fa-street-view"></i> Xem chi tiết
             </a>
           </td>
         </tr>

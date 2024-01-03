@@ -1,23 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { IHrRecord } from '../../model/record';
+import { HrRecordsService } from '../hr-records/hr-records.service';
+import { USER_STATUS } from '../../model/user';
+import { mappingStatusUser } from '../../utils/helper';
+import { Subscription } from 'rxjs';
+import { SharedModule } from '../../shared/shared.module';
+import { AddEditRecordComponent } from '../add-edit-record/add-edit-record.component';
+import { ModalComponent } from '../../shared/components/modal/modal.component';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { IHrRecord } from '../../model/record';
-import { USER_STATUS } from '../../model/user';
-import { ModalComponent } from '../../shared/components/modal/modal.component';
-import { SharedModule } from '../../shared/shared.module';
-import { mappingStatusUser } from '../../utils/helper';
-import { AddEditRecordComponent } from '../add-edit-record/add-edit-record.component';
-import { HrRecordsService } from '../hr-records/hr-records.service';
 
 @Component({
-  selector: 'app-verify-record',
+  selector: 'app-record-list',
   standalone: true,
   imports: [AddEditRecordComponent, ModalComponent, FormsModule, SharedModule],
-  templateUrl: './verify-record.component.html',
-  styleUrl: './verify-record.component.css',
+  templateUrl: './record-list.component.html',
+  styleUrl: './record-list.component.css',
 })
-export class VerifyRecordComponent {
+export class RecordListComponent implements OnInit, OnDestroy {
   isModalOpen = false;
   recordList: IHrRecord[] = [];
   chosenRecord: IHrRecord | null = null;
@@ -97,6 +97,6 @@ export class VerifyRecordComponent {
   }
 
   toConfirm() {
-    alert('Duyệt thông tin thành công');
+    this.router.navigate(['xac-nhan-thong-tin']);
   }
 }

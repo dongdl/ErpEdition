@@ -1,4 +1,11 @@
 export enum USER_STATUS {
+  Active = '1',
+  InActive = '2',
+  Disabled = '3',
+  Deleted = '99',
+}
+
+export enum USER_STATUS_2 {
   Active = 1,
   InActive = 2,
   Disabled = 3,

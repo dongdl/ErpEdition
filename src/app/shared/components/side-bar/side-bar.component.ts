@@ -13,6 +13,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class SideBarComponent {
   menuList: MenuItem[] = [
     {
+      name: 'Quản lý người dùng',
+      id: '7',
+      icon: 'icon-users',
+      link: '/quan-ly-nguoi-dung',
+    },
+    {
       name: 'Quy trình tuyển dụng',
       id: '1',
       icon: 'icon-users',
@@ -27,19 +33,20 @@ export class SideBarComponent {
           active: false,
         },
         {
-          name: 'Duyệt thông tin',
+          name: 'Xác nhận thông tin',
           id: '1-2',
           icon: 'icon-add',
-          link: '/duyet-thong-tin',
+          link: '/xac-nhan-thong-tin',
+          active: false,
+        },
+        {
+          name: 'Duyệt thông tin',
+          id: '1-3',
+          icon: 'icon-add',
+          link: '/duyet-thong-tin-hai-mat',
           active: false,
         },
       ],
-    },
-    {
-      name: 'Nộp hồ sơ nhân sự',
-      id: '2',
-      icon: 'icon-users',
-      link: '/ho-so-nhan-su',
     },
   ];
 
