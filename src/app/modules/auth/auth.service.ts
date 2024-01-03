@@ -1,7 +1,14 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, defer, map, of } from 'rxjs';
 import { apiLogin } from '../../utils/mock-data';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json',
+  }),
+};
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -41,7 +48,8 @@ export class AuthService {
           },
         },
         businessKey: id,
-      }
+      },
+      httpOptions
     );
   }
 
@@ -51,7 +59,8 @@ export class AuthService {
       {
         businessKey: id,
         processDefinitionKey: 'recruitment',
-      }
+      },
+      httpOptions
     );
   }
 }
