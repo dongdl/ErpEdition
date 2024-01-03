@@ -22,7 +22,7 @@ export class SideBarComponent {
       name: 'Quy trình tuyển dụng',
       id: '1',
       icon: 'icon-users',
-      active: true,
+      active: false,
       open: true,
       subMenu: [
         {
@@ -52,8 +52,7 @@ export class SideBarComponent {
 
   onClickParentMenu(id: string) {
     const item = this.menuList.find((item) => item.id === id);
-    if (item) {
-      item.active = !item.active;
+    if (item?.subMenu && item?.subMenu?.length > 0) {
       item.open = !item.open || false;
     }
   }

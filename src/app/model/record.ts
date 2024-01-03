@@ -1,5 +1,7 @@
+import { USER_STATUS } from './user';
+
 export interface IHrRecord {
-  id?: string | number;
+  id?: number;
   username?: string;
   displayName?: string;
   fullName: string;
@@ -11,6 +13,6 @@ export interface IHrRecord {
   region: string;
   taxCode: string;
   bankAccount: string;
-  status: string;
+  status: USER_STATUS;
   insuranceNumber: string;
 }

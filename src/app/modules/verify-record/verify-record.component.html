@@ -1,15 +1,74 @@
 <div class="">
-  <div class="tw-flex tw-my-4">
-    <div class="tw-flex tw-items-center">
-      <input
-        type="text"
-        name="emailBvb"
-        id="emailBvb"
-        [(ngModel)]="searchByUserName"
-        class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-p-2.5 tw-w-[300px]"
-        placeholder="Tìm kiếm bằng tên..."
-      />
+  <div class="tw-flex">
+    <div class="tw-w-full">
+      <div class="tw-flex">
+        <h2 class="tw-text-[18px]">
+          <i class="fa fa-search"></i>
+          Tìm kiếm
+        </h2>
+      </div>
+
+      <form
+        [formGroup]="formSearch"
+        class="tw-grid tw-grid-cols-2 tw-w-full tw-gap-x-10 tw-gap-y-6"
+      >
+        <div class="tw-flex tw-items-center tw-gap-4">
+          <div class="tw-w-[110px]">Mã nhân viên :</div>
+          <input
+            type="text"
+            formControlName="hrCode"
+            class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-p-2.5 tw-w-[300px]"
+            placeholder="Tìm kiếm bằng mã nhân viên"
+          />
+        </div>
+        <div class="tw-flex tw-items-center tw-gap-4">
+          <div class="tw-w-[100px]">Họ và tên :</div>
+          <input
+            type="text"
+            formControlName="fullName"
+            class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-p-2.5 tw-w-[300px]"
+            placeholder="Tìm kiếm bằng họ và tên"
+          />
+        </div>
+        <div class="tw-flex tw-items-center tw-gap-4">
+          <div class="tw-w-[110px]">Chức danh :</div>
+          <input
+            type="text"
+            formControlName="level"
+            class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-p-2.5 tw-w-[300px]"
+            placeholder="Tìm kiếm bằng chức danh"
+          />
+        </div>
+        <div class="tw-flex tw-items-center tw-gap-4">
+          <div class="tw-w-[100px]">Phòng ban :</div>
+          <input
+            type="text"
+            formControlName="departmentCode"
+            class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-p-2.5 tw-w-[300px]"
+            placeholder="Tìm kiếm bằng phòng ban"
+          />
+        </div>
+      </form>
     </div>
+  </div>
+
+  <div class="tw-flex tw-w-full tw-justify-end tw-gap-4 tw-mb-4 tw-mt-4">
+    <button
+      type="button"
+      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[100px] tw-h-12 tw-flex tw-items-center tw-justify-center tw-gap-4"
+      (click)="resetSearchForm()"
+    >
+      <i class="fa fa-recycle"></i>
+      <span class="tw-leading-none">Đặt lại</span>
+    </button>
+    <button
+      type="button"
+      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[100px] tw-h-12 tw-flex tw-items-center tw-justify-center tw-gap-4"
+      (click)="search()"
+    >
+      <i class="fa fa-search"></i>
+      <span class="tw-leading-none">Tìm kiếm</span>
+    </button>
   </div>
   <div class="tw-relative tw-overflow-x-auto sm:tw-rounded-lg">
     <table
@@ -26,8 +85,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (record of (recordList | filterList: searchByUserName ) ; track
-        $index ) {
+        @for (record of (filterList ) ; track $index ) {
         <tr class="odd:tw-bg-white even:tw-bg-gray-50 tw-border tw-text-md">
           <th
             scope="row"
@@ -59,24 +117,24 @@
           <td class="tw-px-6 tw-py-4 tw-flex tw-flex-nowrap tw-gap-2">
             <a
               href="javascript:;"
-              class="btn btn-outline btn-circle btn-sm purple"
+              class="btn btn-outline !tw-px-2"
               (click)="onViewDetail(record)"
             >
-              <i class="fa fa-street-view"></i> Xem chi tiết
+              <i class="fa fa-eye"></i>
             </a>
             <a
               href="javascript:;"
-              class="btn btn-outline btn-circle btn-sm purple"
+              class="btn btn-outline !tw-px-2"
               (click)="toConfirm()"
             >
-              <i class="fa fa-check"></i> Đồng ý
+              <i class="fa fa-check"></i>
             </a>
             <a
               href="javascript:;"
-              class="btn btn-outline btn-circle dark btn-sm black"
+              class="btn btn-outline !tw-px-2"
               (click)="onEditRecord(record)"
             >
-              <i class="fa fa-edit"></i> Chỉnh sửa
+              <i class="fa fa-edit"></i>
             </a>
           </td>
         </tr>

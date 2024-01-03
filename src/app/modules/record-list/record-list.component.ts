@@ -7,13 +7,24 @@ import { Subscription } from 'rxjs';
 import { SharedModule } from '../../shared/shared.module';
 import { AddEditRecordComponent } from '../add-edit-record/add-edit-record.component';
 import { ModalComponent } from '../../shared/components/modal/modal.component';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-record-list',
   standalone: true,
-  imports: [AddEditRecordComponent, ModalComponent, FormsModule, SharedModule],
+  imports: [
+    AddEditRecordComponent,
+    ModalComponent,
+    FormsModule,
+    SharedModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: './record-list.component.html',
   styleUrl: './record-list.component.css',
 })
@@ -24,8 +35,16 @@ export class RecordListComponent implements OnInit, OnDestroy {
   mode: 'add' | 'edit' | 'view' = 'add';
   searchByUserName = '';
   recordListSubscription: Subscription | null = null;
+  formSearch!: FormGroup;
+  filterList: IHrRecord[] = [];
+  firstRender = true;
 
-  constructor(private hrServices: HrRecordsService, private router: Router) {}
+  constructor(
+    private hrServices: HrRecordsService,
+    private router: Router,
+    private activeRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   get STATUS() {
     return USER_STATUS;
@@ -47,25 +66,78 @@ export class RecordListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.recordListSubscription = this.hrServices.recordList.subscribe(
       (record) => {
-        this.recordList = record;
+        this.recordList = [...record];
+        this.filterList = [...record];
       }
     );
+    this.activeRoute.queryParams.subscribe((query) => {
+      if (this.firstRender) return;
+      const { hrCode, fullName, level, departmentCode } = query;
+      if (hrCode) {
+        this.filterList = this.recordList.filter((record) =>
+          record.hrCode.toLowerCase().includes(hrCode.toLowerCase())
+        );
+      }
+      if (fullName) {
+        this.filterList = this.recordList.filter((record) =>
+          record.fullName.toLowerCase().includes(fullName.toLowerCase())
+        );
+      }
+      if (level) {
+        this.filterList = this.recordList.filter((record) =>
+          record.level.toLowerCase().includes(level.toLowerCase())
+        );
+      }
+      if (departmentCode) {
+        this.filterList = this.recordList.filter((record) =>
+          record.departmentCode
+
+            .toLowerCase()
+            .includes(departmentCode.toLowerCase())
+        );
+      }
+    });
+    this.formSearch = this.fb.group({
+      hrCode: [''],
+      fullName: [''],
+      level: [''],
+      departmentCode: [''],
+    });
+    this.firstRender = false;
+  }
+
+  getFormControl(field: string) {
+    return this.formSearch.get(field);
   }
 
   ngOnDestroy(): void {
     this.recordListSubscription?.unsubscribe();
   }
 
+  resetSearchForm() {
+    this.router.navigate(['thong-tin-tuyen-dung'], {
+      queryParams: {},
+    });
+    this.filterList = [...this.recordList];
+    this.formSearch.reset();
+  }
+
+  search() {
+    this.router.navigate(['thong-tin-tuyen-dung'], {
+      queryParams: this.formSearch.value,
+    });
+  }
+
   get modalTitle() {
     switch (this.mode) {
       case 'add': {
-        return 'Thêm thông tin nhân sự';
+        return 'Thêm thông tin tuyển dụng';
       }
       case 'edit': {
-        return 'Chỉnh thông tin nhân sự';
+        return 'Sửa thông tin tuyển dụng';
       }
       case 'view': {
-        return 'Xác nhận thông tin nhân sự';
+        return 'Chi tiết thông tin nhân sự';
       }
     }
   }
@@ -75,7 +147,9 @@ export class RecordListComponent implements OnInit, OnDestroy {
       this.hrServices.addRecord({ id: Date.now(), ...record });
     }
     if (this.mode === 'edit') {
-      let updatedRecord = this.recordList.find((item) => item.id === record.id);
+      let updatedRecord = this.recordList.find(
+        (item) => item?.id === record?.id
+      );
       if (!updatedRecord) return;
       this.hrServices.editRecord(record, updatedRecord?.id as number);
     }
@@ -87,9 +161,12 @@ export class RecordListComponent implements OnInit, OnDestroy {
     this.mode = 'edit';
     this.hrServices.sendRecord(record);
   }
-  onDelete(id: number) {
+
+  onDelete(id?: number) {
+    if (!id) return;
     this.hrServices.deleteRecord(id);
   }
+
   onViewDetail(record: IHrRecord) {
     this.isModalOpen = true;
     this.mode = 'view';

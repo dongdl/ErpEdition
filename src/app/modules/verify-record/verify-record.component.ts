@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IHrRecord } from '../../model/record';
 import { USER_STATUS } from '../../model/user';
@@ -24,8 +24,16 @@ export class VerifyRecordComponent {
   mode: 'add' | 'edit' | 'view' = 'add';
   searchByUserName = '';
   recordListSubscription: Subscription | null = null;
+  firstRender = true;
+  formSearch!: FormGroup;
+  filterList: IHrRecord[] = [];
 
-  constructor(private hrServices: HrRecordsService, private router: Router) {}
+  constructor(
+    private hrServices: HrRecordsService,
+    private router: Router,
+    private activeRoute: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   get STATUS() {
     return USER_STATUS;
@@ -45,11 +53,59 @@ export class VerifyRecordComponent {
   }
 
   ngOnInit(): void {
+    this.formSearch = this.fb.group({
+      hrCode: [''],
+      fullName: [''],
+      level: [''],
+      departmentCode: [''],
+    });
     this.recordListSubscription = this.hrServices.recordList.subscribe(
       (record) => {
-        this.recordList = record;
+        this.recordList = [...record];
+        this.filterList = [...record];
       }
     );
+    this.activeRoute.queryParams.subscribe((query) => {
+      if (this.firstRender) return;
+      const { hrCode, fullName, level, departmentCode } = query;
+      if (hrCode) {
+        this.filterList = this.recordList.filter((record) =>
+          record.hrCode.toLowerCase().includes(hrCode.toLowerCase())
+        );
+      }
+      if (fullName) {
+        this.filterList = this.recordList.filter((record) =>
+          record.fullName.toLowerCase().includes(fullName.toLowerCase())
+        );
+      }
+      if (level) {
+        this.filterList = this.recordList.filter((record) =>
+          record.level.toLowerCase().includes(level.toLowerCase())
+        );
+      }
+      if (departmentCode) {
+        this.filterList = this.recordList.filter((record) =>
+          record.departmentCode
+            .toLowerCase()
+            .includes(departmentCode.toLowerCase())
+        );
+      }
+    });
+    this.firstRender = false;
+  }
+
+  resetSearchForm() {
+    this.router.navigate(['duyet-thong-tin-hai-mat'], {
+      queryParams: {},
+    });
+    this.filterList = [...this.recordList];
+    this.formSearch.reset();
+  }
+
+  search() {
+    this.router.navigate(['duyet-thong-tin-hai-mat'], {
+      queryParams: this.formSearch.value,
+    });
   }
 
   ngOnDestroy(): void {
@@ -62,7 +118,7 @@ export class VerifyRecordComponent {
         return 'Thêm thông tin nhân sự';
       }
       case 'edit': {
-        return 'Chỉnh thông tin nhân sự';
+        return 'Sửa thông tin nhân sự';
       }
       case 'view': {
         return 'Xác nhận thông tin nhân sự';

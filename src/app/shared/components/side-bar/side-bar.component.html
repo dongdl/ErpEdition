@@ -74,7 +74,11 @@
         <ul class="sub-menu">
           @for (subItem of item.subMenu; track $index) {
           <li class="nav-item start">
-            <a [routerLink]="subItem.link" class="nav-link">
+            <a
+              routerLinkActive="!tw-bg-black/20"
+              [routerLink]="subItem.link"
+              class="nav-link"
+            >
               <i *ngIf="subItem.icon" [ngClass]="subItem.icon"></i>
               <span class="title">{{ subItem.name }}</span>
             </a>
@@ -85,6 +89,7 @@
         } @else{
         <a
           (click)="onClickParentMenu(item.id)"
+          routerLinkActive="!tw-bg-black/20"
           [routerLink]="item.link"
           class="nav-link nav-toggle"
         >
