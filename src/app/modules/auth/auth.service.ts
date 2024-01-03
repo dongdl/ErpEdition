@@ -21,4 +21,37 @@ export class AuthService {
       })
     );
   }
+
+  startTask() {
+    return this.httpClient.post(
+      'http://localhost:8080/engine-rest/process-definition/key/recruitment/start',
+      {
+        variables: {
+          action: {
+            value: 'FULL',
+            type: 'String',
+          },
+          twoEyesApprovalAction: {
+            value: 'APPROVE',
+            type: 'String',
+          },
+          existingPosition: {
+            value: false,
+            type: 'Boolean',
+          },
+        },
+        businessKey: 'recruitment_001',
+      }
+    );
+  }
+
+  confirmCurrentTask() {
+    return this.httpClient.post(
+      'http://localhost:8080/engine-rest/custom-task/complete-current-task',
+      {
+        businessKey: 'recruitment_001',
+        processDefinitionKey: 'recruitment',
+      }
+    );
+  }
 }

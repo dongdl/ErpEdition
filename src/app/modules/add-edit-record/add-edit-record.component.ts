@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 
 import { Router } from '@angular/router';
-import { SubscriptionLike } from 'rxjs';
+import { SubscriptionLike, catchError, of } from 'rxjs';
 import { IHrRecord } from '../../model/record';
 import { ModalComponent } from '../../shared/components/modal/modal.component';
 import { SharedModule } from '../../shared/shared.module';
@@ -16,6 +16,7 @@ import ma_chuc_danh from '../../utils/ma_chuc_danh.json';
 import ma_don_vi from '../../utils/ma_don_vi.json';
 import ma_nhan_su from '../../utils/ma_nhan_su.json';
 import { HrRecordsService } from '../hr-records/hr-records.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-add-edit-record',
@@ -51,7 +52,8 @@ export class AddEditRecordComponent {
   constructor(
     private fb: FormBuilder,
     private hrRecordService: HrRecordsService,
-    private router: Router
+    private router: Router,
+    private auth: AuthService
   ) {}
   ngOnDestroy(): void {
     this.previewRecordSubscription?.unsubscribe();
@@ -224,17 +226,37 @@ export class AddEditRecordComponent {
   }
 
   agree() {
-    alert('Duyệt thong tin thành công');
-    this.closeModal.emit(false);
+    this.auth
+      .confirmCurrentTask()
+      .pipe(catchError((err) => of(err)))
+      .subscribe(() => {
+        alert('Duyệt thong tin thành công');
+        this.closeModal.emit(false);
+      });
+
+    // alert('Duyệt thong tin thành công');
+    // this.closeModal.emit(false);
   }
 
   toConfirm() {
-    if (this.router.url === '/thong-tin-tuyen-dung') {
-      this.router.navigate(['xac-nhan-thong-tin']);
-    }
-    if (this.router.url === '/xac-nhan-thong-tin') {
-      this.router.navigate(['duyet-thong-tin-hai-mat']);
-    }
+    this.auth
+      .confirmCurrentTask()
+      .pipe(catchError((err) => of(err)))
+      .subscribe(() => {
+        if (this.router.url === '/thong-tin-tuyen-dung') {
+          this.router.navigate(['xac-nhan-thong-tin']);
+        }
+        if (this.router.url === '/xac-nhan-thong-tin') {
+          this.router.navigate(['duyet-thong-tin-hai-mat']);
+        }
+      });
+
+    // if (this.router.url === '/thong-tin-tuyen-dung') {
+    //   this.router.navigate(['xac-nhan-thong-tin']);
+    // }
+    // if (this.router.url === '/xac-nhan-thong-tin') {
+    //   this.router.navigate(['duyet-thong-tin-hai-mat']);
+    // }
 
     // if(this.route.pathFromRoot)
     // this.router.navigate(['xac-nhan-thong-tin']);

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, catchError, of } from 'rxjs';
 import { IHrRecord } from '../../model/record';
 import { USER_STATUS } from '../../model/user';
 import { ModalComponent } from '../../shared/components/modal/modal.component';
@@ -9,6 +9,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { mappingStatusUser } from '../../utils/helper';
 import { AddEditRecordComponent } from '../add-edit-record/add-edit-record.component';
 import { HrRecordsService } from '../hr-records/hr-records.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-verify-record',
@@ -32,7 +33,8 @@ export class VerifyRecordComponent {
     private hrServices: HrRecordsService,
     private router: Router,
     private activeRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private auth: AuthService
   ) {}
 
   get STATUS() {
@@ -153,6 +155,12 @@ export class VerifyRecordComponent {
   }
 
   toConfirm() {
+    this.auth
+      .confirmCurrentTask()
+      .pipe(catchError((err) => of(err)))
+      .subscribe(() => {
+        this.router.navigate(['duyet-thong-tin-hai-mat']);
+      });
     alert('Duyệt thông tin thành công');
   }
 }

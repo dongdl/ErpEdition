@@ -3,7 +3,7 @@ import { IHrRecord } from '../../model/record';
 import { HrRecordsService } from '../hr-records/hr-records.service';
 import { USER_STATUS } from '../../model/user';
 import { mappingStatusUser } from '../../utils/helper';
-import { Subscription } from 'rxjs';
+import { Subscription, catchError, of } from 'rxjs';
 import { SharedModule } from '../../shared/shared.module';
 import { AddEditRecordComponent } from '../add-edit-record/add-edit-record.component';
 import { ModalComponent } from '../../shared/components/modal/modal.component';
@@ -14,6 +14,8 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-record-list',
@@ -43,7 +45,8 @@ export class RecordListComponent implements OnInit, OnDestroy {
     private hrServices: HrRecordsService,
     private router: Router,
     private activeRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private auth: AuthService
   ) {}
 
   get STATUS() {
@@ -174,6 +177,11 @@ export class RecordListComponent implements OnInit, OnDestroy {
   }
 
   toConfirm() {
-    this.router.navigate(['xac-nhan-thong-tin']);
+    this.auth
+      .startTask()
+      .pipe(catchError((err) => of(err)))
+      .subscribe(() => {
+        this.router.navigate(['xac-nhan-thong-tin']);
+      });
   }
 }
