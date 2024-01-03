@@ -22,7 +22,7 @@ export class AuthService {
     );
   }
 
-  startTask() {
+  startTask(id: number) {
     return this.httpClient.post(
       'http://localhost:8080/engine-rest/process-definition/key/recruitment/start',
       {
@@ -40,16 +40,16 @@ export class AuthService {
             type: 'Boolean',
           },
         },
-        businessKey: 'recruitment_001',
+        businessKey: id,
       }
     );
   }
 
-  confirmCurrentTask() {
+  confirmCurrentTask(id: number) {
     return this.httpClient.post(
       'http://localhost:8080/engine-rest/custom-task/complete-current-task',
       {
-        businessKey: 'recruitment_001',
+        businessKey: id,
         processDefinitionKey: 'recruitment',
       }
     );

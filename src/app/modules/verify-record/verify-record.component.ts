@@ -137,6 +137,7 @@ export class VerifyRecordComponent {
       if (!updatedRecord) return;
       this.hrServices.editRecord(record, updatedRecord?.id as number);
     }
+    this.resetSearchForm();
     this.isModalOpen = false;
   }
 
@@ -147,6 +148,7 @@ export class VerifyRecordComponent {
   }
   onDelete(id: number) {
     this.hrServices.deleteRecord(id);
+    this.resetSearchForm();
   }
   onViewDetail(record: IHrRecord) {
     this.isModalOpen = true;
@@ -154,9 +156,10 @@ export class VerifyRecordComponent {
     this.hrServices.sendRecord(record);
   }
 
-  toConfirm() {
+  toConfirm(id?: number) {
+    if (!id) return;
     this.auth
-      .confirmCurrentTask()
+      .confirmCurrentTask(id)
       .pipe(catchError((err) => of(err)))
       .subscribe(() => {
         this.router.navigate(['duyet-thong-tin-hai-mat']);

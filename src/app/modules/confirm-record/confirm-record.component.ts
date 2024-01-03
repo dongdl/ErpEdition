@@ -136,6 +136,8 @@ export class ConfirmRecordComponent {
       if (!updatedRecord) return;
       this.hrServices.editRecord(record, updatedRecord?.id as number);
     }
+
+    this.resetSearchForm();
     this.isModalOpen = false;
   }
 
@@ -167,9 +169,10 @@ export class ConfirmRecordComponent {
     this.hrServices.sendRecord(record);
   }
 
-  toConfirm() {
+  toConfirm(id?: number) {
+    if (!id) return;
     this.auth
-      .confirmCurrentTask()
+      .confirmCurrentTask(id)
       .pipe(catchError((err) => of(err)))
       .subscribe(() => {
         this.router.navigate(['duyet-thong-tin-hai-mat']);
@@ -183,5 +186,6 @@ export class ConfirmRecordComponent {
   onReturn(id?: number) {
     if (!id) return;
     this.recordList = this.recordList.filter((item) => item.id !== id);
+    this.resetSearchForm();
   }
 }

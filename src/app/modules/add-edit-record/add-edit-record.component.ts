@@ -225,9 +225,11 @@ export class AddEditRecordComponent {
     alert('gửi email thành công');
   }
 
-  agree() {
+  agree(id?: number) {
+    if (!id) return;
+
     this.auth
-      .confirmCurrentTask()
+      .confirmCurrentTask(id)
       .pipe(catchError((err) => of(err)))
       .subscribe(() => {
         alert('Duyệt thong tin thành công');
@@ -238,9 +240,10 @@ export class AddEditRecordComponent {
     // this.closeModal.emit(false);
   }
 
-  toConfirm() {
+  toConfirm(id?: number) {
+    if (!id) return;
     this.auth
-      .confirmCurrentTask()
+      .confirmCurrentTask(id)
       .pipe(catchError((err) => of(err)))
       .subscribe(() => {
         if (this.router.url === '/thong-tin-tuyen-dung') {

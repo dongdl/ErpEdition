@@ -147,7 +147,12 @@ export class RecordListComponent implements OnInit, OnDestroy {
 
   onChangeRecord(record: IHrRecord) {
     if (this.mode === 'add') {
-      this.hrServices.addRecord({ id: Date.now(), ...record });
+      const id = Date.now();
+      this.hrServices.addRecord({ id, ...record });
+      this.auth
+        .startTask(id)
+        .pipe(catchError((err) => of(err)))
+        .subscribe(() => {});
     }
     if (this.mode === 'edit') {
       let updatedRecord = this.recordList.find(
@@ -156,6 +161,7 @@ export class RecordListComponent implements OnInit, OnDestroy {
       if (!updatedRecord) return;
       this.hrServices.editRecord(record, updatedRecord?.id as number);
     }
+    this.resetSearchForm();
     this.isModalOpen = false;
   }
 
@@ -168,6 +174,7 @@ export class RecordListComponent implements OnInit, OnDestroy {
   onDelete(id?: number) {
     if (!id) return;
     this.hrServices.deleteRecord(id);
+    this.resetSearchForm();
   }
 
   onViewDetail(record: IHrRecord) {
@@ -176,12 +183,12 @@ export class RecordListComponent implements OnInit, OnDestroy {
     this.hrServices.sendRecord(record);
   }
 
-  toConfirm() {
+  toConfirm(id?: number) {
+    if (!id) return;
     this.auth
-      .startTask()
+      .confirmCurrentTask(id)
       .pipe(catchError((err) => of(err)))
-      .subscribe(() => {
-        this.router.navigate(['xac-nhan-thong-tin']);
-      });
+      .subscribe(() => {});
+    this.router.navigate(['xac-nhan-thong-tin']);
   }
 }
