@@ -31,7 +31,8 @@
               "./src/assets/layouts/layout/css/themes/blue.min.css",
               "src/assets/global/plugins/select2/css/select2.min.css",
               "src/assets/global/plugins/select2/css/select2-bootstrap.min.css",
-              "src/assets/global/css/components.min.css"
+              "src/assets/global/css/components.min.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "./src/assets/global/plugins/jquery.min.js",

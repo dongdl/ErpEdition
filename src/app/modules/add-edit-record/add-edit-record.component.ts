@@ -15,8 +15,8 @@ import { SharedModule } from '../../shared/shared.module';
 import ma_chuc_danh from '../../utils/ma_chuc_danh.json';
 import ma_don_vi from '../../utils/ma_don_vi.json';
 import ma_nhan_su from '../../utils/ma_nhan_su.json';
-import { HrRecordsService } from '../hr-records/hr-records.service';
 import { AuthService } from '../auth/auth.service';
+import { HrRecordsService } from '../hr-records/hr-records.service';
 
 @Component({
   selector: 'app-add-edit-record',
@@ -34,7 +34,10 @@ export class AddEditRecordComponent {
   recordCurrent: IHrRecord | null = null;
 
   get CODE_LIST() {
-    return ma_nhan_su;
+    return ma_nhan_su.map((item) => ({
+      title: item.option,
+      value: item.option,
+    }));
   }
 
   get isDisabled() {
@@ -42,11 +45,56 @@ export class AddEditRecordComponent {
   }
 
   get POSITION_CODE() {
-    return ma_chuc_danh;
+    return ma_chuc_danh.map((item) => ({
+      title: item.option,
+      value: item.option,
+    }));
+  }
+
+  get GENDER() {
+    return [
+      {
+        title: 'Nam',
+        value: '1',
+      },
+      {
+        title: 'Nữ',
+        value: '2',
+      },
+    ];
+  }
+
+  get MARTIAL_STATUS() {
+    return [
+      {
+        title: 'Đã kết hôn',
+        value: '1',
+      },
+      {
+        title: 'Chưa kết hôn',
+        value: '2',
+      },
+    ];
   }
 
   get DEPARTMENT_CODE() {
-    return ma_don_vi;
+    return ma_don_vi.map((item) => ({
+      title: item.option,
+      value: item.option,
+    }));
+  }
+
+  get STATUS() {
+    return [
+      { title: 'Cộng tác viên', value: '1' },
+      { title: 'Học việc', value: '2' },
+      { title: 'Thử việc', value: '3' },
+      { title: 'Chính thức', value: '4' },
+      { title: 'Nghỉ việc', value: '5' },
+      { title: 'Nghỉ không lương', value: '6' },
+      { title: 'Nghỉ không lương đồng', value: '7' },
+      { title: 'Chưa phân loạig', value: '99' },
+    ];
   }
 
   constructor(
@@ -78,7 +126,7 @@ export class AddEditRecordComponent {
             insuranceNumber: [record.insuranceNumber, Validators.required],
             birthDay: [record.birthDay],
             gender: [record.gender],
-            email: [record.email],
+            email: [record.email, Validators.required],
             emailBvb: [record.emailBvb],
             maritalStatus: [record.maritalStatus],
             permanentAddress: [record.permanentAddress],
@@ -104,7 +152,7 @@ export class AddEditRecordComponent {
             insuranceNumber: ['', Validators.required],
             birthDay: [new Date()],
             gender: ['1'],
-            email: [''],
+            email: ['', Validators.required],
             emailBvb: [''],
             maritalStatus: ['1'],
             permanentAddress: [''],
@@ -174,6 +222,8 @@ export class AddEditRecordComponent {
   }
 
   onSubmit() {
+    console.log(this.formRecord.value);
+
     if (this.mode === 'view') return;
     Object.keys(this.formRecord.controls).forEach((field) => {
       const control = this.formRecord.get(field);
@@ -245,14 +295,7 @@ export class AddEditRecordComponent {
     this.auth
       .confirmCurrentTask(id)
       .pipe(catchError((err) => of(err)))
-      .subscribe(() => {
-        if (this.router.url === '/thong-tin-tuyen-dung') {
-          this.router.navigate(['xac-nhan-thong-tin']);
-        }
-        if (this.router.url === '/xac-nhan-thong-tin') {
-          this.router.navigate(['duyet-thong-tin-hai-mat']);
-        }
-      });
+      .subscribe(() => {});
 
     // if (this.router.url === '/thong-tin-tuyen-dung') {
     //   this.router.navigate(['xac-nhan-thong-tin']);

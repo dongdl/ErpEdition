@@ -1,0 +1,20 @@
+<div class="tw-w-full">
+  <label [for]="id" class="tw-block tw-mb-2 tw-font-medium tw-text-gray-900">{{
+    label
+  }}</label>
+  <input
+    type="text"
+    [name]="id"
+    [id]="id"
+    [type]="type"
+    (ngModel)="(value)"
+    (ngModelChange)="onValueChange($event)"
+    (blur)="markAsTouched()"
+    class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-w-full tw-p-2.5"
+    [placeholder]="placeholder"
+  />
+
+  @if(isDirty && controlInput?.errors){
+  <ng-content> </ng-content>
+  }
+</div>
