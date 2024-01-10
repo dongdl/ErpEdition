@@ -1,45 +1,87 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { IHrRecord } from '../../model/record';
-import { HrRecordsService } from '../hr-records/hr-records.service';
-import { USER_STATUS } from '../../model/user';
-import { mappingStatusUser } from '../../utils/helper';
-import { Subscription, catchError, of } from 'rxjs';
-import { SharedModule } from '../../shared/shared.module';
-import { AddEditRecordComponent } from '../add-edit-record/add-edit-record.component';
-import { ModalComponent } from '../../shared/components/modal/modal.component';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../auth/auth.service';
+import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Employee, IHrRecord } from '../../model/record'
+import { HrRecordsService } from '../hr-records/hr-records.service'
+import { USER_STATUS } from '../../model/user'
+import { mappingStatusUser } from '../../utils/helper'
+import { Subscription, catchError, of } from 'rxjs'
+import { SharedModule } from '../../shared/shared.module'
+import { AddEditRecordComponent } from '../add-edit-record/add-edit-record.component'
+import { ModalComponent } from '../../shared/components/modal/modal.component'
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { ActivatedRoute, Router } from '@angular/router'
+import { HttpClient } from '@angular/common/http'
+import { AuthService } from '../auth/auth.service'
 
 @Component({
   selector: 'app-record-list',
   standalone: true,
-  imports: [
-    AddEditRecordComponent,
-    ModalComponent,
-    FormsModule,
-    SharedModule,
-    ReactiveFormsModule,
-  ],
+  imports: [AddEditRecordComponent, ModalComponent, FormsModule, SharedModule, ReactiveFormsModule],
   templateUrl: './record-list.component.html',
-  styleUrl: './record-list.component.css',
+  styleUrl: './record-list.component.css'
 })
 export class RecordListComponent implements OnInit, OnDestroy {
-  isModalOpen = false;
-  recordList: IHrRecord[] = [];
-  chosenRecord: IHrRecord | null = null;
-  mode: 'add' | 'edit' | 'view' = 'add';
-  searchByUserName = '';
-  recordListSubscription: Subscription | null = null;
-  formSearch!: FormGroup;
-  filterList: IHrRecord[] = [];
-  firstRender = true;
+  isModalOpen = false
+  recordList: IHrRecord[] = []
+  chosenRecord: IHrRecord | null = null
+  mode: 'add' | 'edit' | 'view' = 'add'
+  searchByUserName = ''
+  recordListSubscription: Subscription | null = null
+  formSearch!: FormGroup
+  filterList: IHrRecord[] = []
+  firstRender = true
+  tableHeader: { key: keyof Employee | 'action'; name: string; width?: string }[] = [
+    {
+      key: 'code',
+      name: 'Mã nhân viên'
+    },
+    {
+      key: 'name',
+      name: 'Họ và tên'
+    },
+    {
+      key: 'positionCode',
+      name: 'Mã chức danh'
+    },
+    {
+      key: 'level',
+      name: 'Cấp bậc'
+    },
+    {
+      key: 'zone',
+      name: 'Vùng',
+      width: '200px'
+    },
+    {
+      key: 'region',
+      name: 'Miền',
+      width: '200px'
+    },
+    {
+      key: 'taxCode',
+      name: 'Mã số thuế thu nhập cá nhân',
+      width: '300px'
+    },
+    {
+      key: 'insuranceNumber',
+      name: 'Số sổ bảo hiểm',
+      width: '300px'
+    },
+    {
+      key: 'accountNum',
+      name: 'Số tài khoản BVB',
+      width: '300px'
+    },
+    {
+      key: 'status',
+      name: 'Trạng thái',
+      width: '140px'
+    },
+    {
+      key: 'action',
+      name: 'Trạng thái',
+      width: '140px'
+    }
+  ]
 
   constructor(
     private hrServices: HrRecordsService,
@@ -50,146 +92,139 @@ export class RecordListComponent implements OnInit, OnDestroy {
   ) {}
 
   get STATUS() {
-    return USER_STATUS;
+    return USER_STATUS
   }
 
   generateStatusUser(status: USER_STATUS) {
-    return mappingStatusUser(status);
+    return mappingStatusUser(status)
   }
 
   closeModal(value: boolean) {
-    this.isModalOpen = value;
+    this.isModalOpen = value
   }
 
   addNewRecord() {
-    this.mode = 'add';
-    this.isModalOpen = true;
+    this.mode = 'add'
+    this.isModalOpen = true
   }
 
   ngOnInit(): void {
-    this.recordListSubscription = this.hrServices.recordList.subscribe(
-      (record) => {
-        this.recordList = [...record];
-        this.filterList = [...record];
-      }
-    );
+    this.recordListSubscription = this.hrServices.recordList.subscribe((record) => {
+      this.recordList = [...record]
+      this.filterList = [...record]
+    })
     this.activeRoute.queryParams.subscribe((query) => {
-      if (this.firstRender) return;
-      const { hrCode, fullName, level, departmentCode } = query;
+      if (this.firstRender) return
+      const { hrCode, fullName, level, departmentCode } = query
       if (hrCode) {
         this.filterList = this.recordList.filter((record) =>
           record.hrCode.toLowerCase().includes(hrCode.toLowerCase())
-        );
+        )
       }
       if (fullName) {
         this.filterList = this.recordList.filter((record) =>
           record.fullName.toLowerCase().includes(fullName.toLowerCase())
-        );
+        )
       }
       if (level) {
         this.filterList = this.recordList.filter((record) =>
           record.level.toLowerCase().includes(level.toLowerCase())
-        );
+        )
       }
       if (departmentCode) {
         this.filterList = this.recordList.filter((record) =>
-          record.departmentCode
-
-            .toLowerCase()
-            .includes(departmentCode.toLowerCase())
-        );
+          record.departmentCode.toLowerCase().includes(departmentCode.toLowerCase())
+        )
       }
-    });
+    })
     this.formSearch = this.fb.group({
       hrCode: [''],
       fullName: [''],
       level: [''],
-      departmentCode: [''],
-    });
-    this.firstRender = false;
+      departmentCode: ['']
+    })
+    this.firstRender = false
   }
 
   getFormControl(field: string) {
-    return this.formSearch.get(field);
+    return this.formSearch.get(field)
   }
 
   ngOnDestroy(): void {
-    this.recordListSubscription?.unsubscribe();
+    this.recordListSubscription?.unsubscribe()
   }
 
   resetSearchForm() {
     this.router.navigate(['thong-tin-tuyen-dung'], {
-      queryParams: {},
-    });
-    this.filterList = [...this.recordList];
-    this.formSearch.reset();
+      queryParams: {}
+    })
+    this.filterList = [...this.recordList]
+    this.formSearch.reset()
   }
 
   search() {
     this.router.navigate(['thong-tin-tuyen-dung'], {
-      queryParams: this.formSearch.value,
-    });
+      queryParams: this.formSearch.value
+    })
   }
 
   get modalTitle() {
     switch (this.mode) {
       case 'add': {
-        return 'Thêm thông tin tuyển dụng';
+        return 'Thêm thông tin tuyển dụng'
       }
       case 'edit': {
-        return 'Sửa thông tin tuyển dụng';
+        return 'Sửa thông tin tuyển dụng'
       }
       case 'view': {
-        return 'Chi tiết thông tin nhân sự';
+        return 'Chi tiết thông tin nhân sự'
       }
     }
   }
 
   onChangeRecord(record: IHrRecord) {
     if (this.mode === 'add') {
-      const id = Date.now();
-      this.hrServices.addRecord({ id, ...record });
+      const id = Date.now()
+      this.hrServices.addRecord({ id, ...record })
       this.auth
         .startTask(id)
         .pipe(catchError((err) => of(err)))
-        .subscribe(() => {});
+        .subscribe(() => {})
     }
     if (this.mode === 'edit') {
-      let updatedRecord = this.recordList.find(
-        (item) => item?.id === record?.id
-      );
-      if (!updatedRecord) return;
-      this.hrServices.editRecord(record, updatedRecord?.id as number);
+      let updatedRecord = this.recordList.find((item) => item?.id === record?.id)
+      if (!updatedRecord) return
+      this.hrServices.editRecord(record, updatedRecord?.id as number)
     }
-    this.resetSearchForm();
-    this.isModalOpen = false;
+    this.resetSearchForm()
+    this.isModalOpen = false
   }
 
   onEditRecord(record: IHrRecord) {
-    this.isModalOpen = true;
-    this.mode = 'edit';
-    this.hrServices.sendRecord(record);
+    this.isModalOpen = true
+    this.mode = 'edit'
+    this.hrServices.sendRecord(record)
   }
 
   onDelete(id?: number) {
-    if (!id) return;
-    this.hrServices.deleteRecord(id);
-    this.resetSearchForm();
+    if (!id) return
+    this.hrServices.deleteRecord(id)
+    this.resetSearchForm()
   }
 
   onViewDetail(record: IHrRecord) {
-    this.isModalOpen = true;
-    this.mode = 'view';
-    this.hrServices.sendRecord(record);
+    this.isModalOpen = true
+    this.mode = 'view'
+    this.hrServices.sendRecord(record)
   }
 
   toConfirm(id?: number) {
-    if (!id) return;
+    if (!id) return
     this.auth
       .confirmCurrentTask(id)
       .pipe(catchError((err) => of(err)))
       .subscribe(() => {
         alert('Chuyển duyệt thành công')
-      });
+      })
   }
 }

@@ -1,14 +1,15 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { catchError, defer, map, of } from 'rxjs';
-import { apiLogin } from '../../utils/mock-data';
+import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+import { catchError, defer, map, of } from 'rxjs'
+import { saveUserInfoToLS } from '../../utils/auth'
+import { apiLogin } from '../../utils/mock-data'
 
 const httpOptions = {
   headers: new HttpHeaders({
     'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json',
-  }),
-};
+    'Content-Type': 'application/json'
+  })
+}
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -16,17 +17,18 @@ export class AuthService {
 
   loginUser({ username, password }: { username: string; password: string }) {
     return defer(() => apiLogin({ username, password })).pipe(
-      map((response) => {
-        if (response) {
-          localStorage.setItem('token', '123123213123');
+      map((user) => {
+        console.log(user)
+        if (user) {
+          saveUserInfoToLS(user)
         }
 
-        return of(response);
+        return of(user)
       }),
       catchError((error) => {
-        throw new Error('username or password is incorrect');
+        throw new Error('username or password is incorrect')
       })
-    );
+    )
   }
 
   startTask(id: number) {
@@ -36,21 +38,21 @@ export class AuthService {
         variables: {
           action: {
             value: 'FULL',
-            type: 'String',
+            type: 'String'
           },
           twoEyesApprovalAction: {
             value: 'APPROVE',
-            type: 'String',
+            type: 'String'
           },
           existingPosition: {
             value: false,
-            type: 'Boolean',
-          },
+            type: 'Boolean'
+          }
         },
-        businessKey: id,
+        businessKey: id
       },
       httpOptions
-    );
+    )
   }
 
   confirmCurrentTask(id: number) {
@@ -58,9 +60,9 @@ export class AuthService {
       'http://localhost:8080/engine-rest/custom-task/complete-current-task',
       {
         businessKey: id,
-        processDefinitionKey: 'recruitment',
+        processDefinitionKey: 'recruitment'
       },
       httpOptions
-    );
+    )
   }
 }

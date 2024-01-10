@@ -1,438 +1,64 @@
-<form class="tw-p-8 tw-pt-2" [formGroup]="formRecord" (ngSubmit)="onSubmit()">
+<form
+  class="tw-p-8 tw-pt-2"
+  [formGroup]="formRecord"
+  (ngSubmit)="onSubmit()">
   <app-tab-group>
-    <app-tab-panel title="Thông tin chung">
+    @for (tab of fieldList; track tab.tabId){
+    <app-tab-panel [title]="tab.tabTitle">
       <ng-template tabPanelContent>
-        <div>
-          <div class="tw-grid tw-grid-cols-3 tw-py-6 tw-gap-x-8 tw-gap-y-4">
-            <app-input
-              label="Họ và tên"
-              formControlName="fullName"
-              id="fullName"
-              placeholder="Nhập họ và tên"
-            >
-              @if (fulName?.hasError('required')) {
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Họ và tên không được bỏ trống
-              </p>
-              }
-            </app-input>
-            <app-select
-              label="Mã nhân sự"
-              formControlName="hrCode"
-              id="hrCode"
-              [optionList]="CODE_LIST"
-            >
-              @if (hrCode?.hasError('required')) {
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Mã nhân sự không được bỏ trống
-              </p>
-              }
-            </app-select>
-
-            <app-select
-              label="Mã chức danh"
-              formControlName="positionCode"
-              id="positionCode"
-              [optionList]="POSITION_CODE"
-            >
-              @if (positionCode?.hasError('required')) {
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Mã chức danh không được bỏ trống
-              </p>
-              }
-            </app-select>
-            <app-input
-              label="Cấp bậc"
-              formControlName="level"
-              id="level"
-              placeholder="Nhập cấp bậc"
-            >
-              @if (level?.hasError('required')) {
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Cấp bậc không được bỏ trống
-              </p>
-              }</app-input
-            >
-
-            <app-select
-              label="Mã đơn vị"
-              formControlName="departmentCode"
-              id="departmentCode"
-              [optionList]="DEPARTMENT_CODE"
-            >
-              @if (departmentCode?.hasError('required')) {
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Mã đơn vị không được bỏ trống
-              </p>
-              }
-            </app-select>
-
-            <app-input
-              label="Vùng"
-              formControlName="zone"
-              id="zone"
-              placeholder="Nhập cùng"
-            >
-              @if (zone?.hasError('required')) {
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Vùng không được bỏ trống
-              </p>
-              }</app-input
-            >
-
-            <app-input
-              label="Miền"
-              formControlName="region"
-              id="region"
-              placeholder="Nhập miền"
-            >
-              @if (region?.hasError('required')) {
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Miền không được bỏ trống
-              </p>
-              }</app-input
-            >
-
-            <app-input
-              label="Mã số thuế thu nhập cá nhân"
-              formControlName="taxCode"
-              id="taxCode"
-              placeholder="nhập mã số thuế"
-            >
-              @if (taxCode?.hasError('required')) {
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Mã số thuế không được bỏ trống
-              </p>
-              }</app-input
-            >
-
-            <app-input
-              label="Số sổ bảo hiểm"
-              formControlName="insuranceNumber"
-              id="insuranceNumber"
-              placeholder="Nhập số sổ bảo hiển"
-            >
-              @if (insuranceNumber?.hasError('required')) {
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Số sổ bảo hiểm không được bỏ trống
-              </p>
-              }</app-input
-            >
-
-            <app-input
-              label="Số tài khoản BVB"
-              formControlName="bankAccount"
-              id="bankAccount"
-              placeholder="Nhập số tài khoản BVB"
-            >
-              @if (bankAccount?.hasError('required')) {
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                Số tài khoản BVB không được bỏ trống
-              </p>
-              }</app-input
-            >
-
-            <app-select
-              label="Trạng thái"
-              formControlName="status"
-              id="status"
-              [optionList]="STATUS"
-            >
-              @if (status?.hasError('required')) {
-              <p class="tw-my-0 !tw-text-base tw-text-red-600">
-                trạng thái không được bỏ trống
-              </p>
-              }</app-select
-            >
-            <div>
-              <label
-                class="tw-block tw-mb-2 tw-font-medium tw-text-gray-900 dark:text-white"
-                for="file_input"
-                >Tải lên hồ sơ nhân sự</label
-              >
-              <input
-                type="file"
-                class="tw-block tw-w-full tw-text-slate-400 file:tw-mr-4 file:tw-py-2 file:tw-px-4 !file:tw-rounded-md file:tw-border-0 file:tw-font-semibold file:tw-bg-pink-50 file:tw-text-primary hover:tw-file:bg-blue-400"
-              />
-            </div>
+        <div class="tw-grid tw-grid-cols-4 tw-py-6 tw-gap-x-8 tw-gap-y-4">
+          @for (field of tab.tabContent; track field.key) { @switch (field.controlType) { @case
+          (ControlType.INPUT_TEXT) {
+          <app-input
+            [formControlName]="field.key"
+            [label]="field.label"
+            [id]="field.key"
+            type="text">
+            @if (getFormControl(field.key)?.hasError('required')) {
+            <p class="tw-my-0 !tw-text-base tw-text-red-600">
+              {{ field.label }} không được bỏ trống
+            </p>
+            }
+          </app-input>
+          } @case (ControlType.SELECT) {
+          <app-select
+            [formControlName]="field.key"
+            [label]="field.label"
+            [id]="field.key"
+            [optionList]="field.options"></app-select>
+          } @case (ControlType.INPUT_DATE) {
+          <app-input
+            [formControlName]="field.key"
+            [label]="field.label"
+            [id]="field.key"
+            type="date"></app-input>
+          } @default {
+          <div class="tw-col-span-4 divide-y">
+            <h3 class="!tw-text-2xl">{{ field.title }}</h3>
           </div>
+          } } }
         </div>
       </ng-template>
     </app-tab-panel>
-
-    <app-tab-panel title="Thông tin cá nhân">
+    }
+    <app-tab-panel title="Thông tin gia đình và quan hệ thân nhân">
       <ng-template tabPanelContent>
-        <div class="tw-grid tw-grid-cols-3 tw-py-6 tw-gap-x-8 tw-gap-y-4">
-          <app-input
-            label="Ngày sinh"
-            id="birthDay"
-            type="date"
-            formControlName="birthDay"
-          ></app-input>
-          <app-select
-            label="Giới tính"
-            formControlName="gender"
-            [optionList]="GENDER"
-          ></app-select>
+        <app-add-edit-family></app-add-edit-family>
+      </ng-template>
+    </app-tab-panel>
 
-          <app-input
-            label="Email cá nhân"
-            id="email"
-            formControlName="email"
-            placeholder="nhập email cá nhân"
-          ></app-input>
-
-          <app-input
-            label="Email BVB"
-            id="emailBvb"
-            formControlName="emailBvb"
-            placeholder="nhập email BVB"
-          ></app-input>
-
-          <app-select
-            label="Tình trạng hôn nhân"
-            id="maritalStatus"
-            formControlName="maritalStatus"
-            [optionList]="MARTIAL_STATUS"
-          ></app-select>
-
-          <app-input
-            label="Hộ khẩu thường chú"
-            id="permanentAddress"
-            formControlName="permanentAddress"
-            placeholder="nhập hộ khẩu thường trú"
-          ></app-input>
-
-          <app-input
-            label="Nơi ở hiện tại"
-            id="currentAddress"
-            formControlName="currentAddress"
-            placeholder="nhập nơi ở hiện tại"
-          ></app-input>
-
-          <app-input
-            label="Số CMT / thẻ căn cước"
-            id="cardId"
-            formControlName="cardId"
-            placeholder="nhập Số CMT / thẻ căn cước"
-          ></app-input>
-
-          <div class="tw-col-span-3 tw-grid tw-grid-cols-4 tw-gap-2">
-            <div>
-              <label
-                for="isPartyMember"
-                class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
-                >Là đảng viên</label
-              >
-              <div class="tw-flex tw-mt-4">
-                <div class="tw-flex tw-items-center tw-me-4">
-                  <input
-                    id="inline-radio"
-                    type="radio"
-                    value="1"
-                    name="isPartyMember"
-                    class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
-                    formControlName="isPartyMember"
-                  />
-                  <label
-                    for="inline-radio"
-                    class="tw-ms-2 tw-font-medium tw-text-gray-900 !tw-m-0 !tw-ml-1"
-                    >có</label
-                  >
-                </div>
-                <div class="tw-flex tw-items-center tw-me-4">
-                  <input
-                    id="inline-2-radio"
-                    type="radio"
-                    value="2"
-                    name="isPartyMember"
-                    class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
-                    formControlName="isPartyMember"
-                  />
-                  <label
-                    for="inline-2-radio"
-                    class="tw-ms-2 tw-font-medium tw-text-gray-900 !tw-m-0 !tw-ml-1"
-                    >không</label
-                  >
-                </div>
-              </div>
-            </div>
-            <div>
-              <label
-                for="isArmy"
-                class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
-                >Là quân đội</label
-              >
-              <div class="tw-flex tw-mt-4">
-                <div class="tw-flex tw-items-center tw-me-4">
-                  <input
-                    id="inline-radio"
-                    type="radio"
-                    value="1"
-                    name="isArmy"
-                    formControlName="isArmy"
-                    class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
-                  />
-                  <label
-                    for="inline-radio"
-                    class="tw-ms-2 tw-font-medium tw-text-gray-900 !tw-m-0 !tw-ml-1"
-                    >có</label
-                  >
-                </div>
-                <div class="tw-flex tw-items-center tw-me-4">
-                  <input
-                    id="inline-2-radio"
-                    type="radio"
-                    value="2"
-                    name="isArmy"
-                    formControlName="isArmy"
-                    class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
-                  />
-                  <label
-                    for="inline-2-radio"
-                    class="tw-ms-2 tw-font-medium tw-text-gray-900 !tw-m-0 !tw-ml-1"
-                    >không</label
-                  >
-                </div>
-              </div>
-            </div>
-            <div>
-              <label
-                for="isVeterans"
-                class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
-                >Là thương binh</label
-              >
-              <div class="tw-flex tw-mt-4">
-                <div class="tw-flex tw-items-center tw-me-4">
-                  <input
-                    id="inline-radio"
-                    type="radio"
-                    value="1"
-                    name="isVeterans"
-                    formControlName="isVeterans"
-                    class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
-                  />
-                  <label
-                    for="inline-radio"
-                    class="tw-ms-2 tw-font-medium tw-text-gray-900 !tw-m-0 !tw-ml-1"
-                    >có</label
-                  >
-                </div>
-                <div class="tw-flex tw-items-center tw-me-4">
-                  <input
-                    id="inline-2-radio"
-                    type="radio"
-                    value="2"
-                    name="isVeterans"
-                    formControlName="isVeterans"
-                    class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
-                  />
-                  <label
-                    for="inline-2-radio"
-                    class="tw-ms-2 tw-font-medium tw-text-gray-900 !tw-m-0 !tw-ml-1"
-                    >không</label
-                  >
-                </div>
-              </div>
-            </div>
-            <div>
-              <label
-                for="isMartyrSon"
-                class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900"
-                >Là con liệt sỹ</label
-              >
-              <div class="tw-flex tw-mt-4">
-                <div class="tw-flex tw-items-center tw-me-4">
-                  <input
-                    id="inline-radio"
-                    type="radio"
-                    value="1"
-                    name="isMartyrSon"
-                    formControlName="isMartyrSon"
-                    class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
-                  />
-                  <label
-                    for="inline-radio"
-                    class="tw-ms-2 tw-font-medium tw-text-gray-900 !tw-m-0 !tw-ml-1"
-                    >có</label
-                  >
-                </div>
-                <div class="tw-flex tw-items-center tw-me-4">
-                  <input
-                    id="inline-2-radio"
-                    type="radio"
-                    value="2"
-                    name="isMartyrSon"
-                    formControlName="isMartyrSon"
-                    class="!tw-m-0 tw-w-5 tw-h-5 tw-text-primary tw-bg-gray-100 tw-border-primary focus:tw-ring-blue-500"
-                  />
-                  <label
-                    for="inline-2-radio"
-                    class="tw-ms-2 tw-font-medium tw-text-gray-900 !tw-m-0 !tw-ml-1"
-                    >không</label
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <app-tab-panel title="Lịch sử">
+      <ng-template tabPanelContent>
+        <app-history-record></app-history-record>
       </ng-template>
     </app-tab-panel>
   </app-tab-group>
-  <div class="tw-flex tw-justify-center tw-gap-4 tw-mt-4">
-    @if(isRecordList && mode === 'view'){
-    <button
-      type="button"
-      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[150px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-4"
-      (click)="toConfirm(recordCurrent?.id)"
-    >
-      <i class="fas fa-directions"></i>
-      Chuyển duyệt
-    </button>
-    } @if(isRecordList){ @if(mode === 'edit' || mode === 'add'){
+  <div class="tw-flex tw-justify-center">
     <button
       type="submit"
-      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[130px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-4"
-    >
-      @if(mode === 'edit' || mode === 'add'){
-      <i class="fa fa-save"></i>
+      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[250px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-4">
+      <i class="fa fa-check"></i>
       <span class="tw-leading-none">Lưu</span>
-      }</button
-    >} } @if(isConfirmRecord){ @if(mode === 'view'){
-    <button
-      type="button"
-      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[150px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-4"
-      (click)="toConfirm(recordCurrent?.id)"
-    >
-      <i class="fas fa-directions"></i>
-      Chuyển duyệt
     </button>
-
-    <button
-      type="button"
-      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[150px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-4"
-      (click)="onSendEmail()"
-    >
-      <i class="fa fa-check"></i>
-      Gửi email
-    </button>
-    }} @if(isVerifyRecord && mode === 'view'){
-    <button
-      type="button"
-      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[150px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-4"
-      (click)="agree(recordCurrent?.id)"
-    >
-      <i class="fa fa-check"></i>
-      Đồng ý
-    </button>
-    } @if(isVerifyRecord && mode === 'edit'){
-    <button
-      type="submit"
-      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[250px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-4"
-    >
-      <i class="fa fa-check"></i>
-      <span class="tw-leading-none">Chỉnh sửa thông tin nhân sự</span>
-    </button>
-    }
   </div>
 </form>

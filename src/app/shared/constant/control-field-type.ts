@@ -1,0 +1,5 @@
+export const CONTROL_TYPE = {
+  INPUT_TEXT: 'INPUT_TEXT',
+  SELECT: 'SELECT',
+  INPUT_DATE: 'INPUT_DATE',
+};

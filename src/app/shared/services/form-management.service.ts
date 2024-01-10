@@ -1,22 +1,18 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observer, of} from 'rxjs';
-import {IHrRecord} from '../../model/record';
-import records from './../../utils/users.json';
-import {inputBaseType} from "../../shared/model/input-base.model";
-import {CONTROL_TYPE} from "../../shared/constant/control-field-type";
-import {InputDate} from "../../shared/model/input-date.model";
+import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class HrRecordsService {
-  previewRecord: BehaviorSubject<IHrRecord | any> = new BehaviorSubject(null);
-  recordList: BehaviorSubject<any> = new BehaviorSubject(records);
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { of } from 'rxjs';
+import { CONTROL_TYPE } from '../constant/control-field-type';
+import { inputBaseType } from '../model/input-base.model';
+import { InputDate } from '../model/input-date.model';
+import { SelectInput } from '../model/select-input.model';
+import { TextInput } from '../model/text-input.model';
 
-  constructor() {
-  }
+@Injectable()
+export class FormManagementService {
+  // TODO: get from a remote source of question metadata
 
-  createFieldControlField() {
+  createEmployeeRecordFields() {
     const generaInfo: inputBaseType[] = [
       {
         label: 'Mã nhân sự',
@@ -25,7 +21,7 @@ export class HrRecordsService {
         required: true,
         order: 1,
         controlType: CONTROL_TYPE.SELECT,
-        options: []
+        options: [],
       },
       {
         label: 'Họ và tên',
@@ -41,7 +37,7 @@ export class HrRecordsService {
         required: true,
         order: 3,
         controlType: CONTROL_TYPE.SELECT,
-        options: []
+        options: [],
       },
       {
         label: 'Cấp bậc',
@@ -57,7 +53,7 @@ export class HrRecordsService {
         required: true,
         order: 5,
         controlType: CONTROL_TYPE.SELECT,
-        options: []
+        options: [],
       },
       {
         label: 'Vùng',
@@ -65,7 +61,7 @@ export class HrRecordsService {
         key: 'zone',
         order: 6,
         controlType: CONTROL_TYPE.SELECT,
-        options: []
+        options: [],
       },
       {
         label: 'Miền',
@@ -73,7 +69,7 @@ export class HrRecordsService {
         key: 'region',
         order: 7,
         controlType: CONTROL_TYPE.SELECT,
-        options: []
+        options: [],
       },
       {
         label: ' Mã số thuế thu nhập cá nhân',
@@ -101,11 +97,18 @@ export class HrRecordsService {
         order: 11,
         required: true,
         controlType: CONTROL_TYPE.SELECT,
-        options: []
+        options: [
+          { title: 'Cộng tác viên', value: '1' },
+          { title: 'Học việc', value: '2' },
+          { title: 'Thử việc', value: '3' },
+          { title: 'Chính thức', value: '4' },
+          { title: 'Nghỉ việc', value: '5' },
+          { title: 'Nghỉ không lương', value: '6' },
+          { title: 'Nghỉ không lương đồng', value: '7' },
+          { title: 'Chưa phân loại', value: '99' },
+        ],
       },
-
-
-    ]
+    ];
     const personalInfo: inputBaseType[] = [
       {
         label: 'Ảnh thẻ',
@@ -118,7 +121,7 @@ export class HrRecordsService {
         value: '',
         key: 'birthday',
         order: 2,
-        controlType: CONTROL_TYPE.INPUT_DATE
+        controlType: CONTROL_TYPE.INPUT_DATE,
       },
       {
         label: 'Giới tính',
@@ -126,7 +129,7 @@ export class HrRecordsService {
         key: 'gender',
         order: 3,
         controlType: CONTROL_TYPE.SELECT,
-        options: []
+        options: [],
       },
       {
         label: 'Nơi sinh',
@@ -146,7 +149,7 @@ export class HrRecordsService {
         key: 'ethnicCode',
         order: 6,
         controlType: CONTROL_TYPE.SELECT,
-        options: []
+        options: [],
       },
       {
         label: 'Là đảng viên',
@@ -155,16 +158,16 @@ export class HrRecordsService {
         order: 7,
         controlType: CONTROL_TYPE.SELECT,
         options: [
-          {title: 'Đã là đảng viên', value: '1'},
-          {title: 'Chưa là đảng viên', value: '0'}
-        ]
+          { title: 'Đã là đảng viên', value: '1' },
+          { title: 'Chưa là đảng viên', value: '0' },
+        ],
       },
       {
         label: 'Ngày vào đảng',
         value: '',
         key: 'partyDate',
         order: 8,
-        controlType: CONTROL_TYPE.INPUT_DATE
+        controlType: CONTROL_TYPE.INPUT_DATE,
       },
       {
         label: ' Chức vụ',
@@ -185,9 +188,9 @@ export class HrRecordsService {
         order: 11,
         controlType: CONTROL_TYPE.SELECT,
         options: [
-          {title: 'Có', value: '1'},
-          {title: 'Không', value: '0'}
-        ]
+          { title: 'Có', value: '1' },
+          { title: 'Không', value: '0' },
+        ],
       },
 
       {
@@ -197,9 +200,9 @@ export class HrRecordsService {
         order: 12,
         controlType: CONTROL_TYPE.SELECT,
         options: [
-          {title: 'Có', value: '1'},
-          {title: 'Không', value: '0'}
-        ]
+          { title: 'Có', value: '1' },
+          { title: 'Không', value: '0' },
+        ],
       },
 
       {
@@ -209,9 +212,9 @@ export class HrRecordsService {
         order: 13,
         controlType: CONTROL_TYPE.SELECT,
         options: [
-          {title: 'Có', value: '1'},
-          {title: 'Không', value: '0'}
-        ]
+          { title: 'Có', value: '1' },
+          { title: 'Không', value: '0' },
+        ],
       },
       {
         label: 'Hộ khẩu thường trú',
@@ -236,7 +239,7 @@ export class HrRecordsService {
         value: '',
         key: 'cardDate',
         order: 17,
-        controlType: CONTROL_TYPE.INPUT_DATE
+        controlType: CONTROL_TYPE.INPUT_DATE,
       },
       {
         label: 'Nơi cấp Số CMT/Thẻ căn cước',
@@ -248,21 +251,21 @@ export class HrRecordsService {
         label: 'Số sổ hộ chiếu',
         value: '',
         key: 'passportNumber',
-        order: 19
+        order: 19,
       },
       {
         label: ' Ngày cấp hộ chiếu',
         value: '',
         key: 'passportDate',
         order: 20,
-        controlType: CONTROL_TYPE.INPUT_DATE
+        controlType: CONTROL_TYPE.INPUT_DATE,
       },
       {
         label: 'Ngày hết hạn hộ chiếu',
         value: '',
         key: 'passportExpiredDate',
         order: 21,
-        controlType: CONTROL_TYPE.INPUT_DATE
+        controlType: CONTROL_TYPE.INPUT_DATE,
       },
       {
         label: 'Điện thoại nhà riêng',
@@ -280,13 +283,13 @@ export class HrRecordsService {
         label: 'Email BVB',
         value: '',
         key: 'email',
-        order: 24
+        order: 24,
       },
       {
         label: 'Email cá nhân',
         value: '',
         key: 'emailPrivate',
-        order: 25
+        order: 25,
       },
       {
         label: 'Tình trạng hôn nhân',
@@ -295,42 +298,42 @@ export class HrRecordsService {
         order: 26,
         controlType: CONTROL_TYPE.SELECT,
         options: [
-          {title: 'Độc thân', value: '0'},
-          {title: 'Có gia đình', value: '1'}
-        ]
+          { title: 'Độc thân', value: '0' },
+          { title: 'Có gia đình', value: '1' },
+        ],
       },
       {
         label: 'Thông tin liên hệ khi cần',
         value: '',
         key: 'contactAddress',
-        order: 27
+        order: 27,
       },
       {
         label: 'Số điện thoại liên hệ khi cần',
         value: '',
         key: 'contactPhone',
-        order: 28
+        order: 28,
       },
       {
-        label: 'Ngày vào ngân hàng (Ngày quyết định tuyển dụng đầu tiên)',
+        label: 'Ngày vào ngân hàng',
         value: '',
         key: 'probationaryDontractDate',
         order: 29,
-        controlType: CONTROL_TYPE.INPUT_DATE
+        controlType: CONTROL_TYPE.INPUT_DATE,
       },
       {
         label: 'Ngày hợp đồng chính thức',
         value: '',
         key: 'officialContractDate',
         order: 30,
-        controlType: CONTROL_TYPE.INPUT_DATE
+        controlType: CONTROL_TYPE.INPUT_DATE,
       },
       {
         label: 'Ngày bổ nhiệm chức danh hiện tại',
         value: '',
         key: 'positionDate',
         order: 31,
-        controlType: CONTROL_TYPE.INPUT_DATE
+        controlType: CONTROL_TYPE.INPUT_DATE,
       },
       {
         label: 'Trình độ học vấn',
@@ -356,280 +359,454 @@ export class HrRecordsService {
         key: 'description',
         order: 34,
       },
-    ]
-    const recruitmentInfo: (inputBaseType | { isTitle: true, title: string }) [] = [
+    ];
+    const recruitmentInfo: (
+      | inputBaseType
+      | { isTitle: true; title: string; order: number; controlType: string }
+    )[] = [
       {
         label: 'Nguồn tuyển dụng',
         key: 'recruitmentSource',
-        value: "",
-        order: 1
+        value: '',
+        order: 1,
       },
       {
         label: 'Ngày phỏng vấn',
         key: 'interviewDate',
-        value: "",
+        value: '',
         order: 2,
-        controlType: CONTROL_TYPE.INPUT_DATE
+        controlType: CONTROL_TYPE.INPUT_DATE,
       },
       {
         label: 'Biên bản tuyển dụng số',
         key: 'recruitmentMinutes',
-        value: "",
+        value: '',
         order: 3,
       },
       {
         label: 'Đề nghị tuyển dụng số',
         key: 'recruitmentProposal',
-        value: "",
+        value: '',
         order: 4,
       },
       {
         isTitle: true,
-        title: 'Thông tin tham khảo'
+        title: 'Thông tin tham khảo',
+        controlType: 'header',
+        order: 5,
       },
       {
         label: 'Thông tin tham khảo - Họ tên',
         key: 'referName',
-        value: "",
-        order: 5,
+        value: '',
+        order: 6,
       },
       {
         label: 'Thông tin tham khảo - Chức vụ',
         key: 'referPosition',
-        value: "",
-        order: 6,
+        value: '',
+        order: 7,
       },
       {
         label: 'Thông tin tham khảo - Đơn vị công tác',
         key: 'referWorkUnit',
-        value: "",
-        order: 7,
+        value: '',
+        order: 8,
       },
       {
         label: 'Thông tin tham khảo - Mối quan hệ',
         key: 'referRelationShip',
-        value: "",
-        order: 8,
+        value: '',
+        order: 9,
       },
       {
         label: 'Thông tin tham khảo - Mobile',
         key: 'referMobile',
-        value: "",
-        order: 9,
+        value: '',
+        order: 10,
       },
       {
         label: ' Thông tin tham khảo - Email',
         key: 'referEmail',
-        value: "",
-        order: 10,
+        value: '',
+        order: 11,
       },
       {
         label: 'Thông tin tham khảo - Ghi chú thêm',
         key: 'referDescription',
-        value: "",
-        order: 11,
+        value: '',
+        order: 12,
       },
       {
         isTitle: true,
-        title: "'Người thân bạn bè BVB"
+        title: "'Người thân bạn bè BVB",
+        controlType: 'header',
+        order: 13,
       },
       {
         label: 'Người thân bạn bè BVB - Họ tên',
         key: 'referOrganName',
-        value: "",
-        order: 12,
+        value: '',
+        order: 14,
       },
       {
         label: 'Người thân bạn bè BVB - Chức vụ',
         key: 'referOrganPosition',
-        value: "",
-        order: 13,
-      },
-      {
-        label: 'Người thân bạn bè BVB - Đơn vị công tác',
-        key: 'referOrganWorkUnit',
-        value: "",
-        order: 14,
-      },
-      {
-        label: 'Người thân bạn bè BVB - Đơn vị công tác',
-        key: 'referOrganWorkUnit',
-        value: "",
+        value: '',
         order: 15,
+      },
+      {
+        label: 'Người thân bạn bè BVB - Đơn vị công tác',
+        key: 'referOrganWorkUnit',
+        value: '',
+        order: 16,
+      },
+      {
+        label: 'Người thân bạn bè BVB - Đơn vị công tác',
+        key: 'referOrganWorkUnit',
+        value: '',
+        order: 17,
       },
       {
         label: 'Người thân bạn bè BVB - Mối quan hệ',
         key: 'referOrganRelationShip',
-        value: "",
-        order: 16,
+        value: '',
+        order: 18,
       },
       {
         label: 'Người thân bạn bè BVB - Mobile',
         key: 'referOrganMobile',
-        value: "",
-        order: 17,
+        value: '',
+        order: 19,
       },
       {
         label: 'Người thân bạn bè BVB - Email',
         key: 'referOrganEmail',
-        value: "",
-        order: 18,
+        value: '',
+        order: 20,
       },
       {
         label: 'Người thân bạn bè BVB - Ghi chú thêm',
         key: 'referOrganDescription',
-        value: "",
-        order: 19,
+        value: '',
+        order: 21,
       },
       {
         label: 'Thông tin tham khảo khác - Vị trí',
         key: 'referOtherLocation',
-        value: "",
-        order: 20,
+        value: '',
+        order: 22,
       },
       {
         label: 'Thông tin tham khảo khác - Thời gian',
         key: 'referOtherDate',
-        value: "",
+        value: '',
         order: 21,
-        controlType: CONTROL_TYPE.INPUT_DATE
+        controlType: CONTROL_TYPE.INPUT_DATE,
       },
-
-
-    ]
-    const firstContractInfo: (inputBaseType | { isTitle: true, title: string }) [] = [
+    ];
+    const firstContractInfo: (
+      | inputBaseType
+      | { isTitle: true; title: string; order: number; controlType: 'string' }
+    )[] = [
       {
-        label: "Ngày vào thực tế",
+        label: 'Ngày vào thực tế',
         key: 'contractRealDate',
         order: 1,
-        controlType: CONTROL_TYPE.INPUT_DATE
+        controlType: CONTROL_TYPE.INPUT_DATE,
       },
       {
-        label: "Tháng/Năm",
+        label: 'Tháng/Năm',
         key: 'contractRealShortDate',
         order: 2,
-        controlType: CONTROL_TYPE.INPUT_DATE
+        controlType: CONTROL_TYPE.INPUT_DATE,
       },
       {
-        label: "Loại hợp đồng",
+        label: 'Loại hợp đồng',
         key: 'contractType',
         order: 3,
         controlType: CONTROL_TYPE.SELECT,
-        options: []
+        options: [],
       },
       {
-        label: "Thời hạn hợp đồng",
+        label: 'Thời hạn hợp đồng',
         key: 'contractDurationDate',
         order: 4,
         controlType: CONTROL_TYPE.INPUT_DATE,
       },
       {
-        label: "HĐLĐ - Ngày bắt đầu",
+        label: 'HĐLĐ - Ngày bắt đầu',
         key: 'contractBeginDate',
         order: 5,
         controlType: CONTROL_TYPE.INPUT_DATE,
       },
       {
-        label: "HĐLĐ - Ngày kết thúc",
+        label: 'HĐLĐ - Ngày kết thúc',
         key: 'contractEndDate',
         order: 6,
         controlType: CONTROL_TYPE.INPUT_DATE,
       },
+    ];
 
-    ]
-
-    const incomeInfo = [{
-      label: "Lương học việc",
-      key: 'salaryApprentice',
-      order: 7,
-    },
+    const incomeInfo = [
       {
-        label: " Lương thử việc",
+        label: 'Lương học việc',
+        key: 'salaryApprentice',
+        order: 7,
+      },
+      {
+        label: ' Lương thử việc',
         key: 'salaryProbation',
         order: 8,
       },
       {
-        label: " Lương chính thức",
+        label: 'Lương chính thức',
         key: 'salaryOfficial',
         order: 9,
       },
       {
-        label: "Ngày chính thức nhận lương",
+        label: 'Ngày chính thức nhận lương',
         key: 'salaryOfficialDate',
         order: 10,
-        controlType: CONTROL_TYPE.INPUT_DATE
+        controlType: CONTROL_TYPE.INPUT_DATE,
       },
       {
-        label: "LCB tham gia bảo hiểm",
+        label: 'LCB tham gia bảo hiểm',
         key: 'salaryInsurance',
         order: 11,
       },
       {
-        label: "Phụ cấp 1",
+        label: 'Phụ cấp 1',
         key: 'salaryAllowance1',
         order: 12,
       },
       {
-        label: "Phụ cấp 2",
+        label: 'Phụ cấp 2',
         key: 'salaryAllowance2',
         order: 13,
-      },]
+      },
+    ];
 
     const tabList = [
       {
         tabId: 1,
         tabTitle: 'Thông tin chung',
-        tabContent: generaInfo
+        tabContent: generaInfo,
       },
       {
         tabId: 2,
         tabTitle: 'Thông tin cá nhân',
-        tabContent: personalInfo
+        tabContent: personalInfo,
       },
       {
         tabId: 3,
         tabTitle: 'Thông tin tuyển dụng',
-        tabContent: recruitmentInfo
+        tabContent: recruitmentInfo,
       },
       {
         tabId: 4,
         tabTitle: 'Thông tin HĐLĐ ban đầu',
-        tabContent: firstContractInfo
+        tabContent: firstContractInfo,
       },
 
       {
         tabId: 5,
         tabTitle: 'Thông tin thu nhập',
-        tabContent: incomeInfo
+        tabContent: incomeInfo,
+      },
+    ];
+
+    tabList.forEach((tab) => {
+      tab.tabContent.sort((a, b) => (a.order || 0) - (b.order || 1));
+    });
+    const fieldList = tabList.map((tab) => {
+      return {
+        ...tab,
+        tabContent: tab.tabContent.reduce((fieldList: any[], field) => {
+          if (field.controlType === CONTROL_TYPE.INPUT_DATE) {
+            fieldList.push(new InputDate(field));
+          } else if (field.controlType === CONTROL_TYPE.SELECT) {
+            fieldList.push(new SelectInput(field));
+          } else if (field.controlType === 'header') {
+            fieldList.push(field);
+          } else {
+            fieldList.push(new TextInput(field));
+          }
+          return fieldList;
+        }, []),
+      };
+    });
+
+    return fieldList;
+  }
+
+  createFamilyInfoFields() {
+    const familyInfoGenerate: inputBaseType[] = [
+      {
+        label: 'Quan hệ',
+        value: '',
+        key: 'relationShip',
+        required: true,
+        order: 1,
+      },
+      {
+        label: 'Họ tên',
+        value: '',
+        key: 'name',
+        required: true,
+        order: 2,
+      },
+      {
+        label: 'Ngày sinh',
+        value: '',
+        key: 'birthday',
+        order: 3,
+      },
+      {
+        label: 'Giới tính',
+        value: '',
+        key: 'gender',
+        required: true,
+        order: 4,
+        controlType: CONTROL_TYPE.SELECT,
+        options: [
+          { title: 'Nam', value: '0' },
+          { title: 'Nữ', value: '1' },
+        ],
+      },
+      {
+        label: 'Nghề nghiệp',
+        value: '',
+        key: 'job',
+        order: 5,
+      },
+      {
+        label: 'Nơi công tác/làm việc',
+        value: '',
+        key: 'workUnit',
+        order: 6,
+      },
+      {
+        label: 'Hộ khẩu thường trú',
+        value: '',
+        key: 'permanentAddress',
+
+        order: 7,
+      },
+      {
+        label: 'Nơi ở hiện tại',
+        value: '',
+        key: 'currentAddress',
+
+        order: 8,
+      },
+      {
+        label: 'Số CMT/Thẻ căn cước',
+        value: '',
+        key: 'cardId',
+
+        order: 9,
+      },
+      {
+        label: 'Ngày cấp Số CMT/Thẻ căn cước',
+        value: '',
+        key: 'cardDate',
+
+        order: 10,
+      },
+      {
+        label: 'Nơi cấp Số CMT/Thẻ căn cước',
+        value: '',
+        key: 'cardAddress',
+        order: 11,
+      },
+      {
+        label: 'Số sổ hộ chiếu',
+        value: '',
+        key: 'passportNumber',
+
+        order: 12,
+      },
+      {
+        label: 'Ngày cấp hộ chiếu',
+        value: '',
+        key: 'passportDate',
+
+        order: 13,
+      },
+      {
+        label: 'Ngày hết hạn hộ chiếu',
+        value: '',
+        key: 'passportExpiredDate',
+
+        order: 14,
+        controlType: CONTROL_TYPE.INPUT_DATE,
+      },
+      {
+        label: 'Điện thoại nhà riêng',
+        value: '',
+        key: 'homePhone',
+        order: 15,
+      },
+      {
+        label: 'Điện thoại di động',
+        value: '',
+        key: 'mobilePhone',
+
+        order: 16,
+      },
+      {
+        label: 'Email BVB',
+        value: '',
+        key: 'email',
+        order: 18,
+      },
+      {
+        label: 'Email cá nhân',
+        value: '',
+        key: 'emailPrivate',
+        order: 19,
+      },
+      {
+        label: 'Mô tả',
+        value: '',
+        key: 'description',
+        order: 20,
+      },
+    ];
+
+    familyInfoGenerate.sort((a, b) => (a.order || 0) - (b.order || 1));
+    return familyInfoGenerate.map((field) => {
+      if (field.controlType === CONTROL_TYPE.INPUT_DATE) {
+        return new InputDate(field);
+      } else if (field.controlType === CONTROL_TYPE.SELECT) {
+        return new SelectInput(field);
       }
-    ]
-
-    return of()
+      return new TextInput(field);
+    });
   }
 
-  sendRecord(record: IHrRecord) {
-    this.previewRecord.next(record);
+  toFormGroupFamilyInfo(fieldList: any) {
+    const group: any = {};
+    fieldList.forEach((field: any) => {
+      group[field.key] = field.required
+        ? new FormControl(field.value || '', Validators.required)
+        : new FormControl(field.value || '');
+    });
+    return new FormGroup(group);
   }
 
-  addRecord(record: IHrRecord) {
-    const list = [...this.recordList.value];
-    list.unshift(record);
-    this.recordList.next(list);
-  }
-
-  editRecord(updatedRecord: Partial<IHrRecord>, recordId: number) {
-    const list = [...this.recordList.value];
-    const updateItem = list.find((item) => item.id === recordId);
-    if (!updateItem) return;
-    Object.assign(updateItem, updatedRecord);
-  }
-
-  deleteRecord(id: number) {
-    const list = [...this.recordList.value];
-    const index = list.findIndex((item) => item.id === id);
-    if (index !== -1) {
-      list.splice(index, 1);
-      this.recordList.next(list);
-    }
+  toFormGroupEmployeeRecord(tabList: any) {
+    const group: any = {};
+    tabList.forEach((tab: any) => {
+      tab.tabContent.forEach((field: any) => {
+        if (!field.isTitle) {
+          group[field.key] = field.required
+            ? new FormControl(field.value || '', Validators.required)
+            : new FormControl(field.value || '');
+        }
+      });
+    });
+    return new FormGroup(group);
   }
 }

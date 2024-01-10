@@ -1,67 +1,63 @@
-import { USER_STATUS, USER_STATUS_2 } from '../model/user';
+import { USER_STATUS, USER_STATUS_2 } from '../model/user'
 
 export const createGuid = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     var r = (Math.random() * 16) | 0,
-      v = c === 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-};
+      v = c === 'x' ? r : (r & 0x3) | 0x8
+    return v.toString(16)
+  })
+}
 
 export const formatNumber = (value: string | number) => {
   if (value === null) {
-    return '0,00';
+    return '0,00'
   }
-  const phoneNumber = value + '';
-  const list = phoneNumber.split('.');
-  const prefix = list[0].charAt(0) === '-' ? '-' : '';
-  let num = prefix ? list[0].slice(1) : list[0];
-  let result = '';
+  const phoneNumber = value + ''
+  const list = phoneNumber.split('.')
+  const prefix = list[0].charAt(0) === '-' ? '-' : ''
+  let num = prefix ? list[0].slice(1) : list[0]
+  let result = ''
   while (num.length > 3) {
-    result = `,${num.slice(-3)}${result}`;
-    num = num.slice(0, num.length - 3);
+    result = `,${num.slice(-3)}${result}`
+    num = num.slice(0, num.length - 3)
   }
   if (num) {
-    result = num + result;
+    result = num + result
   }
   const decimal =
-    list[1]?.length > 1
-      ? list[1].slice(0, 2)
-      : list[1]?.length === 1
-      ? `${list[1]}0`
-      : '';
-  return `${prefix}${result}${decimal ? `,${decimal}` : ',00'}`;
-};
+    list[1]?.length > 1 ? list[1].slice(0, 2) : list[1]?.length === 1 ? `${list[1]}0` : ''
+  return `${prefix}${result}${decimal ? `,${decimal}` : ',00'}`
+}
 
 export const mappingStatusUser = (status: USER_STATUS) => {
   switch (status) {
     case USER_STATUS.Active:
-      return 'Active';
+      return 'Active'
     case USER_STATUS.InActive:
-      return 'Inactive';
+      return 'Inactive'
     case USER_STATUS.Deleted:
-      return 'Deleted';
+      return 'Deleted'
     case USER_STATUS.Disabled:
-      return 'Disabled';
+      return 'Disabled'
     default:
-      return '';
+      return ''
   }
-};
+}
 
 export const mappingStatusUser2 = (status: USER_STATUS_2) => {
   switch (status) {
     case USER_STATUS_2.Active:
-      return 'Active';
+      return 'Active'
     case USER_STATUS_2.InActive:
-      return 'Inactive';
+      return 'Inactive'
     case USER_STATUS_2.Deleted:
-      return 'Deleted';
+      return 'Deleted'
     case USER_STATUS_2.Disabled:
-      return 'Disabled';
+      return 'Disabled'
     default:
-      return '';
+      return ''
   }
-};
+}
 
 export const mappingInfo = {
   fullName: 'Họ và tên',
@@ -74,8 +70,8 @@ export const mappingInfo = {
   taxCode: 'Mã số thuế thu nhập cá nhân',
   bankAccount: 'Số tài khoản BVB',
   status: 'Trạng thái',
-  insuranceNumber: 'Số sổ bảo hiểm',
-};
+  insuranceNumber: 'Số sổ bảo hiểm'
+}
 
 export const mappingStatusRecord = {
   '1': 'Cộng tác viên',
@@ -85,5 +81,13 @@ export const mappingStatusRecord = {
   '5': 'Nghỉ việc',
   '6': 'Nghỉ không lương',
   '7': 'Tạm nghỉ hoãn hợp đồng',
-  '99': 'Chưa phân loại',
-};
+  '99': 'Chưa phân loại'
+}
+
+export const intersectArray = (a1: any[], a2: any[], ...rest: any[]): any => {
+  const a12 = a1.filter((value) => a2.includes(value))
+  if (rest.length === 0) {
+    return a12
+  }
+  return intersectArray(a12, ...(rest as [any, any]))
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "username": "user",
+    "password": "123456",
+    "role": ["USER"]
+  },
+  {
+    "username": "manager1",
+    "password": "123456",
+    "role": ["MANAGER_LEVEL_1"]
+  },
+  {
+    "username": "manager2",
+    "password": "123456",
+    "role": ["MANAGER_LEVEL_2"]
+  },
+  {
+    "username": "admin",
+    "password": "123456",
+    "role": ["ADMIN"]
+  }
+]

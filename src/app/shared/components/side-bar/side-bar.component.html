@@ -15,8 +15,7 @@
       data-keep-expanded="false"
       data-auto-scroll="true"
       data-slide-speed="200"
-      style="padding-top: 20px"
-    >
+      style="padding-top: 20px">
       <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
       <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
       <li class="sidebar-toggler-wrapper hide">
@@ -33,15 +32,21 @@
         <form
           class="sidebar-search"
           action="page_general_search_3.html"
-          method="POST"
-        >
-          <a href="javascript:;" class="remove">
+          method="POST">
+          <a
+            href="javascript:;"
+            class="remove">
             <i class="icon-close"></i>
           </a>
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search..." />
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search..." />
             <span class="input-group-btn">
-              <a href="javascript:;" class="btn submit">
+              <a
+                href="javascript:;"
+                class="btn submit">
                 <i class="icon-magnifier"></i>
               </a>
             </span>
@@ -49,41 +54,41 @@
         </form>
         <!-- END RESPONSIVE QUICK SEARCH FORM -->
       </li>
-      @for (item of menuList; track $index) {
+      @for (item of menuList; track $index) { @if(!item.hidden){
       <li
         class="nav-item start"
         [ngClass]="{
           active: item.open,
-        }"
-      >
+        }">
         @if (item?.subMenu && item!.subMenu!.length >0) {
         <a
           (click)="onClickParentMenu(item.id)"
           href="javascript:;"
-          class="nav-link nav-toggle"
-        >
-          <i *ngIf="item.icon" [ngClass]="item.icon"></i>
+          class="nav-link nav-toggle">
+          <i
+            *ngIf="item.icon"
+            [ngClass]="item.icon"></i>
           <span class="title">{{ item.name }}</span>
           <span
             *ngIf="item?.subMenu && item!.subMenu!.length > 0"
             class="arrow"
-            [ngClass]="{ open: item.open }"
-          ></span>
+            [ngClass]="{ open: item.open }"></span>
         </a>
 
         <ul class="sub-menu">
-          @for (subItem of item.subMenu; track $index) {
+          @for (subItem of item.subMenu; track $index) { @if(!subItem.hidden){
           <li class="nav-item start">
             <a
               routerLinkActive="!tw-bg-black/20"
               [routerLink]="subItem.link"
-              class="nav-link"
-            >
-              <i *ngIf="subItem.icon" [ngClass]="subItem.icon"></i>
+              class="nav-link">
+              <i
+                *ngIf="subItem.icon"
+                [ngClass]="subItem.icon"></i>
               <span class="title">{{ subItem.name }}</span>
             </a>
           </li>
-          }
+          } }
         </ul>
 
         } @else{
@@ -91,19 +96,19 @@
           (click)="onClickParentMenu(item.id)"
           routerLinkActive="!tw-bg-black/20"
           [routerLink]="item.link"
-          class="nav-link nav-toggle"
-        >
-          <i *ngIf="item.icon" [ngClass]="item.icon"></i>
+          class="nav-link nav-toggle">
+          <i
+            *ngIf="item.icon"
+            [ngClass]="item.icon"></i>
           <span class="title">{{ item.name }}</span>
           <span
             *ngIf="item?.subMenu && item!.subMenu!.length > 0"
             class="arrow"
-            [ngClass]="{ open: item.open }"
-          ></span>
+            [ngClass]="{ open: item.open }"></span>
         </a>
         }
       </li>
-      }
+      } }
       <!-- <li
         *ngFor="let item of menuList"
         class="nav-item start"

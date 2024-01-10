@@ -3,24 +3,45 @@
     <button
       type="button"
       class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-52 tw-h-12 tw-flex tw-items-center tw-justify-center tw-gap-4"
-      (click)="addNewUser()"
-    >
+      (click)="addNewUser()">
       <i class="fa fa-plus"></i>
       <span class="tw-leading-none">Add User</span>
     </button>
   </div>
   <div class="tw-relative tw-overflow-x-auto sm:tw-rounded-lg">
-    <table
-      class="tw-w-full tw-text-left rtl:tw-text-right tw-text-gray-500 tw-text-md"
-    >
+    <table class="tw-w-full tw-text-left rtl:tw-text-right tw-text-gray-500 tw-text-md">
       <thead class="tw-text-md tw-text-gray-700 tw-bg-gray-50">
         <tr class="tw-border">
-          <th scope="col" class="tw-px-6 tw-py-3">User name</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Display name</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Full name</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Description</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Status</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Action</th>
+          <th
+            scope="col"
+            class="tw-px-6 tw-py-3">
+            User name
+          </th>
+          <th
+            scope="col"
+            class="tw-px-6 tw-py-3">
+            Display name
+          </th>
+          <th
+            scope="col"
+            class="tw-px-6 tw-py-3">
+            Full name
+          </th>
+          <th
+            scope="col"
+            class="tw-px-6 tw-py-3">
+            Description
+          </th>
+          <th
+            scope="col"
+            class="tw-px-6 tw-py-3">
+            Status
+          </th>
+          <th
+            scope="col"
+            class="tw-px-6 tw-py-3">
+            Action
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -28,8 +49,7 @@
         <tr class="odd:tw-bg-white even:tw-bg-gray-50 tw-border tw-text-md">
           <th
             scope="row"
-            class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white"
-          >
+            class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white">
             {{ user.username }}
           </th>
           <td class="tw-px-6 tw-py-4">{{ user.displayName }}</td>
@@ -47,23 +67,21 @@
                 'tw-bg-red-400': user.status === STATUS.Deleted,
                 'tw-bg-slate-500': user.status === STATUS.InActive,
                 'tw-bg-gray-400': user.status === STATUS.Disabled
-              }"
-            >
+              }">
               {{ generateStatusUser(user.status) }}
             </span>
           </td>
 
-          <td
-            class="tw-px-6 tw-py-10 tw-items-center tw-flex tw-flex-nowrap tw-gap-2"
-          >
+          <td class="tw-px-6 tw-py-10 tw-items-center tw-flex tw-flex-nowrap tw-gap-2">
             <a
               href="javascript:;"
               class="btn btn-outline !tw-px-2"
-              (click)="editUser(user)"
-            >
+              (click)="editUser(user)">
               <i class="fa fa-pen-to-square"></i>
             </a>
-            <a href="javascript:;" class="btn btn-outline !tw-px-2">
+            <a
+              href="javascript:;"
+              class="btn btn-outline !tw-px-2">
               <i class="fa fa-trash-o"></i>
             </a>
           </td>
@@ -73,65 +91,64 @@
     </table>
     <nav
       class="tw-flex tw-items-center tw-flex-column tw-flex-wrap md:tw-flex-row tw-justify-between tw-pt-4 tw-px-2 tw-border-x tw-border-b"
-      aria-label="Table navigation"
-    >
+      aria-label="Table navigation">
       <span
-        class="tw-text-md tw-font-normal tw-text-gray-500 tw-mb-4 md:tw-mb-0 tw-block tw-w-full md:tw-inline md:tw-w-auto"
-        >Showing <span class="tw-font-semibold tw-text-gray-900">1-10</span> of
-        <span class="tw-font-semibold tw-text-gray-900">1000</span></span
-      >
-      <ul
-        class="tw-inline-flex tw--space-x-px rtl:tw-space-x-reverse tw-text-md tw-h-8"
-      >
+        class="tw-text-md tw-font-normal tw-text-gray-500 tw-mb-4 md:tw-mb-0 tw-block tw-w-full md:tw-inline md:tw-w-auto">
+        Showing
+        <span class="tw-font-semibold tw-text-gray-900">1-10</span>
+        of
+        <span class="tw-font-semibold tw-text-gray-900">1000</span>
+      </span>
+      <ul class="tw-inline-flex tw--space-x-px rtl:tw-space-x-reverse tw-text-md tw-h-8">
         <li>
           <a
             href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-ms-0 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-rounded-s-lg hover:tw-bg-gray-100 hover:tw-text-gray-700"
-            >Previous</a
-          >
+            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-ms-0 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-rounded-s-lg hover:tw-bg-gray-100 hover:tw-text-gray-700">
+            Previous
+          </a>
         </li>
         <li>
           <a
             href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700"
-            >1</a
-          >
+            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+            1
+          </a>
         </li>
         <li>
           <a
             href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700"
-            >2</a
-          >
+            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+            2
+          </a>
         </li>
         <li>
           <a
             href="#"
             aria-current="page"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700"
-            >3</a
-          >
+            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+            3
+          </a>
         </li>
         <li>
           <a
             href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700"
-            >4</a
-          >
+            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+            4
+          </a>
         </li>
         <li>
           <a
             href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700"
-            >5</a
-          >
+            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+            5
+          </a>
         </li>
         <li>
           <a
             href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700"
-            >Next</a
-          >
+            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+            Next
+          </a>
         </li>
       </ul>
     </nav>
@@ -140,12 +157,14 @@
   <app-modal
     [modalTitle]="mode === 'add' ? 'add new user' : 'edit user'"
     [openModal]="isModalOpen"
-    (changeModal)="closeModal($event)"
-  >
-    <app-add-edit-user-form
-      [mode]="mode"
-      [user]="editedUser"
-      (submitUser)="updateOrAddUser($event)"
-    ></app-add-edit-user-form> </app-modal
-  >}
+    wrapperClass="tw-max-w-[50vw]"
+    (changeModal)="closeModal($event)">
+    <div class="tw-px-10 tw-py-4">
+      <app-add-edit-user-form
+        [mode]="mode"
+        [user]="editedUser"
+        (submitUser)="updateOrAddUser($event)"></app-add-edit-user-form>
+    </div>
+  </app-modal>
+  }
 </div>

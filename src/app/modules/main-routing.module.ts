@@ -1,10 +1,15 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { ConfirmRecordComponent } from './confirm-record/confirm-record.component';
-import { MainComponent } from './main.component';
-import { RecordListComponent } from './record-list/record-list.component';
-import { UsersManagementComponent } from './users-management/users-management.component';
-import { VerifyRecordComponent } from './verify-record/verify-record.component';
+import { NgModule } from '@angular/core'
+import { RouterModule, Routes } from '@angular/router'
+import { ConfirmRecordComponent } from './confirm-record/confirm-record.component'
+import { MainComponent } from './main.component'
+import { RecordListComponent } from './record-list/record-list.component'
+import { UsersManagementComponent } from './users-management/users-management.component'
+import { VerifyRecordComponent } from './verify-record/verify-record.component'
+import {
+  recordListGuard,
+  userGuard,
+  verifyRecordGuard
+} from '../shared/services/authentication/authGuard.service'
 
 const routes: Routes = [
   {
@@ -13,42 +18,31 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'quan-ly-nguoi-dung',
-        pathMatch: 'full',
+        redirectTo: 'thong-tin-tuyen-dung',
+        pathMatch: 'full'
       },
       {
         path: 'quan-ly-nguoi-dung',
         component: UsersManagementComponent,
+        canActivate: [userGuard]
       },
       {
         path: 'thong-tin-tuyen-dung',
         component: RecordListComponent,
-      },
-      {
-        path: 'xac-nhan-thong-tin',
-        component: ConfirmRecordComponent,
+        canActivate: [recordListGuard]
       },
       {
         path: 'duyet-thong-tin-hai-mat',
         component: VerifyRecordComponent,
-      },
-      // {
-      //   path: 'xac-nhan-thong-tin',
-      //   component: PreviewRecordComponent,
-      //   canActivate: [hasNoUser],
-      // },
-      // {
-      //   path: 'kiem-duyet-thong-tin',
-      //   component: VerifyRecordComponent,
-      //   canActivate: [hasNoUser],
-      // },
-    ],
-  },
+        canActivate: [verifyRecordGuard]
+      }
+    ]
+  }
   // { path: '**', component: NotFoundComponent },
-];
+]
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class MainRoutingModule {}

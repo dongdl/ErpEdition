@@ -2,25 +2,26 @@
   id="crud-modal"
   tabindex="-1"
   aria-hidden="true"
-  class="!tw-flex !tw-overflow-y-auto !tw-overflow-x-hidden !tw-fixed !tw-top-0 !tw-right-0 !tw-left-0 !tw-z-50 !tw-justify-center !tw-items-center !tw-w-full !md:tw-inset-0 tw-bg-black/30 tw-h-screen"
+  class="!tw-flex !tw-overflow-hidden !tw-fixed !tw-top-0 !tw-right-0 !tw-left-0 !tw-z-50 !tw-justify-center !tw-items-center !tw-w-full !md:tw-inset-0 tw-bg-black/40 tw-h-screen"
 >
   <div
-    class="tw-relative tw-w-full tw-max-w-[70vw] tw-max-h-[85vh] tw-overflow-y-auto"
+    class="tw-relative tw-w-full tw-overflow-hidden !tw-rounded-lg"
+    [ngClass]="[wrapperClass]"
   >
     <!-- Modal content -->
-    <div class="tw-relative tw-bg-white !tw-rounded-lg tw-shadow">
+    <div
+      class="tw-relative tw-bg-white !tw-rounded-lg tw-shadow tw-overflow-hidden"
+    >
       <!-- Modal header -->
-      <div
-        class="tw-flex tw-items-center tw-justify-between tw-px-10 tw-py-7 tw-border-b tw-rounded-t"
-      >
+      <div class="tw-flex tw-items-center tw-justify-between !tw-rounded-lg">
         <h3
-          class="!tw-text-[20px] tw-font-semibold tw-text-gray-900 tw-m-0 tw-capitalize"
+          class="!tw-text-[20px] tw-font-semibold tw-text-gray-900 tw-m-0 tw-capitalize !tw-rounded-lg tw-px-10 tw-py-8"
         >
           {{ modalTitle }}
         </h3>
         <button
           type="button"
-          class="tw-text-gray-400 tw-bg-transparent hover:tw-bg-gray-200 hover:tw-text-gray-900 tw-rounded-lg tw-text-sm tw-w-8 tw-h-8 tw-ms-auto tw-inline-flex tw-justify-center tw-items-center"
+          class="tw-text-gray-400 tw-bg-transparent hover:tw-bg-gray-200 hover:tw-text-gray-900 tw-rounded-lg tw-text-sm tw-w-8 tw-h-8 tw-ms-auto tw-inline-flex tw-justify-center tw-items-center tw-absolute tw-top-6 tw-right-6"
           data-modal-toggle="crud-modal"
           (click)="closeModal()"
         >
@@ -43,7 +44,9 @@
         </button>
       </div>
       <!-- Modal body -->
-      <ng-content></ng-content>
+      <div>
+        <ng-content></ng-content>
+      </div>
     </div>
   </div>
 </div>
