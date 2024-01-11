@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { ActivatedRoute, Router } from '@angular/router'
 import { HttpClient } from '@angular/common/http'
 import { AuthService } from '../auth/auth.service'
+import recordListJson from '../../utils/users.json'
 
 @Component({
   selector: 'app-record-list',
@@ -21,15 +22,14 @@ import { AuthService } from '../auth/auth.service'
 })
 export class RecordListComponent implements OnInit, OnDestroy {
   isModalOpen = false
-  recordList: IHrRecord[] = []
+  recordList: Employee[] = recordListJson
   chosenRecord: IHrRecord | null = null
   mode: 'add' | 'edit' | 'view' = 'add'
-  searchByUserName = ''
   recordListSubscription: Subscription | null = null
   formSearch!: FormGroup
-  filterList: IHrRecord[] = []
+  // filterList: IHrRecord[] = []
   firstRender = true
-  tableHeader: { key: keyof Employee | 'action'; name: string; width?: string }[] = [
+  tableHeader: { key: keyof Employee; name: string; width?: string }[] = [
     {
       key: 'code',
       name: 'Mã nhân viên'
@@ -75,11 +75,6 @@ export class RecordListComponent implements OnInit, OnDestroy {
       key: 'status',
       name: 'Trạng thái',
       width: '140px'
-    },
-    {
-      key: 'action',
-      name: 'Trạng thái',
-      width: '140px'
     }
   ]
 
@@ -109,34 +104,35 @@ export class RecordListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.recordListSubscription = this.hrServices.recordList.subscribe((record) => {
-      this.recordList = [...record]
-      this.filterList = [...record]
-    })
-    this.activeRoute.queryParams.subscribe((query) => {
-      if (this.firstRender) return
-      const { hrCode, fullName, level, departmentCode } = query
-      if (hrCode) {
-        this.filterList = this.recordList.filter((record) =>
-          record.hrCode.toLowerCase().includes(hrCode.toLowerCase())
-        )
-      }
-      if (fullName) {
-        this.filterList = this.recordList.filter((record) =>
-          record.fullName.toLowerCase().includes(fullName.toLowerCase())
-        )
-      }
-      if (level) {
-        this.filterList = this.recordList.filter((record) =>
-          record.level.toLowerCase().includes(level.toLowerCase())
-        )
-      }
-      if (departmentCode) {
-        this.filterList = this.recordList.filter((record) =>
-          record.departmentCode.toLowerCase().includes(departmentCode.toLowerCase())
-        )
-      }
-    })
+    // this.recordListSubscription = this.hrServices.recordList.subscribe((record) => {
+    //   this.recordList = [...record]
+    //   this.filterList = [...record]
+    // })
+    // this.activeRoute.queryParams.subscribe((query) => {
+    //   if (this.firstRender) return
+    //   const { hrCode, fullName, level, departmentCode } = query
+    //   if (hrCode) {
+    //     this.filterList = this.recordList.filter((record) =>
+    //       record.hrCode.toLowerCase().includes(hrCode.toLowerCase())
+    //     )
+    //   }
+    //   if (fullName) {
+    //     this.filterList = this.recordList.filter((record) =>
+    //       record.fullName.toLowerCase().includes(fullName.toLowerCase())
+    //     )
+    //   }
+    //   if (level) {
+    //     this.filterList = this.recordList.filter((record) =>
+    //       record.level.toLowerCase().includes(level.toLowerCase())
+    //     )
+    //   }
+    //   if (departmentCode) {
+    //     this.filterList = this.recordList.filter((record) =>
+    //       record.departmentCode.toLowerCase().includes(departmentCode.toLowerCase())
+    //     )
+    //   }
+    // })
+
     this.formSearch = this.fb.group({
       hrCode: [''],
       fullName: [''],
@@ -158,7 +154,7 @@ export class RecordListComponent implements OnInit, OnDestroy {
     this.router.navigate(['thong-tin-tuyen-dung'], {
       queryParams: {}
     })
-    this.filterList = [...this.recordList]
+    // this.filterList = [...this.recordList]
     this.formSearch.reset()
   }
 
@@ -183,20 +179,20 @@ export class RecordListComponent implements OnInit, OnDestroy {
   }
 
   onChangeRecord(record: IHrRecord) {
-    if (this.mode === 'add') {
-      const id = Date.now()
-      this.hrServices.addRecord({ id, ...record })
-      this.auth
-        .startTask(id)
-        .pipe(catchError((err) => of(err)))
-        .subscribe(() => {})
-    }
-    if (this.mode === 'edit') {
-      let updatedRecord = this.recordList.find((item) => item?.id === record?.id)
-      if (!updatedRecord) return
-      this.hrServices.editRecord(record, updatedRecord?.id as number)
-    }
-    this.resetSearchForm()
+    // if (this.mode === 'add') {
+    //   const id = Date.now()
+    //   this.hrServices.addRecord({ id, ...record })
+    //   this.auth
+    //     .startTask(id)
+    //     .pipe(catchError((err) => of(err)))
+    //     .subscribe(() => {})
+    // }
+    // if (this.mode === 'edit') {
+    //   let updatedRecord = this.recordList.find((item) => item?.id === record?.id)
+    //   if (!updatedRecord) return
+    //   this.hrServices.editRecord(record, updatedRecord?.id as number)
+    // }
+    // this.resetSearchForm()
     this.isModalOpen = false
   }
 

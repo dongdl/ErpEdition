@@ -76,45 +76,76 @@
       <span class="tw-leading-none">Import excel</span>
     </button>
   </div>
-  <div class="tw-relative tw-overflow-x-auto sm:tw-rounded-lg">
-    <table class="tw-w-full tw-text-left rtl:tw-text-right tw-text-gray-500 tw-text-md">
+  <div
+    class="tw-relative tw-overflow-x-auto sm:tw-rounded-lg tw-scrollbar tw-scrollbar-thumb-gray-300 tw-scrollbar-thumb-rounded-md tw-scrollbar-track-gray-100 tw-scrollbar-h-4">
+    <table class="tw-w-fit tw-text-left rtl:tw-text-right tw-text-gray-500 tw-text-md">
       <thead class="tw-text-md tw-text-gray-700 tw-bg-gray-50">
         <tr class="tw-border">
+          @for(header of tableHeader; track header.key ){
           <th
             scope="col"
-            class="tw-px-6 tw-py-3">
-            Mã nhân viên
+            class="tw-px-8 tw-py-3"
+            [style.minWidth]="header.width || '200px'">
+            {{ header.name }}
           </th>
+          }
           <th
             scope="col"
-            class="tw-px-6 tw-py-3">
-            Họ và tên
-          </th>
-          <th
-            scope="col"
-            class="tw-px-6 tw-py-3">
-            Chức danh
-          </th>
-          <th
-            scope="col"
-            class="tw-px-6 tw-py-3">
-            Phòng ban
-          </th>
-          <th
-            scope="col"
-            class="tw-px-6 tw-py-3">
-            Trạng thái
-          </th>
-          <th
-            scope="col"
-            class="tw-px-6 tw-py-3">
+            class="tw-px-8 tw-py-3 tw-sticky tw-right-0 tw-bg-gray-100 tw-z-10"
+            [style.minWidth]="'150px'">
             Hành động
           </th>
         </tr>
       </thead>
       <tbody>
-        @for (record of (filterList ) ; track $index ) {
-        <tr class="odd:tw-bg-white even:tw-bg-gray-50 tw-border tw-text-md">
+        @for (record of recordList ; track record.id ) {
+        <tr class="tw-border tw-text-md">
+          @for(header of tableHeader; track header.key){
+          <td
+            scope="row"
+            class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-h-20">
+            <span
+              class="tw-line-clamp-3"
+              [style.maxWidth]="header.width || '150px'">
+              {{ record[header.key] }}
+            </span>
+          </td>
+
+          }
+          <td
+            class="tw-flex tw-flex-nowrap tw-gap-2 tw-sticky tw-right-0 tw-bg-white tw-z-10 tw-h-40">
+            <div class="tw-absolute tw-inset-0 tw-flex tw-items-center">
+              <a
+                href="javascript:;"
+                class="btn btn-outline !tw-px-2">
+                <i class="fas fa-directions"></i>
+              </a>
+              <a
+                href="javascript:;"
+                class="btn btn-outline !tw-px-2">
+                <i class="fa fa-eye"></i>
+              </a>
+
+              <a
+                href="javascript:;"
+                class="btn btn-outline !tw-px-2">
+                <i class="fa fa-edit"></i>
+              </a>
+
+              <a
+                href="javascript:;"
+                class="btn btn-outline !tw-px-2">
+                <i class="fa fa-trash"></i>
+              </a>
+              <a
+                href="javascript:;"
+                class="btn btn-outline !tw-px-2">
+                <i class="fa fa-envelope"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+        <!-- <tr class="odd:tw-bg-white even:tw-bg-gray-50 tw-border tw-text-md">
           <th
             scope="row"
             class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white">
@@ -171,74 +202,74 @@
               <i class="fa fa-trash"></i>
             </a>
           </td>
-        </tr>
+        </tr> -->
         }
       </tbody>
     </table>
-    <nav
-      class="tw-flex tw-items-center tw-flex-column tw-flex-wrap md:tw-flex-row tw-justify-between tw-pt-4 tw-px-2 tw-border-x tw-border-b"
-      aria-label="Table navigation">
-      <span
-        class="tw-text-md tw-font-normal tw-text-gray-500 tw-mb-4 md:tw-mb-0 tw-block tw-w-full md:tw-inline md:tw-w-auto">
-        Showing
-        <span class="tw-font-semibold tw-text-gray-900">1-10</span>
-        of
-        <span class="tw-font-semibold tw-text-gray-900">1000</span>
-      </span>
-      <ul class="tw-inline-flex tw--space-x-px rtl:tw-space-x-reverse tw-text-md tw-h-8">
-        <li>
-          <a
-            href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-ms-0 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-rounded-s-lg hover:tw-bg-gray-100 hover:tw-text-gray-700">
-            Previous
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
-            1
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
-            2
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            aria-current="page"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
-            3
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
-            4
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
-            5
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
-            Next
-          </a>
-        </li>
-      </ul>
-    </nav>
   </div>
+  <nav
+    class="tw-flex tw-items-center tw-flex-column tw-flex-wrap md:tw-flex-row tw-justify-between tw-pt-4 tw-px-2 tw-border-x tw-border-b"
+    aria-label="Table navigation">
+    <span
+      class="tw-text-md tw-font-normal tw-text-gray-500 tw-mb-4 md:tw-mb-0 tw-block tw-w-full md:tw-inline md:tw-w-auto">
+      Showing
+      <span class="tw-font-semibold tw-text-gray-900">1-10</span>
+      of
+      <span class="tw-font-semibold tw-text-gray-900">1000</span>
+    </span>
+    <ul class="tw-inline-flex tw--space-x-px rtl:tw-space-x-reverse tw-text-md tw-h-8">
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-ms-0 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-rounded-s-lg hover:tw-bg-gray-100 hover:tw-text-gray-700">
+          Previous
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          1
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          2
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          aria-current="page"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          3
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          4
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          5
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          Next
+        </a>
+      </li>
+    </ul>
+  </nav>
   @if (isModalOpen) {
   <app-modal
     [modalTitle]="modalTitle"
