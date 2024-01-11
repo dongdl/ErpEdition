@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
 import { Router } from '@angular/router'
 import { SubscriptionLike, catchError, of, Subscription } from 'rxjs'
-import { IHrRecord } from '../../model/record'
+import { Employee, IHrRecord } from '../../model/record'
 import { ModalComponent } from '../../shared/components/modal/modal.component'
 import { SharedModule } from '../../shared/shared.module'
 import ma_chuc_danh from '../../utils/ma_chuc_danh.json'
@@ -34,11 +34,13 @@ import { HistoryRecordComponent } from '../history-record/history-record.compone
 })
 export class AddEditRecordComponent implements OnInit {
   @Input() mode: 'add' | 'view' | 'edit' = 'add'
+  @Input() recordCurrent: Employee | null = null
   @Output() closeModal = new EventEmitter<boolean>()
-  @Output() changeRecord = new EventEmitter<IHrRecord>()
+
+  @Output() changeRecord = new EventEmitter<Employee>()
+
   formRecord!: FormGroup
   // previewRecordSubscription: SubscriptionLike | null = null;
-  recordCurrent: IHrRecord | null = null
   fieldList!: any
 
   get CODE_LIST() {
@@ -120,6 +122,10 @@ export class AddEditRecordComponent implements OnInit {
   ngOnInit(): void {
     this.fieldList = this.fmService.createEmployeeRecordFields()
     this.formRecord = this.fmService.toFormGroupEmployeeRecord(this.fieldList)
+
+    if (this.recordCurrent) {
+      this.formRecord.patchValue(this.recordCurrent, { onlySelf: true })
+    }
   }
 
   getFormControl(key: string) {
@@ -127,21 +133,25 @@ export class AddEditRecordComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.formRecord.value)
+
+    console.log(this.formRecord.errors)
+
     if (this.mode === 'view') return
     Object.keys(this.formRecord.controls).forEach((field) => {
       const control = this.formRecord.get(field)
       control?.markAsDirty({ onlySelf: true })
     })
     if (this.formRecord.invalid) return
-    // if (this.mode === 'add') {
-    //   this.changeRecord.emit(this.formRecord.value);
-    // } else {
-    //   this.changeRecord.emit({
-    //     ...this.formRecord.value,
-    //     id: this.recordCurrent?.id,
-    //   });
-    // }
-    // this.closeModal.emit(false);
+    if (this.mode === 'add') {
+      this.changeRecord.emit(this.formRecord.value)
+    } else {
+      this.changeRecord.emit({
+        ...this.formRecord.value,
+        id: this.recordCurrent?.id
+      })
+    }
+    this.closeModal.emit(false)
   }
 
   onVerifyRecord() {

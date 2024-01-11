@@ -10,16 +10,14 @@
 
       <form
         [formGroup]="formSearch"
-        class="tw-grid tw-grid-cols-2 tw-w-full tw-gap-x-10 tw-gap-y-6"
-      >
+        class="tw-grid tw-grid-cols-2 tw-w-full tw-gap-x-10 tw-gap-y-6">
         <div class="tw-flex tw-items-center tw-gap-4">
           <div class="tw-w-[110px]">Mã nhân viên :</div>
           <input
             type="text"
             formControlName="hrCode"
             class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-p-2.5 tw-w-[300px]"
-            placeholder="Tìm kiếm bằng mã nhân viên"
-          />
+            placeholder="Tìm kiếm bằng mã nhân viên" />
         </div>
         <div class="tw-flex tw-items-center tw-gap-4">
           <div class="tw-w-[100px]">Họ và tên :</div>
@@ -27,8 +25,7 @@
             type="text"
             formControlName="fullName"
             class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-p-2.5 tw-w-[300px]"
-            placeholder="Tìm kiếm bằng họ và tên"
-          />
+            placeholder="Tìm kiếm bằng họ và tên" />
         </div>
         <div class="tw-flex tw-items-center tw-gap-4">
           <div class="tw-w-[110px]">Chức danh :</div>
@@ -36,8 +33,7 @@
             type="text"
             formControlName="level"
             class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-p-2.5 tw-w-[300px]"
-            placeholder="Tìm kiếm bằng chức danh"
-          />
+            placeholder="Tìm kiếm bằng chức danh" />
         </div>
         <div class="tw-flex tw-items-center tw-gap-4">
           <div class="tw-w-[100px]">Phòng ban :</div>
@@ -45,8 +41,7 @@
             type="text"
             formControlName="departmentCode"
             class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-p-2.5 tw-w-[300px]"
-            placeholder="Tìm kiếm bằng phòng ban"
-          />
+            placeholder="Tìm kiếm bằng phòng ban" />
         </div>
       </form>
     </div>
@@ -56,32 +51,52 @@
     <button
       type="button"
       class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[100px] tw-h-12 tw-flex tw-items-center tw-justify-center tw-gap-4"
-      (click)="resetSearchForm()"
-    >
+      (click)="resetSearchForm()">
       <i class="fa fa-recycle"></i>
       <span class="tw-leading-none">Đặt lại</span>
     </button>
     <button
       type="button"
       class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[100px] tw-h-12 tw-flex tw-items-center tw-justify-center tw-gap-4"
-      (click)="search()"
-    >
+      (click)="search()">
       <i class="fa fa-search"></i>
       <span class="tw-leading-none">Tìm kiếm</span>
     </button>
   </div>
   <div class="tw-relative tw-overflow-x-auto sm:tw-rounded-lg">
-    <table
-      class="tw-w-full tw-text-left rtl:tw-text-right tw-text-gray-500 tw-text-md"
-    >
+    <table class="tw-w-full tw-text-left rtl:tw-text-right tw-text-gray-500 tw-text-md">
       <thead class="tw-text-md tw-text-gray-700 tw-bg-gray-50">
         <tr class="tw-border">
-          <th scope="col" class="tw-px-6 tw-py-3">Mã nhân viên</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Họ và tên</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Chức danh</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Phòng ban</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Trạng thái</th>
-          <th scope="col" class="tw-px-6 tw-py-3">Hành động</th>
+          <th
+            scope="col"
+            class="tw-px-6 tw-py-3">
+            Mã nhân viên
+          </th>
+          <th
+            scope="col"
+            class="tw-px-6 tw-py-3">
+            Họ và tên
+          </th>
+          <th
+            scope="col"
+            class="tw-px-6 tw-py-3">
+            Chức danh
+          </th>
+          <th
+            scope="col"
+            class="tw-px-6 tw-py-3">
+            Phòng ban
+          </th>
+          <th
+            scope="col"
+            class="tw-px-6 tw-py-3">
+            Trạng thái
+          </th>
+          <th
+            scope="col"
+            class="tw-px-6 tw-py-3">
+            Hành động
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -89,8 +104,7 @@
         <tr class="odd:tw-bg-white even:tw-bg-gray-50 tw-border tw-text-md">
           <th
             scope="row"
-            class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white"
-          >
+            class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white">
             {{ record.fullName }}
           </th>
           <td class="tw-px-6 tw-py-4">{{ record.hrCode }}</td>
@@ -108,8 +122,7 @@
                 'tw-bg-red-400': record.status === STATUS.Deleted,
                 'tw-bg-slate-500': record.status === STATUS.InActive,
                 'tw-bg-gray-400': record.status === STATUS.Disabled
-              }"
-            >
+              }">
               {{ generateStatusUser(record.status) }}
             </span>
           </td>
@@ -118,29 +131,25 @@
             <a
               href="javascript:;"
               class="btn btn-outline !tw-px-2"
-              (click)="onSendMail()"
-            >
+              (click)="onSendMail()">
               <i class="fa fa-envelope"></i>
             </a>
             <a
               href="javascript:;"
               class="btn btn-outline !tw-px-2"
-              (click)="onReturn(record?.id)"
-            >
-             <i class="fas fa-arrow-left"></i>
+              (click)="onReturn(record?.id)">
+              <i class="fas fa-arrow-left"></i>
             </a>
             <a
               href="javascript:;"
               class="btn btn-outline !tw-px-2"
-              (click)="toConfirm(record?.id)"
-            >
+              (click)="toConfirm(record?.id)">
               <i class="fas fa-directions"></i>
             </a>
             <a
               href="javascript:;"
               class="btn btn-outline !tw-px-2"
-              (click)="onViewDetail(record)"
-            >
+              (click)="onViewDetail(record)">
               <i class="fa fa-eye"></i>
             </a>
           </td>
@@ -150,65 +159,64 @@
     </table>
     <nav
       class="tw-flex tw-items-center tw-flex-column tw-flex-wrap md:tw-flex-row tw-justify-between tw-pt-4 tw-px-2 tw-border-x tw-border-b"
-      aria-label="Table navigation"
-    >
+      aria-label="Table navigation">
       <span
-        class="tw-text-md tw-font-normal tw-text-gray-500 tw-mb-4 md:tw-mb-0 tw-block tw-w-full md:tw-inline md:tw-w-auto"
-        >Showing <span class="tw-font-semibold tw-text-gray-900">1-10</span> of
-        <span class="tw-font-semibold tw-text-gray-900">1000</span></span
-      >
-      <ul
-        class="tw-inline-flex tw--space-x-px rtl:tw-space-x-reverse tw-text-md tw-h-8"
-      >
+        class="tw-text-md tw-font-normal tw-text-gray-500 tw-mb-4 md:tw-mb-0 tw-block tw-w-full md:tw-inline md:tw-w-auto">
+        Showing
+        <span class="tw-font-semibold tw-text-gray-900">1-10</span>
+        of
+        <span class="tw-font-semibold tw-text-gray-900">1000</span>
+      </span>
+      <ul class="tw-inline-flex tw--space-x-px rtl:tw-space-x-reverse tw-text-md tw-h-8">
         <li>
           <a
             href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-ms-0 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-rounded-s-lg hover:tw-bg-gray-100 hover:tw-text-gray-700"
-            >Previous</a
-          >
+            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-ms-0 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-rounded-s-lg hover:tw-bg-gray-100 hover:tw-text-gray-700">
+            Previous
+          </a>
         </li>
         <li>
           <a
             href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700"
-            >1</a
-          >
+            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+            1
+          </a>
         </li>
         <li>
           <a
             href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700"
-            >2</a
-          >
+            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+            2
+          </a>
         </li>
         <li>
           <a
             href="#"
             aria-current="page"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700"
-            >3</a
-          >
+            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+            3
+          </a>
         </li>
         <li>
           <a
             href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700"
-            >4</a
-          >
+            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+            4
+          </a>
         </li>
         <li>
           <a
             href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700"
-            >5</a
-          >
+            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+            5
+          </a>
         </li>
         <li>
           <a
             href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700"
-            >Next</a
-          >
+            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+            Next
+          </a>
         </li>
       </ul>
     </nav>
@@ -217,13 +225,10 @@
   <app-modal
     [modalTitle]="modalTitle"
     [openModal]="true"
-    (changeModal)="closeModal($event)"
-  >
+    (changeModal)="closeModal($event)">
     <app-add-edit-record
       [mode]="mode"
-      (closeModal)="isModalOpen = $event"
-      (changeRecord)="onChangeRecord($event)"
-    ></app-add-edit-record>
+      (closeModal)="isModalOpen = $event"></app-add-edit-record>
   </app-modal>
   }
 </div>

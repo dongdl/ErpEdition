@@ -121,12 +121,14 @@
                 <i class="fas fa-directions"></i>
               </a>
               <a
+                (click)="onViewDetail(record)"
                 href="javascript:;"
                 class="btn btn-outline !tw-px-2">
                 <i class="fa fa-eye"></i>
               </a>
 
               <a
+                (click)="onEditRecord(record)"
                 href="javascript:;"
                 class="btn btn-outline !tw-px-2">
                 <i class="fa fa-edit"></i>
@@ -278,6 +280,7 @@
     <app-add-edit-record
       [mode]="mode"
       (closeModal)="isModalOpen = $event"
+      [recordCurrent]="recordEdited"
       (changeRecord)="onChangeRecord($event)"></app-add-edit-record>
   </app-modal>
   }

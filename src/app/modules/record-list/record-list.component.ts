@@ -27,7 +27,7 @@ export class RecordListComponent implements OnInit, OnDestroy {
   mode: 'add' | 'edit' | 'view' = 'add'
   recordListSubscription: Subscription | null = null
   formSearch!: FormGroup
-  // filterList: IHrRecord[] = []
+  recordEdited: Employee | null = null
   firstRender = true
   tableHeader: { key: keyof Employee; name: string; width?: string }[] = [
     {
@@ -35,7 +35,7 @@ export class RecordListComponent implements OnInit, OnDestroy {
       name: 'Mã nhân viên'
     },
     {
-      key: 'name',
+      key: 'fullName',
       name: 'Họ và tên'
     },
     {
@@ -178,7 +178,18 @@ export class RecordListComponent implements OnInit, OnDestroy {
     }
   }
 
-  onChangeRecord(record: IHrRecord) {
+  onChangeRecord(record: Employee) {
+    if (this.mode === 'add') {
+      this.recordList.unshift({ ...record, id: Date.now() })
+    }
+    if (this.mode === 'edit') {
+      const index = this.recordList.findIndex((item) => item.id === record.id)
+      if (index === -1) return
+      const updatedRecord = { ...this.recordList[index], ...record }
+      this.recordList.splice(index, 1, updatedRecord)
+      this.recordEdited = null
+    }
+
     // if (this.mode === 'add') {
     //   const id = Date.now()
     //   this.hrServices.addRecord({ id, ...record })
@@ -196,10 +207,10 @@ export class RecordListComponent implements OnInit, OnDestroy {
     this.isModalOpen = false
   }
 
-  onEditRecord(record: IHrRecord) {
+  onEditRecord(record: Employee) {
+    this.recordEdited = record
     this.isModalOpen = true
     this.mode = 'edit'
-    this.hrServices.sendRecord(record)
   }
 
   onDelete(id?: number) {
@@ -208,10 +219,10 @@ export class RecordListComponent implements OnInit, OnDestroy {
     this.resetSearchForm()
   }
 
-  onViewDetail(record: IHrRecord) {
+  onViewDetail(record: Employee) {
     this.isModalOpen = true
     this.mode = 'view'
-    this.hrServices.sendRecord(record)
+    this.recordEdited = record
   }
 
   toConfirm(id?: number) {
