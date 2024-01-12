@@ -1,12 +1,14 @@
 import { Component } from '@angular/core'
 import { formatBytes, formatDate } from '../../utils/helper'
+import { getUserInfoToLS } from '../../utils/auth'
+import { IUserLogin } from '../../utils/mock-data'
 
 interface fileItem {
   id: number
   fileName: string
   dateCreated: string
   fileSize: string
-  fileType: string
+  creator: string
 }
 
 @Component({
@@ -19,9 +21,9 @@ interface fileItem {
 export class UploadFileListComponent {
   tableHeader: { key: keyof fileItem; name: string; width?: string }[] = [
     { key: 'fileName', name: 'Tên', width: '20%' },
-    { key: 'fileType', name: 'Loại', width: '10%' },
     { key: 'fileSize', name: 'Dung lượng', width: '100px' },
-    { key: 'dateCreated', name: 'Thời gian', width: '180px' }
+    { key: 'creator', name: 'Người upload', width: '10%' },
+    { key: 'dateCreated', name: 'Thời gian upload', width: '180px' }
   ]
   fileList: fileItem[] = []
   allowedFile = '.xls,.xlsx,.rar,.zip,.csv,.doc,.docx,.pdf,.txt,.msg'
@@ -29,6 +31,7 @@ export class UploadFileListComponent {
   onAddFile() {}
 
   onChangeFile(event: Event) {
+    const userLogin = getUserInfoToLS() as IUserLogin
     const input = event.target as HTMLInputElement
     const fileList = Array.from(input?.files || [])
     const addedFile: fileItem[] = fileList.map((file, idx) => ({
@@ -36,7 +39,7 @@ export class UploadFileListComponent {
       dateCreated: formatDate(new Date()),
       fileName: file.name,
       fileSize: formatBytes(file.size),
-      fileType: file?.name?.split('.')?.[1] || ''
+      creator: userLogin.username
     }))
     this.fileList.unshift(...addedFile)
   }

@@ -21,7 +21,7 @@
         @for(header of tableHeader; track header.key ){
         <th
           scope="col"
-          class="tw-px-8 tw-py-3"
+          class="tw-px-8 tw-py-3 tw-text-center"
           [style.minWidth]="header.width || '200px'">
           {{ header.name }}
         </th>
@@ -29,9 +29,7 @@
         <th
           scope="col"
           class="tw-px-8 tw-py-3 tw-sticky tw-right-0 tw-bg-gray-100 tw-z-10 tw-text-center"
-          [style.maxWidth]="'100px'">
-          Hành động
-        </th>
+          [style.maxWidth]="'100px'"></th>
       </tr>
     </thead>
     <tbody>
@@ -40,7 +38,7 @@
         @for(header of tableHeader; track header.key){
         <td
           scope="row"
-          class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900">
+          class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-text-center">
           <span class="tw-line-clamp-3">
             {{ file[header.key] }}
           </span>
