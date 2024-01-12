@@ -190,6 +190,8 @@ export class RecordWaitHandleComponent implements OnInit, OnDestroy {
       this.recordList.unshift({ ...record, id: Date.now() })
     }
     if (this.mode === 'edit') {
+      console.log(record)
+
       const index = this.recordList.findIndex((item) => item.id === record.id)
       if (index === -1) return
       const updatedRecord = { ...this.recordList[index], ...record }

@@ -8,8 +8,8 @@
     [id]="id"
     [name]="id"
     [disabled]="disabled"
-    [value]="value"
-    (change)="onValueChange($event)"
+    [ngModel]="value"
+    (ngModalChange)="onValueChange($event)"
     (blur)="markAsTouched()"
     class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-lg tw-focus:ring-primary-500 focus:tw-border-primary-500 tw-block tw-w-full tw-p-2.5">
     @for (option of optionList ; track $index) {

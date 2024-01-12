@@ -146,6 +146,8 @@ export class AddEditRecordComponent implements OnInit {
     if (this.mode === 'add') {
       this.changeRecord.emit(this.formRecord.value)
     } else {
+      console.log(this.formRecord.value)
+
       this.changeRecord.emit({
         ...this.formRecord.value,
         id: this.recordCurrent?.id
