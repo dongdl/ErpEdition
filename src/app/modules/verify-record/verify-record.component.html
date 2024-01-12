@@ -47,7 +47,7 @@
     </div>
   </div>
 
-  <div class="tw-flex tw-w-full tw-justify-end tw-gap-4 tw-mb-4 tw-mt-4">
+  <div class="tw-flex tw-w-full tw-justify-end tw-gap-4 tw-mb-10 tw-mt-10">
     <button
       type="button"
       class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[100px] tw-h-12 tw-flex tw-items-center tw-justify-center tw-gap-4"
@@ -63,166 +63,115 @@
       <span class="tw-leading-none">Tìm kiếm</span>
     </button>
   </div>
-  <div class="tw-relative tw-overflow-x-auto sm:tw-rounded-lg">
-    <table class="tw-w-full tw-text-left rtl:tw-text-right tw-text-gray-500 tw-text-md">
-      <thead class="tw-text-md tw-text-gray-700 tw-bg-gray-50">
-        <tr class="tw-border">
-          <th
-            scope="col"
-            class="tw-px-6 tw-py-3">
-            Mã nhân viên
-          </th>
-          <th
-            scope="col"
-            class="tw-px-6 tw-py-3">
-            Họ và tên
-          </th>
-          <th
-            scope="col"
-            class="tw-px-6 tw-py-3">
-            Chức danh
-          </th>
-          <th
-            scope="col"
-            class="tw-px-6 tw-py-3">
-            Phòng ban
-          </th>
-          <th
-            scope="col"
-            class="tw-px-6 tw-py-3">
-            Trạng thái
-          </th>
-          <th
-            scope="col"
-            class="tw-px-6 tw-py-3">
-            Hành động
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (record of (filterList ) ; track $index ) {
-        <tr class="odd:tw-bg-white even:tw-bg-gray-50 tw-border tw-text-md">
-          <th
-            scope="row"
-            class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-whitespace-nowrap tw-dark:text-white">
-            {{ record.fullName }}
-          </th>
-          <td class="tw-px-6 tw-py-4">{{ record.hrCode }}</td>
-          <td class="tw-px-6 tw-py-4">
-            <span class="tw-max-w-[300px] tw-line-clamp-3">
-              {{ record.level }}
-            </span>
-          </td>
-          <td class="tw-px-6 tw-py-4">{{ record.departmentCode }}</td>
-          <td class="tw-px-6 tw-py-4">
-            <span
-              class="tw-inline-flex tw-items-center tw-font-medium tw-px-2.5 tw-py-0.5 !tw-rounded-full !tw-text-base tw-text-white"
-              [ngClass]="{
-                'tw-bg-green-400': record.status === STATUS.Active,
-                'tw-bg-red-400': record.status === STATUS.Deleted,
-                'tw-bg-slate-500': record.status === STATUS.InActive,
-                'tw-bg-gray-400': record.status === STATUS.Disabled
-              }">
-              {{ generateStatusUser(record.status) }}
-            </span>
-          </td>
 
-          <td class="tw-px-6 tw-py-4 tw-flex tw-flex-nowrap tw-gap-2">
-            <a
-              href="javascript:;"
-              class="btn btn-outline !tw-px-2"
-              (click)="onViewDetail(record)">
-              <i class="fa fa-eye"></i>
-            </a>
-            <a
-              href="javascript:;"
-              class="btn btn-outline !tw-px-2"
-              (click)="toConfirm(record.id)">
-              <i class="fa fa-check"></i>
-            </a>
-            <!-- <a
-              href="javascript:;"
-              class="btn btn-outline !tw-px-2"
-              (click)="onEditRecord(record)">
-              <i class="fa fa-edit"></i>
-            </a> -->
-          </td>
-        </tr>
+  <app-record-table
+    [tableHeader]="tableHeader"
+    [recordList]="recordList">
+    <ng-template
+      #actionTemplate
+      let-record>
+      <div class="tw-absolute tw-inset-0 tw-flex tw-justify-center tw-items-center">
+        <a
+          (click)="onViewDetail(record)"
+          href="javascript:;"
+          class="btn btn-outline !tw-px-2">
+          <i class="fa fa-eye"></i>
+        </a>
+
+        @if(isManager2 || isAdmin){
+        <a
+          href="javascript:;"
+          class="btn btn-outline !tw-px-2"
+          (click)="openModal('reject')">
+          <i class="fa fa-close"></i>
+        </a>
         }
-      </tbody>
-    </table>
-    <nav
-      class="tw-flex tw-items-center tw-flex-column tw-flex-wrap md:tw-flex-row tw-justify-between tw-pt-4 tw-px-2 tw-border-x tw-border-b"
-      aria-label="Table navigation">
-      <span
-        class="tw-text-md tw-font-normal tw-text-gray-500 tw-mb-4 md:tw-mb-0 tw-block tw-w-full md:tw-inline md:tw-w-auto">
-        Showing
-        <span class="tw-font-semibold tw-text-gray-900">1-10</span>
-        of
-        <span class="tw-font-semibold tw-text-gray-900">1000</span>
-      </span>
-      <ul class="tw-inline-flex tw--space-x-px rtl:tw-space-x-reverse tw-text-md tw-h-8">
-        <li>
-          <a
-            href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-ms-0 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-rounded-s-lg hover:tw-bg-gray-100 hover:tw-text-gray-700">
-            Previous
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
-            1
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
-            2
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            aria-current="page"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
-            3
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
-            4
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
-            5
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
-            Next
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
-  @if (isModalOpen) {
+        <a
+          href="javascript:;"
+          class="btn btn-outline !tw-px-2"
+          (click)="openModal('agree')">
+          <i class="fa fa-check"></i>
+        </a>
+      </div>
+    </ng-template>
+  </app-record-table>
+
+  <nav
+    class="tw-flex tw-items-center tw-flex-column tw-flex-wrap md:tw-flex-row tw-justify-between tw-pt-4 tw-px-2 tw-border-x tw-border-b"
+    aria-label="Table navigation">
+    <span
+      class="tw-text-md tw-font-normal tw-text-gray-500 tw-mb-4 md:tw-mb-0 tw-block tw-w-full md:tw-inline md:tw-w-auto">
+      Showing
+      <span class="tw-font-semibold tw-text-gray-900">1-10</span>
+      of
+      <span class="tw-font-semibold tw-text-gray-900">1000</span>
+    </span>
+    <ul class="tw-inline-flex tw--space-x-px rtl:tw-space-x-reverse tw-text-md tw-h-8">
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-ms-0 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-rounded-s-lg hover:tw-bg-gray-100 hover:tw-text-gray-700">
+          Previous
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          1
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          2
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          aria-current="page"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          3
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          4
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          5
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          Next
+        </a>
+      </li>
+    </ul>
+  </nav>
+  @if (isModalOpenComment) {
+  <app-modal-reason
+    [modalType]="modalType"
+    (close)="isModalOpenComment = $event"></app-modal-reason>
+  } @if (isModalEmployee) {
   <app-modal
     [modalTitle]="modalTitle"
     [openModal]="true"
-    (changeModal)="closeModal($event)">
+    (changeModal)="isModalEmployee = $event">
     <app-add-edit-record
       [mode]="mode"
-      (closeModal)="isModalOpen = $event"></app-add-edit-record>
+      (closeModal)="isModalEmployee = $event"
+      [recordCurrent]="recordEdited"></app-add-edit-record>
   </app-modal>
   }
 </div>

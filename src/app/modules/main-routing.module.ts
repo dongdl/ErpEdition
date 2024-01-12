@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
-import { ConfirmRecordComponent } from './confirm-record/confirm-record.component'
-import { MainComponent } from './main.component'
-import { RecordListComponent } from './record-list/record-list.component'
-import { UsersManagementComponent } from './users-management/users-management.component'
-import { VerifyRecordComponent } from './verify-record/verify-record.component'
 import {
   recordListGuard,
   userGuard,
   verifyRecordGuard
 } from '../shared/services/authentication/authGuard.service'
+import { MainComponent } from './main.component'
+import { RecordCompleteComponent } from './record-complete/record-complete.component'
+import { RecordProcessingComponent } from './record-processing/record-processing.component'
+import { RecordWaitHandleComponent } from './record-wait-handle/record-wait-handle.component'
+import { UsersManagementComponent } from './users-management/users-management.component'
+import { VerifyRecordComponent } from './verify-record/verify-record.component'
 
 const routes: Routes = [
   {
@@ -27,8 +28,18 @@ const routes: Routes = [
         canActivate: [userGuard]
       },
       {
-        path: 'thong-tin-tuyen-dung',
-        component: RecordListComponent,
+        path: 'thong-tin-tuyen-dung-can-xu-ly',
+        component: RecordWaitHandleComponent,
+        canActivate: [recordListGuard]
+      },
+      {
+        path: 'thong-tin-tuyen-dung-dang-xu-ly',
+        component: RecordProcessingComponent,
+        canActivate: [recordListGuard]
+      },
+      {
+        path: 'thong-tin-tuyen-dung-hoan-thanh',
+        component: RecordCompleteComponent,
         canActivate: [recordListGuard]
       },
       {

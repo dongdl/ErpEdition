@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core'
 
-import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { of } from 'rxjs'
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { CONTROL_TYPE } from '../constant/control-field-type'
 import { inputBaseType } from '../model/input-base.model'
 import { InputDate } from '../model/input-date.model'
 import { SelectInput } from '../model/select-input.model'
 import { TextInput } from '../model/text-input.model'
+import { Employee } from '../../model/record'
 
 @Injectable()
 export class FormManagementService {
   // TODO: get from a remote source of question metadata
 
-  createEmployeeRecordFields() {
-    const generaInfo: inputBaseType[] = [
+  constructor(private fb: FormBuilder) {}
+
+  createEmployeeRecordFields(data?: Employee) {
+    let generaInfo: inputBaseType[] = [
       {
         label: 'Mã nhân sự',
         value: '',
@@ -109,7 +111,7 @@ export class FormManagementService {
         ]
       }
     ]
-    const personalInfo: inputBaseType[] = [
+    let personalInfo: inputBaseType[] = [
       {
         label: 'Ảnh thẻ',
         value: '',
@@ -360,7 +362,7 @@ export class FormManagementService {
         order: 34
       }
     ]
-    const recruitmentInfo: (
+    let recruitmentInfo: (
       | inputBaseType
       | { isTitle: true; title: string; order: number; controlType: string }
     )[] = [
@@ -396,97 +398,97 @@ export class FormManagementService {
         order: 5
       },
       {
-        label: 'Thông tin tham khảo - Họ tên',
+        label: 'Họ tên',
         key: 'referName',
         value: '',
         order: 6
       },
       {
-        label: 'Thông tin tham khảo - Chức vụ',
+        label: 'Chức vụ',
         key: 'referPosition',
         value: '',
         order: 7
       },
       {
-        label: 'Thông tin tham khảo - Đơn vị công tác',
+        label: 'Đơn vị công tác',
         key: 'referWorkUnit',
         value: '',
         order: 8
       },
       {
-        label: 'Thông tin tham khảo - Mối quan hệ',
+        label: 'Mối quan hệ',
         key: 'referRelationShip',
         value: '',
         order: 9
       },
       {
-        label: 'Thông tin tham khảo - Mobile',
+        label: 'Mobile',
         key: 'referMobile',
         value: '',
         order: 10
       },
       {
-        label: ' Thông tin tham khảo - Email',
+        label: 'Email',
         key: 'referEmail',
         value: '',
         order: 11
       },
       {
-        label: 'Thông tin tham khảo - Ghi chú thêm',
+        label: 'Ghi chú thêm',
         key: 'referDescription',
         value: '',
         order: 12
       },
       {
         isTitle: true,
-        title: "'Người thân bạn bè BVB",
+        title: 'Người thân bạn bè BVB',
         controlType: 'header',
         order: 13
       },
       {
-        label: 'Người thân bạn bè BVB - Họ tên',
+        label: 'Họ tên',
         key: 'referOrganName',
         value: '',
         order: 14
       },
       {
-        label: 'Người thân bạn bè BVB - Chức vụ',
+        label: 'Chức vụ',
         key: 'referOrganPosition',
         value: '',
         order: 15
       },
       {
-        label: 'Người thân bạn bè BVB - Đơn vị công tác',
+        label: 'Đơn vị công tác',
         key: 'referOrganWorkUnit',
         value: '',
         order: 16
       },
       {
-        label: 'Người thân bạn bè BVB - Đơn vị công tác',
+        label: 'Đơn vị công tác',
         key: 'referOrganWorkUnit',
         value: '',
         order: 17
       },
       {
-        label: 'Người thân bạn bè BVB - Mối quan hệ',
+        label: 'Mối quan hệ',
         key: 'referOrganRelationShip',
         value: '',
         order: 18
       },
       {
-        label: 'Người thân bạn bè BVB - Mobile',
+        label: 'Mobile',
         key: 'referOrganMobile',
         value: '',
         order: 19
       },
       {
-        label: 'Người thân bạn bè BVB - Email',
+        label: 'Email',
         key: 'referOrganEmail',
         value: '',
         order: 20
       },
       {
-        label: 'Người thân bạn bè BVB - Ghi chú thêm',
+        label: 'Ghi chú thêm',
         key: 'referOrganDescription',
         value: '',
         order: 21
@@ -505,7 +507,7 @@ export class FormManagementService {
         controlType: CONTROL_TYPE.INPUT_DATE
       }
     ]
-    const firstContractInfo: (
+    let firstContractInfo: (
       | inputBaseType
       | { isTitle: true; title: string; order: number; controlType: 'string' }
     )[] = [
@@ -548,7 +550,7 @@ export class FormManagementService {
       }
     ]
 
-    const incomeInfo = [
+    let incomeInfo = [
       {
         label: 'Lương học việc',
         key: 'salaryApprentice',
@@ -586,6 +588,19 @@ export class FormManagementService {
         order: 13
       }
     ]
+
+    // if (data) {
+    //   generaInfo = generaInfo.map((x) => ({ ...x, value: data[x.key as keyof Employee] || '' }))
+    //   personalInfo = personalInfo.map((x) => ({ ...x, value: data[x.key as keyof Employee] || '' }))
+    //   recruitmentInfo = recruitmentInfo.map((x) => ({
+    //     ...x,
+    //     value: data[(x as any).key as keyof Employee] || ''
+    //   }))
+    //   firstContractInfo = firstContractInfo.map((x) => ({
+    //     ...x,
+    //     value: data[x as any as keyof Employee] || ''
+    //   }))
+    // }
 
     const tabList = [
       {
@@ -786,7 +801,18 @@ export class FormManagementService {
     })
   }
 
-  toFormGroupFamilyInfo(fieldList: any) {
+  createSearchFormGroup(fields: inputBaseType[]) {
+    return fields.map((field) => {
+      if (field.controlType === CONTROL_TYPE.INPUT_DATE) {
+        return new InputDate(field)
+      } else if (field.controlType === CONTROL_TYPE.SELECT) {
+        return new SelectInput(field)
+      }
+      return new TextInput(field)
+    })
+  }
+
+  toFormGroup(fieldList: any) {
     const group: any = {}
     fieldList.forEach((field: any) => {
       group[field.key] = field.required
@@ -802,11 +828,11 @@ export class FormManagementService {
       tab.tabContent.forEach((field: any) => {
         if (!field.isTitle) {
           group[field.key] = field.required
-            ? new FormControl(field.value || '', Validators.required)
-            : new FormControl(field.value || '')
+            ? [field.value || '', Validators.required]
+            : [field.value || '']
         }
       })
     })
-    return new FormGroup(group)
+    return this.fb.group(group)
   }
 }

@@ -52,7 +52,14 @@
         <app-history-record></app-history-record>
       </ng-template>
     </app-tab-panel>
+
+    <app-tab-panel title="File đính kèm">
+      <ng-template tabPanelContent>
+        <app-upload-file-list></app-upload-file-list>
+      </ng-template>
+    </app-tab-panel>
   </app-tab-group>
+  @if(this.mode !== 'view'){
   <div class="tw-flex tw-justify-center">
     <button
       type="submit"
@@ -61,4 +68,5 @@
       <span class="tw-leading-none">Lưu</span>
     </button>
   </div>
+  }
 </form>

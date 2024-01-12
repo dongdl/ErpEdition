@@ -1,22 +1,29 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
-import { Employee, IHrRecord } from '../../model/record'
-import { HrRecordsService } from '../hr-records/hr-records.service'
-import { USER_STATUS } from '../../model/user'
-import { mappingStatusUser } from '../../utils/helper'
-import { Subscription, catchError, of } from 'rxjs'
-import { SharedModule } from '../../shared/shared.module'
-import { AddEditRecordComponent } from '../add-edit-record/add-edit-record.component'
-import { ModalComponent } from '../../shared/components/modal/modal.component'
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
-import { HttpClient } from '@angular/common/http'
-import { AuthService } from '../auth/auth.service'
+import { Subscription, catchError, of } from 'rxjs'
+import { Employee, IHrRecord } from '../../model/record'
+import { USER_STATUS } from '../../model/user'
+import { ModalComponent } from '../../shared/components/modal/modal.component'
+import { SharedModule } from '../../shared/shared.module'
+import { mappingStatusUser } from '../../utils/helper'
 import recordListJson from '../../utils/users.json'
+import { AddEditRecordComponent } from '../add-edit-record/add-edit-record.component'
+import { AuthService } from '../auth/auth.service'
+import { HrRecordsService } from '../hr-records/hr-records.service'
+import { RecordTableComponent } from '../record-table/record-table.component'
 
 @Component({
   selector: 'app-record-list',
   standalone: true,
-  imports: [AddEditRecordComponent, ModalComponent, FormsModule, SharedModule, ReactiveFormsModule],
+  imports: [
+    AddEditRecordComponent,
+    ModalComponent,
+    FormsModule,
+    SharedModule,
+    ReactiveFormsModule,
+    RecordTableComponent
+  ],
   templateUrl: './record-list.component.html',
   styleUrl: './record-list.component.css'
 })

@@ -26,7 +26,7 @@ export class ModalAddEditFamilyFormComponent implements OnInit {
   constructor(private fmService: FormManagementService) {}
   ngOnInit(): void {
     this.fieldList = this.fmService.createFamilyInfoFields()
-    this.formFamily = this.fmService.toFormGroupFamilyInfo(this.fieldList)
+    this.formFamily = this.fmService.toFormGroup(this.fieldList)
   }
 
   get modalTitle() {

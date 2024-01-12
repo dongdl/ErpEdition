@@ -1,20 +1,22 @@
 <div>
-  <label [for]="id" class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900">{{
-    label
-  }}</label>
+  <label
+    [for]="id"
+    class="tw-block tw-mb-1 tw-font-medium tw-text-gray-900">
+    {{ label }}
+  </label>
   <select
     [id]="id"
     [name]="id"
-    (ngModel)="(value)"
+    [disabled]="disabled"
+    [value]="value"
     (change)="onValueChange($event)"
     (blur)="markAsTouched()"
-    class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-lg tw-focus:ring-primary-500 focus:tw-border-primary-500 tw-block tw-w-full tw-p-2.5"
-  >
+    class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-lg tw-focus:ring-primary-500 focus:tw-border-primary-500 tw-block tw-w-full tw-p-2.5">
     @for (option of optionList ; track $index) {
     <option [value]="option.value">{{ option.title }}</option>
     }
   </select>
   @if(isDirty && controlInput?.errors){
-  <ng-content> </ng-content>
+  <ng-content></ng-content>
   }
 </div>

@@ -16,7 +16,6 @@ export class SideBarComponent implements OnInit {
   menuList!: MenuItem[]
   ngOnInit(): void {
     this.menuList = sidebarForEachRole([...MENU_FULL])
-    console.log(this.menuList)
   }
 
   onClickParentMenu(id: string) {

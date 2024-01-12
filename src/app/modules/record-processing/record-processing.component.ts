@@ -12,13 +12,9 @@ import { AddEditRecordComponent } from '../add-edit-record/add-edit-record.compo
 import { AuthService } from '../auth/auth.service'
 import { HrRecordsService } from '../hr-records/hr-records.service'
 import { RecordTableComponent } from '../record-table/record-table.component'
-import { getUserInfoToLS } from '../../utils/auth'
-import { IUserLogin } from '../../utils/mock-data'
-import ROLES from '../../utils/roles'
-import { ModalReasonComponent } from '../modal-reason/modal-reason.component'
 
 @Component({
-  selector: 'app-verify-record',
+  selector: 'app-record-processing',
   standalone: true,
   imports: [
     AddEditRecordComponent,
@@ -26,15 +22,13 @@ import { ModalReasonComponent } from '../modal-reason/modal-reason.component'
     FormsModule,
     SharedModule,
     ReactiveFormsModule,
-    RecordTableComponent,
-    ModalReasonComponent
+    RecordTableComponent
   ],
-  templateUrl: './verify-record.component.html',
-  styleUrl: './verify-record.component.css'
+  templateUrl: './record-processing.component.html',
+  styleUrl: './record-processing.component.css'
 })
-export class VerifyRecordComponent implements OnInit, OnDestroy {
-  isModalOpenComment = false
-  isModalEmployee = false
+export class RecordProcessingComponent implements OnInit, OnDestroy {
+  isModalOpen = false
   recordList: Employee[] = recordListJson
   chosenRecord: IHrRecord | null = null
   mode: 'add' | 'edit' | 'view' = 'add'
@@ -42,7 +36,6 @@ export class VerifyRecordComponent implements OnInit, OnDestroy {
   formSearch!: FormGroup
   recordEdited: Employee | null = null
   firstRender = true
-  modalType: 'agree' | 'reject' = 'agree'
   tableHeader: { key: keyof Employee; name: string; width?: string }[] = [
     {
       key: 'code',
@@ -109,17 +102,12 @@ export class VerifyRecordComponent implements OnInit, OnDestroy {
   }
 
   closeModal(value: boolean) {
-    this.isModalOpenComment = value
+    this.isModalOpen = value
   }
 
   addNewRecord() {
     this.mode = 'add'
-    this.isModalOpenComment = true
-  }
-
-  openModal(type: 'reject' | 'agree') {
-    this.isModalOpenComment = true
-    this.modalType = type
+    this.isModalOpen = true
   }
 
   ngOnInit(): void {
@@ -178,9 +166,9 @@ export class VerifyRecordComponent implements OnInit, OnDestroy {
   }
 
   search() {
-    // this.router.navigate(['thong-tin-tuyen-dung'], {
-    //   queryParams: this.formSearch.value
-    // })
+    this.router.navigate(['thong-tin-tuyen-dung'], {
+      queryParams: this.formSearch.value
+    })
   }
 
   get modalTitle() {
@@ -223,26 +211,23 @@ export class VerifyRecordComponent implements OnInit, OnDestroy {
     //   this.hrServices.editRecord(record, updatedRecord?.id as number)
     // }
     // this.resetSearchForm()
-    this.isModalOpenComment = false
+    this.isModalOpen = false
   }
 
-  get isManager1() {
-    const roles = (getUserInfoToLS() as IUserLogin).role
-    return roles.includes(ROLES.MANAGER_1)
+  onEditRecord(record: Employee) {
+    this.recordEdited = record
+    this.isModalOpen = true
+    this.mode = 'edit'
   }
 
-  get isManager2() {
-    const roles = (getUserInfoToLS() as IUserLogin).role
-    return roles.includes(ROLES.MANAGER_2)
-  }
-
-  get isAdmin() {
-    const roles = (getUserInfoToLS() as IUserLogin).role
-    return roles.includes(ROLES.ADMIN)
+  onDelete(id?: number) {
+    if (!id) return
+    this.hrServices.deleteRecord(id)
+    this.resetSearchForm()
   }
 
   onViewDetail(record: Employee) {
-    this.isModalEmployee = true
+    this.isModalOpen = true
     this.mode = 'view'
     this.recordEdited = record
   }

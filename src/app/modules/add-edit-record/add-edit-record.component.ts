@@ -1,21 +1,21 @@
 import { NgIf } from '@angular/common'
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core'
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
+import { FormGroup, ReactiveFormsModule } from '@angular/forms'
 
 import { Router } from '@angular/router'
-import { SubscriptionLike, catchError, of, Subscription } from 'rxjs'
-import { Employee, IHrRecord } from '../../model/record'
+import { catchError, of } from 'rxjs'
+import { Employee } from '../../model/record'
 import { ModalComponent } from '../../shared/components/modal/modal.component'
+import { CONTROL_TYPE } from '../../shared/constant/control-field-type'
+import { FormManagementService } from '../../shared/services/form-management.service'
 import { SharedModule } from '../../shared/shared.module'
 import ma_chuc_danh from '../../utils/ma_chuc_danh.json'
 import ma_don_vi from '../../utils/ma_don_vi.json'
 import ma_nhan_su from '../../utils/ma_nhan_su.json'
-import { AuthService } from '../auth/auth.service'
-import { HrRecordsService } from '../hr-records/hr-records.service'
-import { FormManagementService } from '../../shared/services/form-management.service'
-import { CONTROL_TYPE } from '../../shared/constant/control-field-type'
 import { AddEditFamilyComponent } from '../add-edit-family/add-edit-family.component'
+import { AuthService } from '../auth/auth.service'
 import { HistoryRecordComponent } from '../history-record/history-record.component'
+import { UploadFileListComponent } from '../upload-file-list/upload-file-list.component'
 
 @Component({
   selector: 'app-add-edit-record',
@@ -26,7 +26,8 @@ import { HistoryRecordComponent } from '../history-record/history-record.compone
     ReactiveFormsModule,
     SharedModule,
     AddEditFamilyComponent,
-    HistoryRecordComponent
+    HistoryRecordComponent,
+    UploadFileListComponent
   ],
   templateUrl: './add-edit-record.component.html',
   styleUrl: './add-edit-record.component.css',
@@ -112,8 +113,6 @@ export class AddEditRecordComponent implements OnInit {
   }
 
   constructor(
-    private fb: FormBuilder,
-    private hrRecordService: HrRecordsService,
     private router: Router,
     private auth: AuthService,
     private fmService: FormManagementService
@@ -121,10 +120,15 @@ export class AddEditRecordComponent implements OnInit {
 
   ngOnInit(): void {
     this.fieldList = this.fmService.createEmployeeRecordFields()
-    this.formRecord = this.fmService.toFormGroupEmployeeRecord(this.fieldList)
 
-    if (this.recordCurrent) {
-      this.formRecord.patchValue(this.recordCurrent, { onlySelf: true })
+    this.formRecord = this.fmService.toFormGroupEmployeeRecord(this.fieldList)
+    if (this.recordCurrent) this.formRecord.patchValue(this.recordCurrent, { onlySelf: true })
+
+    if (this.mode === 'view') {
+      Object.keys(this.formRecord.controls).forEach((field) => {
+        const control = this.formRecord.get(field)
+        control?.disable()
+      })
     }
   }
 
@@ -133,10 +137,6 @@ export class AddEditRecordComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.formRecord.value)
-
-    console.log(this.formRecord.errors)
-
     if (this.mode === 'view') return
     Object.keys(this.formRecord.controls).forEach((field) => {
       const control = this.formRecord.get(field)

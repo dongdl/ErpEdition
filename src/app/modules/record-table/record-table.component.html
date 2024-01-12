@@ -1,0 +1,48 @@
+<div
+  class="tw-relative tw-overflow-x-auto sm:tw-rounded-lg tw-scrollbar tw-scrollbar-thumb-gray-300 tw-scrollbar-thumb-rounded-md tw-scrollbar-track-gray-100 tw-scrollbar-h-4">
+  <table class="tw-w-fit tw-text-left rtl:tw-text-right tw-text-gray-500 tw-text-md">
+    <thead class="tw-text-md tw-text-gray-700 tw-bg-gray-50">
+      <tr class="tw-border">
+        @for(header of tableHeader; track header.key ){
+        <th
+          scope="col"
+          class="tw-px-8 tw-py-3"
+          [style.minWidth]="header.width || '200px'">
+          {{ header.name }}
+        </th>
+        }
+        <th
+          scope="col"
+          class="tw-px-8 tw-py-3 tw-sticky tw-right-0 tw-bg-gray-100 tw-z-10"
+          [style.minWidth]="'150px'">
+          Hành động
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (record of recordList ; track record.id ) {
+      <tr class="tw-border tw-text-md">
+        @for(header of tableHeader; track header.key){
+        <td
+          scope="row"
+          class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-h-20">
+          <span
+            class="tw-line-clamp-3"
+            [style.maxWidth]="header.width || '150px'">
+            {{ record[header.key] }}
+          </span>
+        </td>
+
+        }
+        <td
+          class="tw-flex tw-flex-nowrap tw-gap-2 tw-sticky tw-right-0 tw-bg-white tw-z-10 tw-h-40">
+          <ng-container
+            [ngTemplateOutlet]="actionTemplate"
+            [ngTemplateOutletContext]="{ $implicit: record }"></ng-container>
+        </td>
+      </tr>
+
+      }
+    </tbody>
+  </table>
+</div>

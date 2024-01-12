@@ -1,4 +1,5 @@
 import { USER_STATUS, USER_STATUS_2 } from '../model/user'
+import { format } from 'date-fns'
 
 export const createGuid = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -90,4 +91,25 @@ export const intersectArray = (a1: any[], a2: any[], ...rest: any[]): any => {
     return a12
   }
   return intersectArray(a12, ...(rest as [any, any]))
+}
+
+export function formatBytes(bytes: any, decimals = 2) {
+  if (bytes >= 1073741824) {
+    bytes = (bytes / 1073741824).toFixed(2) + ' GB'
+  } else if (bytes >= 1048576) {
+    bytes = (bytes / 1048576).toFixed(2) + ' MB'
+  } else if (bytes >= 1024) {
+    bytes = (bytes / 1024).toFixed(2) + ' KB'
+  } else if (bytes > 1) {
+    bytes = bytes + ' bytes'
+  } else if (bytes == 1) {
+    bytes = bytes + ' byte'
+  } else {
+    bytes = '0 bytes'
+  }
+  return bytes
+}
+
+export function formatDate(date: Date, fm = 'dd/MM/yyyy') {
+  return format(date, fm)
 }

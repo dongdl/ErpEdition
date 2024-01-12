@@ -1,0 +1,72 @@
+<div>
+  <div class="tw-flex tw-justify-end tw-my-6">
+    <input
+      #inputFile
+      type="file"
+      multiple
+      [accept]="allowedFile"
+      (change)="onChangeFile($event)"
+      class="hidden" />
+    <button
+      type="button"
+      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[150px] tw-h-12 tw-flex tw-items-center tw-justify-center tw-gap-4"
+      (click)="inputFile.click()">
+      <i class="fa fa-plus"></i>
+      <span class="tw-leading-none">Thêm file</span>
+    </button>
+  </div>
+  <table class="tw-w-full tw-text-left rtl:tw-text-right tw-text-gray-500 tw-text-md">
+    <thead class="tw-text-md tw-text-gray-700 tw-bg-gray-50">
+      <tr class="tw-border">
+        @for(header of tableHeader; track header.key ){
+        <th
+          scope="col"
+          class="tw-px-8 tw-py-3"
+          [style.minWidth]="header.width || '200px'">
+          {{ header.name }}
+        </th>
+        }
+        <th
+          scope="col"
+          class="tw-px-8 tw-py-3 tw-sticky tw-right-0 tw-bg-gray-100 tw-z-10 tw-text-center"
+          [style.maxWidth]="'100px'">
+          Hành động
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (file of fileList ; track file.id ) {
+      <tr class="tw-border tw-text-md">
+        @for(header of tableHeader; track header.key){
+        <td
+          scope="row"
+          class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900">
+          <span class="tw-line-clamp-3">
+            {{ file[header.key] }}
+          </span>
+        </td>
+        }
+        <td class="tw-flex tw-justify-center tw-flex-nowrap tw-gap-2 tw-bg-white tw-z-10">
+          <div class="tw-flex tw-items-center tw-justify-center">
+            <a
+              href="javascript:;"
+              (click)="removeFile(file.id)"
+              class="btn btn-outline !tw-text-[25px] !tw-px-2">
+              <i class="fa fa-trash"></i>
+            </a>
+          </div>
+        </td>
+      </tr>
+
+      } @empty {
+      <tr class="tw-h-[200px]">
+        <td
+          colspan="5"
+          class="tw-border tw-text-md tw-text-center">
+          Không có file đính kèm
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

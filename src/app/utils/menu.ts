@@ -19,10 +19,28 @@ export const MENU_FULL: MenuItem[] = [
     roles: ['ADMIN', 'USER', 'MANAGER_LEVEL_2', 'MANAGER_LEVEL_1'],
     subMenu: [
       {
-        name: 'Thông tin tuyển dụng',
+        name: 'Thông tin tuyển dụng cần xử lý',
         id: '1-1',
         icon: 'icon-add',
-        link: '/thong-tin-tuyen-dung',
+        link: '/thong-tin-tuyen-dung-can-xu-ly',
+        active: false,
+        roles: ['ADMIN', 'USER'],
+        key: 'record-list'
+      },
+      {
+        name: 'Thông tin tuyển dụng đang xử lý',
+        id: '1-1',
+        icon: 'icon-add',
+        link: '/thong-tin-tuyen-dung-dang-xu-ly',
+        active: false,
+        roles: ['ADMIN', 'USER'],
+        key: 'record-list'
+      },
+      {
+        name: 'Thông tin tuyển dụng hoàn thành',
+        id: '1-1',
+        icon: 'icon-add',
+        link: '/thong-tin-tuyen-dung-hoan-thanh',
         active: false,
         roles: ['ADMIN', 'USER'],
         key: 'record-list'

@@ -24,7 +24,7 @@ export const redirectToMainPage: CanActivateFn = (route, state) => {
   if (user) {
     const { role } = user
     if (role.includes('USER')) {
-      router.navigate(['thong-tin-tuyen-dung'])
+      router.navigate(['thong-tin-tuyen-dung-can-xu-ly'])
     } else if (role.includes('MANAGER_LEVEL_1') || role.includes('MANAGER_LEVEL_2')) {
       router.navigate(['duyet-thong-tin-hai-mat'])
     } else {
@@ -73,7 +73,7 @@ export const verifyRecordGuard: CanActivateFn = (route, state) => {
       role.includes('MANAGER_LEVEL_2')
     )
   ) {
-    router.navigate(['thong-tin-tuyen-dung'])
+    router.navigate(['thong-tin-tuyen-dung-can-xu-ly'])
     return false
   }
   return true
