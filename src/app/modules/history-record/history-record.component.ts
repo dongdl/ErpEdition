@@ -19,13 +19,13 @@ export class HistoryRecordComponent {
       width: '40%'
     },
     {
-      name: 'Ý kiến',
-      key: 'commentDetail',
+      name: 'Cán bộ xử lý',
+      key: 'assignee',
       width: '30%'
     },
     {
       name: 'Ghi chú',
-      key: 'createdBy',
+      key: 'commentDetail',
       width: '30%'
     },
     {
