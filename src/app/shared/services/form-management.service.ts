@@ -7,24 +7,26 @@ import { InputDate } from '../model/input-date.model'
 import { SelectInput } from '../model/select-input.model'
 import { TextInput } from '../model/text-input.model'
 import { Employee } from '../../model/record'
+import { CommonService } from './common.service'
+import { map, of, switchMap, tap } from 'rxjs'
 
 @Injectable()
 export class FormManagementService {
   // TODO: get from a remote source of question metadata
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private commonService: CommonService) {}
 
   createEmployeeRecordFields(data?: Employee) {
     let generaInfo: inputBaseType[] = [
-      {
-        label: 'Mã nhân sự',
-        value: '',
-        key: 'code',
-        // required: true,
-        order: 1,
-        controlType: CONTROL_TYPE.SELECT,
-        options: []
-      },
+      // {
+      //   label: 'Mã nhân sự',
+      //   value: '',
+      //   key: 'code',
+      //   // required: true,
+      //   order: 1,
+      //   controlType: CONTROL_TYPE.SELECT,
+      //   options: []
+      // },
       {
         label: 'Họ và tên',
         value: '',
@@ -63,7 +65,10 @@ export class FormManagementService {
         key: 'zone',
         order: 6,
         controlType: CONTROL_TYPE.SELECT,
-        options: []
+        options: [
+          { title: 'Vùng 1', value: '0' },
+          { title: 'Vùng 2', value: '1' }
+        ]
       },
       {
         label: 'Miền',
@@ -71,7 +76,11 @@ export class FormManagementService {
         key: 'region',
         order: 7,
         controlType: CONTROL_TYPE.SELECT,
-        options: []
+        options: [
+          { title: 'Miền bắc', value: '0' },
+          { title: 'Miền trung', value: '1' },
+          { title: 'Miền name', value: '2' }
+        ]
       },
       {
         label: ' Mã số thuế thu nhập cá nhân',
@@ -127,11 +136,14 @@ export class FormManagementService {
       },
       {
         label: 'Giới tính',
-        value: '',
+        value: '1',
         key: 'gender',
         order: 3,
         controlType: CONTROL_TYPE.SELECT,
-        options: []
+        options: [
+          { title: 'Nam', value: '1' },
+          { title: 'Nữ', value: '0' }
+        ]
       },
       {
         label: 'Nơi sinh',
@@ -155,7 +167,7 @@ export class FormManagementService {
       },
       {
         label: 'Là đảng viên',
-        value: '',
+        value: '0',
         key: 'isParty',
         order: 7,
         controlType: CONTROL_TYPE.SELECT,
@@ -185,7 +197,7 @@ export class FormManagementService {
       },
       {
         label: 'Là quân đội',
-        value: '',
+        value: '0',
         key: 'isArmy',
         order: 11,
         controlType: CONTROL_TYPE.SELECT,
@@ -197,7 +209,7 @@ export class FormManagementService {
 
       {
         label: 'Là thương binh',
-        value: '',
+        value: '0',
         key: 'isVeterans',
         order: 12,
         controlType: CONTROL_TYPE.SELECT,
@@ -209,7 +221,7 @@ export class FormManagementService {
 
       {
         label: 'Là con liệt sĩ',
-        value: '',
+        value: '0',
         key: 'isMartyrsChild',
         order: 13,
         controlType: CONTROL_TYPE.SELECT,
@@ -528,7 +540,12 @@ export class FormManagementService {
         key: 'contractType',
         order: 3,
         controlType: CONTROL_TYPE.SELECT,
-        options: []
+        options: [
+          { title: 'Học việc', value: '1' },
+          { title: 'Thử việc', value: '2' },
+          { title: 'Chính thức', value: '3' },
+          { title: 'Khác', value: '99' }
+        ]
       },
       {
         label: 'Thời hạn hợp đồng',
@@ -549,7 +566,6 @@ export class FormManagementService {
         controlType: CONTROL_TYPE.INPUT_DATE
       }
     ]
-
     let incomeInfo = [
       {
         label: 'Lương học việc',
@@ -589,70 +605,82 @@ export class FormManagementService {
       }
     ]
 
-    // if (data) {
-    //   generaInfo = generaInfo.map((x) => ({ ...x, value: data[x.key as keyof Employee] || '' }))
-    //   personalInfo = personalInfo.map((x) => ({ ...x, value: data[x.key as keyof Employee] || '' }))
-    //   recruitmentInfo = recruitmentInfo.map((x) => ({
-    //     ...x,
-    //     value: data[(x as any).key as keyof Employee] || ''
-    //   }))
-    //   firstContractInfo = firstContractInfo.map((x) => ({
-    //     ...x,
-    //     value: data[x as any as keyof Employee] || ''
-    //   }))
-    // }
+    return this.commonService.getListDepartment().pipe(
+      tap<any>((value) => {
+        const department = generaInfo.find((item) => item.key === 'departmentCode')
+        department?.options?.push(
+          ...value.map((x: any) => ({
+            title: x.name,
+            value: x.code
+          }))
+        )
+      }),
+      switchMap(() => {
+        return this.commonService.getEthic()
+      }),
+      tap<any>((value) => {
+        const ethic = personalInfo.find((item) => item.key === 'ethnicCode')
+        ethic?.options?.push(
+          ...value.map((x: any) => ({
+            title: x.name,
+            value: x.code
+          }))
+        )
+      }),
+      map(() => {
+        const tabList = [
+          {
+            tabId: 1,
+            tabTitle: 'Thông tin chung',
+            tabContent: generaInfo
+          },
+          {
+            tabId: 2,
+            tabTitle: 'Thông tin cá nhân',
+            tabContent: personalInfo
+          },
+          {
+            tabId: 3,
+            tabTitle: 'Thông tin tuyển dụng',
+            tabContent: recruitmentInfo
+          },
+          {
+            tabId: 4,
+            tabTitle: 'Thông tin HĐLĐ ban đầu',
+            tabContent: firstContractInfo
+          },
 
-    const tabList = [
-      {
-        tabId: 1,
-        tabTitle: 'Thông tin chung',
-        tabContent: generaInfo
-      },
-      {
-        tabId: 2,
-        tabTitle: 'Thông tin cá nhân',
-        tabContent: personalInfo
-      },
-      {
-        tabId: 3,
-        tabTitle: 'Thông tin tuyển dụng',
-        tabContent: recruitmentInfo
-      },
-      {
-        tabId: 4,
-        tabTitle: 'Thông tin HĐLĐ ban đầu',
-        tabContent: firstContractInfo
-      },
-
-      {
-        tabId: 5,
-        tabTitle: 'Thông tin thu nhập',
-        tabContent: incomeInfo
-      }
-    ]
-
-    tabList.forEach((tab) => {
-      tab.tabContent.sort((a, b) => (a.order || 0) - (b.order || 1))
-    })
-    const fieldList = tabList.map((tab) => {
-      return {
-        ...tab,
-        tabContent: tab.tabContent.reduce((fieldList: any[], field) => {
-          if (field.controlType === CONTROL_TYPE.INPUT_DATE) {
-            fieldList.push(new InputDate(field))
-          } else if (field.controlType === CONTROL_TYPE.SELECT) {
-            fieldList.push(new SelectInput(field))
-          } else if (field.controlType === 'header') {
-            fieldList.push(field)
-          } else {
-            fieldList.push(new TextInput(field))
+          {
+            tabId: 5,
+            tabTitle: 'Thông tin thu nhập',
+            tabContent: incomeInfo
           }
-          return fieldList
-        }, [])
-      }
-    })
+        ]
 
-    return fieldList
+        tabList.forEach((tab) => {
+          tab.tabContent.sort((a, b) => (a.order || 0) - (b.order || 1))
+        })
+        const fieldList = tabList.map((tab) => {
+          return {
+            ...tab,
+            tabContent: tab.tabContent.reduce((fieldList: any[], field) => {
+              if (field.controlType === CONTROL_TYPE.INPUT_DATE) {
+                fieldList.push(new InputDate(field))
+              } else if (field.controlType === CONTROL_TYPE.SELECT) {
+                fieldList.push(new SelectInput(field))
+              } else if (field.controlType === 'header') {
+                fieldList.push(field)
+              } else {
+                fieldList.push(new TextInput(field))
+              }
+              return fieldList
+            }, [])
+          }
+        })
+
+        return fieldList
+      })
+    )
   }
 
   createFamilyInfoFields() {
@@ -816,10 +844,10 @@ export class FormManagementService {
     const group: any = {}
     fieldList.forEach((field: any) => {
       group[field.key] = field.required
-        ? new FormControl(field.value || '', Validators.required)
-        : new FormControl(field.value || '')
+        ? [field.value || '', Validators.required]
+        : [field.value || '']
     })
-    return new FormGroup(group)
+    return this.fb.group(group)
   }
 
   toFormGroupEmployeeRecord(tabList: any) {

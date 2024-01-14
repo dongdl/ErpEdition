@@ -1,10 +1,10 @@
 import { inject } from '@angular/core'
 import { CanActivateFn, Router } from '@angular/router'
-import { HrRecordsService } from '../../../modules/hr-records/hr-records.service'
 import { getUserInfoToLS } from '../../../utils/auth'
-import { MenuItem } from '../../model/util.model'
 import { intersectArray } from '../../../utils/helper'
 import { IUserLogin } from '../../../utils/mock-data'
+import ROLES from '../../../utils/roles'
+import { MenuItem } from '../../model/util.model'
 
 export const AuthGuard: CanActivateFn = (route, state) => {
   const router = inject(Router)
@@ -23,9 +23,9 @@ export const redirectToMainPage: CanActivateFn = (route, state) => {
   const user = getUserInfoToLS() as IUserLogin
   if (user) {
     const { role } = user
-    if (role.includes('USER')) {
+    if (role.includes(ROLES.USER)) {
       router.navigate(['thong-tin-tuyen-dung-can-xu-ly'])
-    } else if (role.includes('MANAGER_LEVEL_1') || role.includes('MANAGER_LEVEL_2')) {
+    } else if (role.includes(ROLES.MANAGER_1) || role.includes(ROLES.MANAGER_2)) {
       router.navigate(['duyet-thong-tin-hai-mat'])
     } else {
       router.navigate(['quan-ly-nguoi-dung'])
@@ -40,10 +40,10 @@ export const userGuard: CanActivateFn = (route, state) => {
   const user = getUserInfoToLS() as IUserLogin
   const { role } = user
 
-  if (!role.includes('ADMIN')) {
-    if (role.includes('USER')) {
+  if (!role.includes(ROLES.ADMIN)) {
+    if (role.includes(ROLES.USER)) {
       router.navigate(['thong-tin-tuyen-dung'])
-    } else if (role.includes('MANAGER_LEVEL_1') || role.includes('MANAGER_LEVEL_2')) {
+    } else if (role.includes(ROLES.MANAGER_1) || role.includes(ROLES.MANAGER_2)) {
       router.navigate(['duyet-thong-tin-hai-mat'])
     }
     return false
@@ -51,11 +51,25 @@ export const userGuard: CanActivateFn = (route, state) => {
   return true
 }
 
+export const redirect: CanActivateFn = (route, state) => {
+  const router = inject(Router)
+  const user = getUserInfoToLS() as IUserLogin
+  const { username } = user
+  if (username === 'admin') {
+    router.navigate(['quan-ly-nguoi-dung'])
+  } else if (username === 'user') {
+    router.navigate(['thong-tin-tuyen-dung-can-xu-ly'])
+  } else if (username === 'manager1' || username === 'manager2') {
+    router.navigate(['duyet-thong-tin-hai-mat'])
+  }
+  return false
+}
+
 export const recordListGuard: CanActivateFn = (route, state) => {
   const router = inject(Router)
   const user = getUserInfoToLS() as IUserLogin
   const { role } = user
-  if (!(role.includes('ADMIN') || role.includes('USER'))) {
+  if (!(role.includes(ROLES.ADMIN) || role.includes(ROLES.USER))) {
     router.navigate(['duyet-thong-tin-hai-mat'])
     return false
   }
@@ -68,9 +82,9 @@ export const verifyRecordGuard: CanActivateFn = (route, state) => {
   const { role } = user
   if (
     !(
-      role.includes('ADMIN') ||
-      role.includes('MANAGER_LEVEL_1') ||
-      role.includes('MANAGER_LEVEL_2')
+      role.includes(ROLES.ADMIN) ||
+      role.includes(ROLES.MANAGER_1) ||
+      role.includes(ROLES.MANAGER_2)
     )
   ) {
     router.navigate(['thong-tin-tuyen-dung-can-xu-ly'])
@@ -90,7 +104,7 @@ export const sidebarForEachRole = (menuList: MenuItem[]) => {
       const roleArr = intersectArray(menu.roles, role)
 
       if (menu.key === 'user-management') {
-        if (roleArr.includes('ADMIN')) {
+        if (roleArr.includes(ROLES.ADMIN)) {
           menu.hidden = false
         } else {
           menu.hidden = true
@@ -99,10 +113,10 @@ export const sidebarForEachRole = (menuList: MenuItem[]) => {
 
       if (menu.key === 'recruitment') {
         if (
-          roleArr.includes('ADMIN') ||
-          roleArr.includes('USER') ||
-          roleArr.includes('MANAGER_LEVEL_2') ||
-          roleArr.includes('MANAGER_LEVEL_1')
+          roleArr.includes(ROLES.ADMIN) ||
+          roleArr.includes(ROLES.USER) ||
+          roleArr.includes(ROLES.MANAGER_2) ||
+          roleArr.includes(ROLES.MANAGER_1)
         ) {
           menu.hidden = false
 
@@ -111,14 +125,14 @@ export const sidebarForEachRole = (menuList: MenuItem[]) => {
               const roleArr = intersectArray(submenu.roles as string[], role)
 
               if (submenu.key === 'record-list') {
-                submenu.hidden = !(roleArr.includes('ADMIN') || roleArr.includes('USER'))
+                submenu.hidden = !(roleArr.includes(ROLES.ADMIN) || roleArr.includes(ROLES.USER))
               }
 
               if (submenu.key === 'verify-record') {
                 submenu.hidden = !(
-                  roleArr.includes('ADMIN') ||
-                  roleArr.includes('MANAGER_LEVEL_1') ||
-                  roleArr.includes('MANAGER_LEVEL_2')
+                  roleArr.includes(ROLES.ADMIN) ||
+                  roleArr.includes(ROLES.MANAGER_1) ||
+                  roleArr.includes(ROLES.MANAGER_2)
                 )
               }
             })

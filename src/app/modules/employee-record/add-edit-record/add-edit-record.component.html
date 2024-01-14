@@ -1,0 +1,79 @@
+<form
+  class="tw-p-8 tw-pt-2"
+  [formGroup]="formRecord"
+  (ngSubmit)="onSubmit()">
+  <app-tab-group>
+    @for (tab of fieldList; track tab.tabId){
+    <app-tab-panel [title]="tab.tabTitle">
+      <ng-template tabPanelContent>
+        <div class="tw-grid tw-grid-cols-4 tw-py-6 tw-gap-x-8 tw-gap-y-4">
+          @for (field of tab.tabContent; track field.key) { @switch (field.controlType) { @case
+          (ControlType.INPUT_TEXT) {
+          <app-input
+            [formControlName]="field.key"
+            [label]="field.label"
+            [id]="field.key"
+            type="text">
+            @if (getFormControl(field.key)?.hasError('required')) {
+            <p class="tw-my-0 !tw-text-base tw-text-red-600">
+              {{ field.label }} không được bỏ trống
+            </p>
+            }
+          </app-input>
+          } @case (ControlType.SELECT) {
+          <app-select
+            [formControlName]="field.key"
+            [label]="field.label"
+            [id]="field.key"
+            [optionList]="field.options"></app-select>
+          } @case (ControlType.INPUT_DATE) {
+          <app-input
+            [formControlName]="field.key"
+            [label]="field.label"
+            [id]="field.key"
+            type="datetime"></app-input>
+          } @default {
+          <div class="tw-col-span-4 divide-y">
+            <h3 class="!tw-text-2xl">{{ field.title }}</h3>
+          </div>
+          } } }
+        </div>
+      </ng-template>
+    </app-tab-panel>
+    }
+    <app-tab-panel title="Thông tin gia đình và quan hệ thân nhân">
+      <ng-template tabPanelContent>
+        <app-add-edit-family
+          [familyList]="familyList"
+          [mode]="modeModalFamily"
+          (deleteFamily)="deleteFamily($event)"
+          (changeFamily)="onChangeFamily($event)"
+          (changeMode)="modeModalFamily = $event"></app-add-edit-family>
+      </ng-template>
+    </app-tab-panel>
+
+    @if(mode !== 'add'){
+    <app-tab-panel title="Lịch sử">
+      <ng-template tabPanelContent>
+        <app-history-record [history]="history"></app-history-record>
+      </ng-template>
+    </app-tab-panel>
+    }
+
+    <app-tab-panel title="Danh sách tài liệu">
+      <ng-template tabPanelContent>
+        <app-upload-file-list></app-upload-file-list>
+      </ng-template>
+    </app-tab-panel>
+  </app-tab-group>
+  @if(this.mode !== 'view'){
+  <div class="tw-flex tw-justify-center">
+    <button
+      type="submit"
+      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[250px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-4">
+      <i class="fa fa-check"></i>
+      <span class="tw-leading-none">Lưu</span>
+    </button>
+  </div>
+  }
+</form>

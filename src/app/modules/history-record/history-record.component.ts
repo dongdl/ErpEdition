@@ -1,6 +1,7 @@
-import { Component } from '@angular/core'
+import { Component, Input } from '@angular/core'
 import { employeeHistory } from '../../model/employee/employeeHistory'
 import { NgClass } from '@angular/common'
+import { HistoryEmployeeItem } from '../../model/record'
 
 @Component({
   selector: 'app-history-record',
@@ -10,27 +11,27 @@ import { NgClass } from '@angular/common'
   styleUrl: './history-record.component.css'
 })
 export class HistoryRecordComponent {
-  tableHeader: { key: keyof employeeHistory; name: string; width?: string | number }[] = [
+  @Input() history: HistoryEmployeeItem[] = []
+  tableHeader: { key: keyof HistoryEmployeeItem; name: string; width?: string | number }[] = [
     {
       name: 'Nội dung',
-      key: 'content',
+      key: 'taskName',
       width: '40%'
     },
     {
-      name: 'Trạng thái',
-      key: 'status',
-      width: '10%'
-    },
-    {
-      name: 'Trạng thái tiếp theo',
-      key: 'nextStatus',
-      width: '10%'
-    },
-    {
-      name: 'Mô tả',
-      key: 'description',
+      name: 'Thời gian',
+      key: 'createdDate',
       width: '40%'
+    },
+    {
+      name: 'Người thực hiện',
+      key: 'assignee',
+      width: '30%'
+    },
+    {
+      name: 'Tạo bởi',
+      key: 'createdBy',
+      width: '10%'
     }
   ]
-  tableData: employeeHistory[] = []
 }

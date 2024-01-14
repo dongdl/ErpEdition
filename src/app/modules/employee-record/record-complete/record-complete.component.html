@@ -1,0 +1,195 @@
+<div class="">
+  <div class="tw-flex">
+    <div class="tw-w-full">
+      <div class="tw-flex">
+        <h2 class="tw-text-[18px]">
+          <i class="fa fa-search"></i>
+          Tìm kiếm
+        </h2>
+      </div>
+
+      <form
+        [formGroup]="formSearch"
+        class="tw-grid tw-grid-cols-2 tw-w-full tw-gap-x-10 tw-gap-y-6">
+        <div class="tw-flex tw-items-center tw-gap-4">
+          <div class="tw-w-[110px]">Mã nhân viên :</div>
+          <input
+            type="text"
+            formControlName="hrCode"
+            class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-p-2.5 tw-w-[300px]"
+            placeholder="Tìm kiếm bằng mã nhân viên" />
+        </div>
+        <div class="tw-flex tw-items-center tw-gap-4">
+          <div class="tw-w-[100px]">Họ và tên :</div>
+          <input
+            type="text"
+            formControlName="fullName"
+            class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-p-2.5 tw-w-[300px]"
+            placeholder="Tìm kiếm bằng họ và tên" />
+        </div>
+        <div class="tw-flex tw-items-center tw-gap-4">
+          <div class="tw-w-[110px]">Chức danh :</div>
+          <input
+            type="text"
+            formControlName="level"
+            class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-p-2.5 tw-w-[300px]"
+            placeholder="Tìm kiếm bằng chức danh" />
+        </div>
+        <div class="tw-flex tw-items-center tw-gap-4">
+          <div class="tw-w-[100px]">Phòng ban :</div>
+          <input
+            type="text"
+            formControlName="departmentCode"
+            class="tw-bg-gray-50 tw-border tw-border-gray-300 tw-text-gray-900 !tw-rounded-md focus:tw-ring-primary-600 focus:tw-border-primary-600 tw-block tw-p-2.5 tw-w-[300px]"
+            placeholder="Tìm kiếm bằng phòng ban" />
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="tw-flex tw-w-full tw-justify-end tw-gap-4 tw-mb-10 tw-mt-10">
+    <button
+      type="button"
+      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[100px] tw-h-12 tw-flex tw-items-center tw-justify-center tw-gap-4"
+      (click)="resetSearchForm()">
+      <i class="fa fa-recycle"></i>
+      <span class="tw-leading-none">Đặt lại</span>
+    </button>
+    <button
+      type="button"
+      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[100px] tw-h-12 tw-flex tw-items-center tw-justify-center tw-gap-4"
+      (click)="search()">
+      <i class="fa fa-search"></i>
+      <span class="tw-leading-none">Tìm kiếm</span>
+    </button>
+    <button
+      type="button"
+      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[100px] tw-h-12 tw-flex tw-items-center tw-justify-center tw-gap-4"
+      (click)="addNewRecord()">
+      <i class="fa fa-plus"></i>
+      <span class="tw-leading-none">Thêm mới</span>
+    </button>
+    <button
+      type="button"
+      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[120px] tw-h-12 tw-flex tw-items-center tw-justify-center tw-gap-4">
+      <i class="fa fa-download"></i>
+      <span class="tw-leading-none">Import excel</span>
+    </button>
+  </div>
+
+  <app-record-table
+    [tableHeader]="tableHeader"
+    [recordList]="recordList">
+    <ng-template
+      #actionTemplate
+      let-record>
+      <div class="tw-absolute tw-inset-0 tw-flex tw-items-center tw-justify-center">
+        <!-- <a
+          href="javascript:;"
+          class="btn btn-outline !tw-px-2">
+          <i class="fas fa-directions"></i>
+        </a> -->
+        <a
+          (click)="onViewDetail(record)"
+          href="javascript:;"
+          class="btn btn-outline !tw-px-2 !tw-text-[20px]">
+          <i class="fa fa-eye"></i>
+        </a>
+
+        <!-- <a
+          (click)="onEditRecord(record)"
+          href="javascript:;"
+          class="btn btn-outline !tw-px-2">
+          <i class="fa fa-edit"></i>
+        </a> -->
+
+        <!-- <a
+          href="javascript:;"
+          class="btn btn-outline !tw-px-2">
+          <i class="fa fa-trash"></i>
+        </a>
+        <a
+          href="javascript:;"
+          class="btn btn-outline !tw-px-2">
+          <i class="fa fa-envelope"></i>
+        </a> -->
+      </div>
+    </ng-template>
+  </app-record-table>
+
+  <nav
+    class="tw-flex tw-items-center tw-flex-column tw-flex-wrap md:tw-flex-row tw-justify-between tw-pt-4 tw-px-2 tw-border-x tw-border-b"
+    aria-label="Table navigation">
+    <span
+      class="tw-text-md tw-font-normal tw-text-gray-500 tw-mb-4 md:tw-mb-0 tw-block tw-w-full md:tw-inline md:tw-w-auto">
+      Showing
+      <span class="tw-font-semibold tw-text-gray-900">1-10</span>
+      of
+      <span class="tw-font-semibold tw-text-gray-900">1000</span>
+    </span>
+    <ul class="tw-inline-flex tw--space-x-px rtl:tw-space-x-reverse tw-text-md tw-h-8">
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-ms-0 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-rounded-s-lg hover:tw-bg-gray-100 hover:tw-text-gray-700">
+          Previous
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          1
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          2
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          aria-current="page"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          3
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          4
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          5
+        </a>
+      </li>
+      <li>
+        <a
+          href="#"
+          class="tw-flex tw-items-center tw-justify-center tw-px-3 tw-h-10 tw-leading-tight tw-text-gray-500 tw-bg-white tw-border tw-border-gray-300 tw-hover:bg-gray-100 hover:tw-text-gray-700">
+          Next
+        </a>
+      </li>
+    </ul>
+  </nav>
+  @if (isModalOpen) {
+  <app-modal
+    [modalTitle]="modalTitle"
+    [openModal]="true"
+    (changeModal)="closeModal($event)">
+    <app-add-edit-record
+      [mode]="mode"
+      (closeModal)="isModalOpen = $event"
+      [recordCurrent]="recordEdited"
+      (changeRecord)="onChangeRecord($event)"></app-add-edit-record>
+  </app-modal>
+  }
+</div>

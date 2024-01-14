@@ -34,7 +34,7 @@ export class InputComponent implements ControlValueAccessor, Validator, AfterVie
   @Input() label = ''
   @Input() id = ''
   @Input() placeholder = ''
-  @Input() type: 'text' | 'date' = 'text'
+  @Input() type: 'text' | 'datetime' = 'text'
   @Input() layout: 'vertical' | 'horizontal' = 'vertical'
   value = ''
   disabled = false

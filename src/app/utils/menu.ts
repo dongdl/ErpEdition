@@ -1,4 +1,5 @@
 import { MenuItem } from '../shared/model/util.model'
+import ROLES from './roles'
 
 export const MENU_FULL: MenuItem[] = [
   {
@@ -6,7 +7,7 @@ export const MENU_FULL: MenuItem[] = [
     id: '7',
     icon: 'icon-users',
     link: '/quan-ly-nguoi-dung',
-    roles: ['ADMIN'],
+    roles: [ROLES.ADMIN],
     key: 'user-management'
   },
   {
@@ -16,7 +17,7 @@ export const MENU_FULL: MenuItem[] = [
     active: false,
     open: true,
     key: 'recruitment',
-    roles: ['ADMIN', 'USER', 'MANAGER_LEVEL_2', 'MANAGER_LEVEL_1'],
+    roles: [ROLES.ADMIN, ROLES.MANAGER_1, ROLES.MANAGER_2, ROLES.USER],
     subMenu: [
       {
         name: 'Thông tin tuyển dụng cần xử lý',
@@ -24,7 +25,7 @@ export const MENU_FULL: MenuItem[] = [
         icon: 'icon-add',
         link: '/thong-tin-tuyen-dung-can-xu-ly',
         active: false,
-        roles: ['ADMIN', 'USER'],
+        roles: [ROLES.ADMIN, ROLES.USER],
         key: 'record-list'
       },
       {
@@ -33,7 +34,7 @@ export const MENU_FULL: MenuItem[] = [
         icon: 'icon-add',
         link: '/thong-tin-tuyen-dung-dang-xu-ly',
         active: false,
-        roles: ['ADMIN', 'USER'],
+        roles: [ROLES.ADMIN, ROLES.USER],
         key: 'record-list'
       },
       {
@@ -42,7 +43,7 @@ export const MENU_FULL: MenuItem[] = [
         icon: 'icon-add',
         link: '/thong-tin-tuyen-dung-hoan-thanh',
         active: false,
-        roles: ['ADMIN', 'USER'],
+        roles: [ROLES.ADMIN, ROLES.USER],
         key: 'record-list'
       },
       {
@@ -51,7 +52,7 @@ export const MENU_FULL: MenuItem[] = [
         icon: 'icon-add',
         link: '/duyet-thong-tin-hai-mat',
         active: false,
-        roles: ['MANAGER_LEVEL_2', 'MANAGER_LEVEL_1', 'ADMIN'],
+        roles: [ROLES.ADMIN, ROLES.MANAGER_1, ROLES.MANAGER_2],
         key: 'verify-record'
       }
     ]

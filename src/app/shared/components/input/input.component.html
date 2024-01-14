@@ -5,10 +5,9 @@
     {{ label }}
   </label>
   <input
-    type="text"
     [name]="id"
     [id]="id"
-    [type]="type"
+    [attr.type]="type === 'datetime' ? 'datetime-local' : 'text'"
     [disabled]="disabled"
     [ngModel]="value"
     (ngModelChange)="onValueChange($event)"

@@ -18,7 +18,6 @@ export class AuthService {
   loginUser({ username, password }: { username: string; password: string }) {
     return defer(() => apiLogin({ username, password })).pipe(
       map((user) => {
-        console.log(user)
         if (user) {
           saveUserInfoToLS(user)
         }

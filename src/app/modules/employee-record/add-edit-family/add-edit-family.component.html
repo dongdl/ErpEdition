@@ -1,38 +1,74 @@
 <div>
+  <div class="tw-flex tw-justify-end tw-my-4">
+    <button
+      type="button"
+      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[150px] tw-h-14 tw-flex tw-items-center tw-justify-center tw-gap-4"
+      (click)="addFamily()">
+      <i class="fa fa-plus"></i>
+      <span class="tw-leading-none">Thêm mới</span>
+    </button>
+  </div>
   <div
-    class="tw-relative tw-overflow-x-auto sm:tw-rounded-lg tw-scrollbar tw-scrollbar-thumb-gray-200 tw-scrollbar-track-gray-100 tw-scrollbar-h-4">
-    <table class="tw-w-full tw-text-left rtl:tw-text-right tw-text-gray-500 tw-text-md">
-      <thead class="tw-w-full tw-text-md tw-text-gray-700 tw-bg-gray-50">
+    class="tw-relative tw-overflow-x-auto sm:tw-rounded-lg tw-scrollbar tw-scrollbar-thumb-gray-300 tw-scrollbar-thumb-rounded-md tw-scrollbar-track-gray-100 tw-scrollbar-h-4">
+    <table class="tw-w-fit tw-text-left rtl:tw-text-right tw-text-gray-500 tw-text-md">
+      <thead class="tw-text-md tw-text-gray-700 tw-bg-gray-50">
         <tr class="tw-border">
           @for(header of tableHeader; track header.key ){
           <th
             scope="col"
             class="tw-px-8 tw-py-3"
-            [style.minWidth]="header.width">
+            [style.minWidth]="header.width || '200px'">
             {{ header.name }}
           </th>
           }
+          <th
+            scope="col"
+            class="tw-px-8 tw-py-3 tw-sticky tw-right-0 tw-bg-gray-100 tw-z-10"
+            [style.minWidth]="'150px'">
+            Hành động
+          </th>
         </tr>
       </thead>
       <tbody>
-        @for (record of history ; track record.id ) {
-        <tr class="odd:tw-bg-white even:tw-bg-gray-50 tw-border tw-text-md">
+        @for (record of familyList ; track record.id ) {
+        <tr class="tw-border tw-text-md">
           @for(header of tableHeader; track header.key){
           <td
             scope="row"
             class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-h-20">
-            <span class="tw-line-clamp-3">
+            <span
+              class="tw-line-clamp-3"
+              [style.maxWidth]="header.width || '150px'">
               {{ record[header.key] }}
             </span>
           </td>
           }
+          <td
+            class="tw-flex tw-flex-nowrap tw-gap-2 tw-sticky tw-right-0 tw-bg-white tw-z-10 tw-h-40">
+            <div class="tw-absolute tw-inset-0 tw-flex tw-justify-center tw-items-center">
+              <a
+                href="javascript:;"
+                class="btn btn-outline !tw-px-2"
+                (click)="editFamily(record)">
+                <i class="fa fa-edit"></i>
+              </a>
+
+              <a
+                (click)="delete(record)"
+                href="javascript:;"
+                class="btn btn-outline !tw-px-2">
+                <i class="fa fa-trash"></i>
+              </a>
+            </div>
+          </td>
         </tr>
+
         } @empty {
         <tr class="tw-h-[200px]">
           <td
-            colspan="5"
+            [attr.colspan]="tableHeader.length + 1"
             class="tw-border tw-text-md tw-text-center">
-            Không có dữ liệu
+            không có dữ liệu
           </td>
         </tr>
         }
@@ -102,4 +138,11 @@
       </li>
     </ul>
   </nav>
+  @if(isOpenModal){
+  <app-modal-add-edit-family-form
+    [mode]="mode"
+    [editedFamilyInfo]="editedFamily"
+    (onSubmitFamilyInfo)="onSubmit($event)"
+    (onCloseModal)="closeModal()"></app-modal-add-edit-family-form>
+  }
 </div>

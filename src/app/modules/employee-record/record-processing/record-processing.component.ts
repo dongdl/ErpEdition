@@ -1,20 +1,19 @@
+import { HttpErrorResponse } from '@angular/common/http'
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Subscription, catchError, of } from 'rxjs'
-import { Employee, IHrRecord } from '../../model/record'
-import { USER_STATUS } from '../../model/user'
-import { ModalComponent } from '../../shared/components/modal/modal.component'
-import { SharedModule } from '../../shared/shared.module'
-import { mappingStatusUser } from '../../utils/helper'
-import recordListJson from '../../utils/users.json'
-import { AuthService } from '../auth/auth.service'
-import { HrRecordsService } from '../hr-records/hr-records.service'
-import { RecordTableComponent } from '../employee-record/record-table/record-table.component'
-import { AddEditRecordComponent } from '../employee-record/add-edit-record/add-edit-record.component'
+import { EMPLOYEE_STATUS, Employee, IHrRecord } from '../../../model/record'
+import { ModalComponent } from '../../../shared/components/modal/modal.component'
+import { SharedModule } from '../../../shared/shared.module'
+import { AuthService } from '../../auth/auth.service'
+import { HrRecordsService } from '../../hr-records/hr-records.service'
+import { AddEditRecordComponent } from '../add-edit-record/add-edit-record.component'
+import { EmployeeRecordService } from '../employee-record.service'
+import { RecordTableComponent } from '../record-table/record-table.component'
 
 @Component({
-  selector: 'app-record-list',
+  selector: 'app-record-processing',
   standalone: true,
   imports: [
     AddEditRecordComponent,
@@ -24,12 +23,13 @@ import { AddEditRecordComponent } from '../employee-record/add-edit-record/add-e
     ReactiveFormsModule,
     RecordTableComponent
   ],
-  templateUrl: './record-list.component.html',
-  styleUrl: './record-list.component.css'
+  providers: [EmployeeRecordService],
+  templateUrl: './record-processing.component.html',
+  styleUrl: './record-processing.component.css'
 })
-export class RecordListComponent implements OnInit, OnDestroy {
+export class RecordProcessingComponent implements OnInit, OnDestroy {
   isModalOpen = false
-  recordList: Employee[] = recordListJson
+  recordList: Employee[] = []
   chosenRecord: IHrRecord | null = null
   mode: 'add' | 'edit' | 'view' = 'add'
   recordListSubscription: Subscription | null = null
@@ -90,15 +90,29 @@ export class RecordListComponent implements OnInit, OnDestroy {
     private router: Router,
     private activeRoute: ActivatedRoute,
     private fb: FormBuilder,
-    private auth: AuthService
+    private auth: AuthService,
+    private employeeService: EmployeeRecordService
   ) {}
 
-  get STATUS() {
-    return USER_STATUS
+  ngOnInit(): void {
+    this.getListByRoles()
+    this.formSearch = this.fb.group({
+      hrCode: [''],
+      fullName: [''],
+      level: [''],
+      departmentCode: ['']
+    })
   }
 
-  generateStatusUser(status: USER_STATUS) {
-    return mappingStatusUser(status)
+  getListByRoles() {
+    this.employeeService
+      .getListEmployeeByRoleAndStatus(EMPLOYEE_STATUS.PROCESSING)
+      .pipe(catchError((err) => of(err)))
+      .subscribe((res) => {
+        if (!(res instanceof HttpErrorResponse)) {
+          this.recordList = res
+        }
+      })
   }
 
   closeModal(value: boolean) {
@@ -108,45 +122,6 @@ export class RecordListComponent implements OnInit, OnDestroy {
   addNewRecord() {
     this.mode = 'add'
     this.isModalOpen = true
-  }
-
-  ngOnInit(): void {
-    // this.recordListSubscription = this.hrServices.recordList.subscribe((record) => {
-    //   this.recordList = [...record]
-    //   this.filterList = [...record]
-    // })
-    // this.activeRoute.queryParams.subscribe((query) => {
-    //   if (this.firstRender) return
-    //   const { hrCode, fullName, level, departmentCode } = query
-    //   if (hrCode) {
-    //     this.filterList = this.recordList.filter((record) =>
-    //       record.hrCode.toLowerCase().includes(hrCode.toLowerCase())
-    //     )
-    //   }
-    //   if (fullName) {
-    //     this.filterList = this.recordList.filter((record) =>
-    //       record.fullName.toLowerCase().includes(fullName.toLowerCase())
-    //     )
-    //   }
-    //   if (level) {
-    //     this.filterList = this.recordList.filter((record) =>
-    //       record.level.toLowerCase().includes(level.toLowerCase())
-    //     )
-    //   }
-    //   if (departmentCode) {
-    //     this.filterList = this.recordList.filter((record) =>
-    //       record.departmentCode.toLowerCase().includes(departmentCode.toLowerCase())
-    //     )
-    //   }
-    // })
-
-    this.formSearch = this.fb.group({
-      hrCode: [''],
-      fullName: [''],
-      level: [''],
-      departmentCode: ['']
-    })
-    this.firstRender = false
   }
 
   getFormControl(field: string) {

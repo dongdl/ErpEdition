@@ -2,15 +2,30 @@ import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import {
   recordListGuard,
+  redirect,
   userGuard,
   verifyRecordGuard
 } from '../shared/services/authentication/authGuard.service'
 import { MainComponent } from './main.component'
-import { RecordCompleteComponent } from './record-complete/record-complete.component'
-import { RecordProcessingComponent } from './record-processing/record-processing.component'
-import { RecordWaitHandleComponent } from './record-wait-handle/record-wait-handle.component'
+import { RecordProcessingComponent } from './employee-record/record-processing/record-processing.component'
+import { RecordWaitHandleComponent } from './employee-record/record-wait-handle/record-wait-handle.component'
 import { UsersManagementComponent } from './users-management/users-management.component'
-import { VerifyRecordComponent } from './verify-record/verify-record.component'
+import { VerifyRecordComponent } from './employee-record/verify-record/verify-record.component'
+import { RecordCompleteComponent } from './employee-record/record-complete/record-complete.component'
+import { getUserInfoToLS } from '../utils/auth'
+import { IUserLogin } from '../utils/mock-data'
+
+const redirectTo = () => {
+  const { username } = getUserInfoToLS() as IUserLogin
+  if (username === 'admin') {
+    return 'quan-ly-nguoi-dung'
+  } else if (username === 'user') {
+    return 'thong-tin-tuyen-dung-can-xu-ly'
+  } else if (username === 'manager1' || username === 'manager2') {
+    return 'duyet-thong-tin-hai-mat'
+  }
+  return ''
+}
 
 const routes: Routes = [
   {
@@ -19,7 +34,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'thong-tin-tuyen-dung',
+        redirectTo: redirectTo(),
         pathMatch: 'full'
       },
       {

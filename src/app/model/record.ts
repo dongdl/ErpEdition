@@ -1,5 +1,20 @@
 import { USER_STATUS } from './user'
 
+export enum EMPLOYEE_STATUS {
+  WAIT_PROCESSING = 'WAIT_PROCESSING',
+  PROCESSING = 'PROCESSING',
+  APPROVED = 'APPROVED'
+}
+
+export interface changeStatusEmployeeRecordRequest {
+  recruitmentUserTaskId: number
+  action?: 'SUBMIT' | 'CLOSE' | 'APPROVE' | 'REJECT'
+  employeeId: number
+  commentCode: string
+  commentTitle: string
+  commentDetail: string
+}
+
 export interface IHrRecord {
   id?: number
   username?: string
@@ -18,7 +33,8 @@ export interface IHrRecord {
 }
 
 export interface Family {
-  id: number
+  _id?: number
+  id?: number
   relationShip?: string // Quan hệ"
   name?: string // Họ tên"
   birthday?: string // Ngày sinh"
@@ -54,6 +70,7 @@ export enum STATUS {
 export interface Employee {
   id?: number
   code?: string
+  recruitmentUserTaskId?: number
 
   fullName?: string // Họ và tên
   positionCode?: string // Mã chức danh, tên chức danh
@@ -149,8 +166,8 @@ export interface Employee {
   salaryAllowance2?: number // Thông tin thu nhập - Phụ cấp 2
   relationShip?: string // Quan hệ
   name?: string // Họ tên
-  // families?: Array<Family>;
-  families: string
+  families?: Array<Family>
+  // families: string
 }
 
 interface IHeaderTableRecord {
@@ -165,4 +182,16 @@ interface IHeaderTableRecord {
   insuranceNumber?: string // Số sổ bảo hiểm
   accountNum?: string // Số TK BVB
   status?: string
+}
+
+export interface HistoryEmployeeItem {
+  createdBy: string
+  createdDate: string
+  modifiedBy: string
+  modifiedDate: string
+  id: number
+  employeeId: number
+  taskId: string
+  taskName: string
+  assignee: string
 }
