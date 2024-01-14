@@ -14,7 +14,7 @@ export class HistoryRecordComponent {
   @Input() history: HistoryEmployeeItem[] = []
   tableHeader: { key: keyof HistoryEmployeeItem; name: string; width?: string | number }[] = [
     {
-      name: 'Nội dung',
+      name: 'Bước xử lý',
       key: 'taskName',
       width: '40%'
     },
@@ -24,14 +24,10 @@ export class HistoryRecordComponent {
       width: '40%'
     },
     {
-      name: 'Người thực hiện',
+      name: 'Ghi chú',
       key: 'assignee',
       width: '30%'
     },
-    {
-      name: 'Tạo bởi',
-      key: 'createdBy',
-      width: '10%'
-    }
+    
   ]
 }
