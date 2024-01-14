@@ -16,12 +16,14 @@ import { getUserInfoToLS } from '../utils/auth'
 import { IUserLogin } from '../utils/mock-data'
 
 const redirectTo = () => {
-  const { username } = getUserInfoToLS() as IUserLogin
-  if (username === 'admin') {
+  const user = getUserInfoToLS() as IUserLogin
+  if (user === null) return ''
+
+  if (user.username === 'admin') {
     return 'quan-ly-nguoi-dung'
-  } else if (username === 'user') {
+  } else if (user.username === 'user') {
     return 'thong-tin-tuyen-dung-can-xu-ly'
-  } else if (username === 'manager1' || username === 'manager2') {
+  } else if (user.username === 'manager1' || user.username === 'manager2') {
     return 'duyet-thong-tin-hai-mat'
   }
   return ''
