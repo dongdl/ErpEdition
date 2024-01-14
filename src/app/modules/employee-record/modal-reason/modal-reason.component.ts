@@ -71,7 +71,7 @@ export class ModalReasonComponent implements OnInit {
         action: action as any,
         recruitmentUserTaskId: this.employeeChosen?.recruitmentUserTaskId,
         commentCode: '',
-        commentDetail: '',
+        commentDetail: this.form.value,
         commentTitle: ''
       })
       .pipe(catchError((err) => of(err)))
