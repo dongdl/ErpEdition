@@ -69,7 +69,7 @@ export const generateStatusStyleAndText = (status: string) => {
           'tw-px-2 tw-py-2 tw-flex tw-items-center tw-justify-center !tw-rounded-md tw-bg-green-500 tw-text-white !tw-text-base',
         text: 'Tạo mới'
       }
-    case EMPLOYEE_STATUS.WAIT_PROCESSING:
+    case 'RETURN':
       return {
         class:
           'tw-px-2 tw-py-2 tw-flex tw-items-center tw-justify-center !tw-rounded-md tw-bg-primary tw-text-white !tw-text-base',
