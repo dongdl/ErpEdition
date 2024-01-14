@@ -20,5 +20,5 @@ export const apiLogin = ({ username, password }: { username: string; password: s
       } else {
         rel(undefined)
       }
-    }, 2000)
+    }, 1000)
   })

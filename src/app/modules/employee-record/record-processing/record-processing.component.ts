@@ -11,6 +11,7 @@ import { HrRecordsService } from '../../hr-records/hr-records.service'
 import { AddEditRecordComponent } from '../add-edit-record/add-edit-record.component'
 import { EmployeeRecordService } from '../employee-record.service'
 import { RecordTableComponent } from '../record-table/record-table.component'
+import { FormManagementService } from '../../../shared/services/form-management.service'
 
 @Component({
   selector: 'app-record-processing',
@@ -23,7 +24,7 @@ import { RecordTableComponent } from '../record-table/record-table.component'
     ReactiveFormsModule,
     RecordTableComponent
   ],
-  providers: [EmployeeRecordService],
+  providers: [EmployeeRecordService, FormManagementService],
   templateUrl: './record-processing.component.html',
   styleUrl: './record-processing.component.css'
 })
@@ -38,50 +39,30 @@ export class RecordProcessingComponent implements OnInit, OnDestroy {
   firstRender = true
   tableHeader: { key: keyof Employee; name: string; width?: string }[] = [
     {
-      key: 'code',
-      name: 'Mã nhân viên'
+      key: 'fullName',
+      name: 'Họ và tên',
+      width: '30%'
     },
     {
-      key: 'fullName',
-      name: 'Họ và tên'
+      key: 'code',
+      name: 'Mã nhân viên',
+      width: '30%'
     },
+
     {
       key: 'positionCode',
-      name: 'Mã chức danh'
+      name: 'Chức danh',
+      width: '20%'
     },
     {
-      key: 'level',
-      name: 'Cấp bậc'
+      key: 'departmentCode',
+      name: 'Phòng ban',
+      width: '20%'
     },
     {
-      key: 'zone',
-      name: 'Vùng',
-      width: '200px'
-    },
-    {
-      key: 'region',
-      name: 'Miền',
-      width: '200px'
-    },
-    {
-      key: 'taxCode',
-      name: 'Mã số thuế thu nhập cá nhân',
-      width: '300px'
-    },
-    {
-      key: 'insuranceNumber',
-      name: 'Số sổ bảo hiểm',
-      width: '300px'
-    },
-    {
-      key: 'accountNum',
-      name: 'Số tài khoản BVB',
-      width: '300px'
-    },
-    {
-      key: 'status',
+      key: 'subStatus',
       name: 'Trạng thái',
-      width: '140px'
+      width: '20%'
     }
   ]
 

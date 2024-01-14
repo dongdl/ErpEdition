@@ -71,6 +71,7 @@ export interface Employee {
   id?: number
   code?: string
   recruitmentUserTaskId?: number
+  subStatus?: string
 
   fullName?: string // Họ và tên
   positionCode?: string // Mã chức danh, tên chức danh

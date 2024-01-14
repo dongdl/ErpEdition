@@ -95,6 +95,7 @@ export const verifyRecordGuard: CanActivateFn = (route, state) => {
 
 export const sidebarForEachRole = (menuList: MenuItem[]) => {
   const data = getUserInfoToLS()
+
   if (!data) return []
   const { role } = data
   menuList.forEach((menu) => {
@@ -112,35 +113,65 @@ export const sidebarForEachRole = (menuList: MenuItem[]) => {
       }
 
       if (menu.key === 'recruitment') {
-        if (
+        menu.hidden = !(
           roleArr.includes(ROLES.ADMIN) ||
           roleArr.includes(ROLES.USER) ||
           roleArr.includes(ROLES.MANAGER_2) ||
           roleArr.includes(ROLES.MANAGER_1)
-        ) {
-          menu.hidden = false
+        )
 
-          if (menu?.subMenu) {
-            menu.subMenu.forEach((submenu) => {
-              const roleArr = intersectArray(submenu.roles as string[], role)
+        if (menu?.subMenu) {
+          menu.subMenu.forEach((submenu) => {
+            const roleArr = intersectArray(submenu.roles as string[], role)
 
-              if (submenu.key === 'record-list') {
-                submenu.hidden = !(roleArr.includes(ROLES.ADMIN) || roleArr.includes(ROLES.USER))
-              }
+            if (submenu.key === 'recruitment-manager') {
+              submenu.hidden = !(roleArr.includes(ROLES.ADMIN) || roleArr.includes(ROLES.USER))
+            }
 
-              if (submenu.key === 'verify-record') {
-                submenu.hidden = !(
-                  roleArr.includes(ROLES.ADMIN) ||
-                  roleArr.includes(ROLES.MANAGER_1) ||
-                  roleArr.includes(ROLES.MANAGER_2)
-                )
-              }
-            })
-          }
-        } else {
-          menu.hidden = true
+            if (submenu.key === 'verify') {
+              submenu.hidden = !(
+                roleArr.includes(ROLES.ADMIN) ||
+                roleArr.includes(ROLES.MANAGER_1) ||
+                roleArr.includes(ROLES.MANAGER_2)
+              )
+            }
+          })
         }
       }
+
+      // if (menu.key === 'recruitment-manage') {
+      //   if (
+      //     roleArr.includes(ROLES.ADMIN) ||
+      //     roleArr.includes(ROLES.USER) ||
+      //     roleArr.includes(ROLES.MANAGER_2) ||
+      //     roleArr.includes(ROLES.MANAGER_1)
+      //   ) {
+      //     menu.hidden = false
+
+      //     if (menu?.subMenu) {
+      //       menu.subMenu.forEach((submenu) => {
+      //         const roleArr = intersectArray(submenu.roles as string[], role)
+      //         console.log(roleArr)
+
+      //         if (submenu.key === 'record-list') {
+      //           submenu.hidden = !(roleArr.includes(ROLES.ADMIN) || roleArr.includes(ROLES.USER))
+      //         }
+
+      //         if (submenu.key === 'verify-record') {
+      //           console.log('run')
+
+      //           submenu.hidden = !(
+      //             roleArr.includes(ROLES.ADMIN) ||
+      //             roleArr.includes(ROLES.MANAGER_1) ||
+      //             roleArr.includes(ROLES.MANAGER_2)
+      //           )
+      //         }
+      //       })
+      //     }
+      //   } else {
+      //     menu.hidden = true
+      //   }
+      // }
     }
   })
   return menuList

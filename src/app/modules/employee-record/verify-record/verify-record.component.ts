@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http'
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { Router } from '@angular/router'
 import { Subscription, catchError, of } from 'rxjs'
@@ -13,6 +13,7 @@ import { AddEditRecordComponent } from '../add-edit-record/add-edit-record.compo
 import { EmployeeRecordService } from '../employee-record.service'
 import { ModalReasonComponent } from '../modal-reason/modal-reason.component'
 import { RecordTableComponent } from '../record-table/record-table.component'
+import { ModalConfirmComponent } from '../../../shared/components/modal-confirm/modal-confirm.component'
 
 @Component({
   selector: 'app-verify-record',
@@ -24,15 +25,18 @@ import { RecordTableComponent } from '../record-table/record-table.component'
     SharedModule,
     ReactiveFormsModule,
     RecordTableComponent,
-    ModalReasonComponent
+    ModalReasonComponent,
+    ModalConfirmComponent
   ],
   providers: [EmployeeRecordService],
   templateUrl: './verify-record.component.html',
   styleUrl: './verify-record.component.css'
 })
 export class VerifyRecordComponent implements OnInit, OnDestroy {
+  @Input({ required: true }) status!: EMPLOYEE_STATUS
   isModalOpenComment = false
   isModalEmployee = false
+
   recordList: Employee[] = []
   chosenRecord: IHrRecord | null = null
   mode: 'add' | 'edit' | 'view' = 'add'
@@ -43,51 +47,31 @@ export class VerifyRecordComponent implements OnInit, OnDestroy {
   modalType: 'agree' | 'reject' = 'agree'
   tableHeader: { key: keyof Employee; name: string; width?: string }[] = [
     {
-      key: 'code',
-      name: 'Mã nhân viên'
+      key: 'fullName',
+      name: 'Họ và tên',
+      width: '30%'
     },
     {
-      key: 'fullName',
-      name: 'Họ và tên'
+      key: 'code',
+      name: 'Mã nhân viên',
+      width: '30%'
     },
+
     {
       key: 'positionCode',
-      name: 'Mã chức danh'
+      name: 'Chức danh',
+      width: '20%'
     },
     {
-      key: 'level',
-      name: 'Cấp bậc'
-    },
-    {
-      key: 'zone',
-      name: 'Vùng',
-      width: '200px'
-    },
-    {
-      key: 'region',
-      name: 'Miền',
-      width: '200px'
-    },
-    {
-      key: 'taxCode',
-      name: 'Mã số thuế thu nhập cá nhân',
-      width: '300px'
-    },
-    {
-      key: 'insuranceNumber',
-      name: 'Số sổ bảo hiểm',
-      width: '300px'
-    },
-    {
-      key: 'accountNum',
-      name: 'Số tài khoản BVB',
-      width: '300px'
-    },
-    {
-      key: 'status',
-      name: 'Trạng thái',
-      width: '140px'
+      key: 'departmentCode',
+      name: 'Phòng ban',
+      width: '20%'
     }
+    // {
+    //   key: 'subStatus',
+    //   name: 'Trạng thái',
+    //   width: '20%'
+    // }
   ]
 
   constructor(
@@ -97,7 +81,7 @@ export class VerifyRecordComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getListByRoles()
+    this.getListByRoles(this.status)
     this.formSearch = this.fb.group({
       hrCode: [''],
       fullName: [''],
@@ -120,9 +104,9 @@ export class VerifyRecordComponent implements OnInit, OnDestroy {
     this.modalType = type
   }
 
-  getListByRoles() {
+  getListByRoles(status: EMPLOYEE_STATUS) {
     this.employeeService
-      .getListEmployeeByRoleAndStatus()
+      .getListEmployeeByRoleAndStatus(status)
       .pipe(catchError((err) => of(err)))
       .subscribe((res) => {
         if (!(res instanceof HttpErrorResponse)) {

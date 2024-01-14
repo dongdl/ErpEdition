@@ -46,7 +46,7 @@ export class SelectComponent implements ControlValueAccessor, Validator, AfterVi
   onTouched = () => {}
 
   onValueChange(event: any) {
-    const value = event.target.value
+    const value = event
     this.onChange(value)
   }
 

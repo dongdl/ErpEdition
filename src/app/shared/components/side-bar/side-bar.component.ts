@@ -16,6 +16,7 @@ export class SideBarComponent implements OnInit {
   menuList!: MenuItem[]
   ngOnInit(): void {
     this.menuList = sidebarForEachRole([...MENU_FULL])
+    // this.menuList = MENU_FULL
   }
 
   onClickParentMenu(id: string) {
@@ -23,5 +24,14 @@ export class SideBarComponent implements OnInit {
     if (item?.subMenu && item?.subMenu?.length > 0) {
       item.open = !item.open || false
     }
+  }
+  onClickSubItem(item: MenuItem) {
+    const pos = item.id.split('-').map((x) => Number(x))
+    const index1 = pos[0]
+    const index2 = pos[1]
+    const menuItem = this.menuList?.[index1]
+    if (!menuItem) return
+    const subMenu = menuItem.subMenu?.[index2]
+    subMenu!.open = !subMenu?.open
   }
 }

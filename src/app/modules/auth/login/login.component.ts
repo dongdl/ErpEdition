@@ -44,7 +44,7 @@ export class LoginComponent {
           } else if (username === 'user') {
             this.router.navigate(['thong-tin-tuyen-dung-can-xu-ly'])
           } else if (username === 'manager1' || username === 'manager2') {
-            this.router.navigate(['duyet-thong-tin-hai-mat'])
+            this.router.navigate(['duyet-thong-tin-hai-mat-can-xu-ly'])
           }
         },
         error: (error) => {

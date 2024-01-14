@@ -12,6 +12,8 @@ import { HrRecordsService } from '../../hr-records/hr-records.service'
 import { AddEditRecordComponent } from '../add-edit-record/add-edit-record.component'
 import { EmployeeRecordService } from '../employee-record.service'
 import { RecordTableComponent } from '../record-table/record-table.component'
+import { FormManagementService } from '../../../shared/services/form-management.service'
+import { ModalConfirmComponent } from '../../../shared/components/modal-confirm/modal-confirm.component'
 
 @Component({
   selector: 'app-record-wait-handle',
@@ -22,14 +24,18 @@ import { RecordTableComponent } from '../record-table/record-table.component'
     FormsModule,
     SharedModule,
     ReactiveFormsModule,
-    RecordTableComponent
+    RecordTableComponent,
+    ModalConfirmComponent
   ],
-  providers: [EmployeeRecordService],
+  providers: [EmployeeRecordService, FormManagementService],
   templateUrl: './record-wait-handle.component.html',
   styleUrl: './record-wait-handle.component.css'
 })
 export class RecordWaitHandleComponent implements OnInit, OnDestroy {
   isModalOpen = false
+  isOpenModalConfirm = false
+  confirmType: 'submit' | 'close' = 'submit'
+  recordConfirm: any = null
   recordList: Employee[] = []
   chosenRecord: IHrRecord | null = null
   mode: 'add' | 'edit' | 'view' = 'add'
@@ -39,50 +45,30 @@ export class RecordWaitHandleComponent implements OnInit, OnDestroy {
   firstRender = true
   tableHeader: { key: keyof Employee; name: string; width?: string }[] = [
     {
-      key: 'code',
-      name: 'Mã nhân viên'
+      key: 'fullName',
+      name: 'Họ và tên',
+      width: '30%'
     },
     {
-      key: 'fullName',
-      name: 'Họ và tên'
+      key: 'code',
+      name: 'Mã nhân viên',
+      width: '30%'
     },
+
     {
       key: 'positionCode',
-      name: 'Mã chức danh'
+      name: 'Chức danh',
+      width: '20%'
     },
     {
-      key: 'level',
-      name: 'Cấp bậc'
+      key: 'departmentCode',
+      name: 'Phòng ban',
+      width: '20%'
     },
     {
-      key: 'zone',
-      name: 'Vùng',
-      width: '200px'
-    },
-    {
-      key: 'region',
-      name: 'Miền',
-      width: '200px'
-    },
-    {
-      key: 'taxCode',
-      name: 'Mã số thuế thu nhập cá nhân',
-      width: '300px'
-    },
-    {
-      key: 'insuranceNumber',
-      name: 'Số sổ bảo hiểm',
-      width: '300px'
-    },
-    {
-      key: 'accountNum',
-      name: 'Số tài khoản BVB',
-      width: '300px'
-    },
-    {
-      key: 'status',
+      key: 'subStatus',
       name: 'Trạng thái',
-      width: '140px'
+      width: '20%'
     }
   ]
 
@@ -93,7 +79,8 @@ export class RecordWaitHandleComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private auth: AuthService,
     private employeeService: EmployeeRecordService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private fm: FormManagementService
   ) {}
 
   ngOnInit(): void {
@@ -217,6 +204,7 @@ export class RecordWaitHandleComponent implements OnInit, OnDestroy {
         if (!(res instanceof HttpErrorResponse) && !(res instanceof Error)) {
           this.toast.success('Chuyển duyệt thành công')
           this.getListByRoles()
+          this.isOpenModalConfirm = false
         }
       })
   }
@@ -237,7 +225,22 @@ export class RecordWaitHandleComponent implements OnInit, OnDestroy {
         if (!(res instanceof HttpErrorResponse) && !(res instanceof Error)) {
           this.toast.success('Đóng hồ sơ thành công')
           this.getListByRoles()
+          this.isOpenModalConfirm = false
         }
       })
+  }
+
+  openModalConfirm(type: 'submit' | 'close', employee: Employee) {
+    this.recordConfirm = employee
+    this.confirmType = type
+    this.isOpenModalConfirm = true
+  }
+
+  confirm(type: 'submit' | 'close') {
+    if (type === 'submit') {
+      this.approveByUser(this.recordConfirm)
+    } else {
+      this.closeByUser(this.recordConfirm)
+    }
   }
 }

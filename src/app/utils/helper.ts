@@ -61,26 +61,26 @@ export const mappingStatusUser2 = (status: USER_STATUS_2) => {
   }
 }
 
-export const generateStatusStyleAndText = (status: EMPLOYEE_STATUS) => {
+export const generateStatusStyleAndText = (status: string) => {
   switch (status) {
-    case EMPLOYEE_STATUS.APPROVED:
+    case 'NEW':
       return {
         class:
           'tw-px-2 tw-py-2 tw-flex tw-items-center tw-justify-center !tw-rounded-md tw-bg-green-500 tw-text-white !tw-text-base',
-        text: 'Đồng ý'
+        text: 'Tạo mới'
       }
     case EMPLOYEE_STATUS.WAIT_PROCESSING:
       return {
         class:
           'tw-px-2 tw-py-2 tw-flex tw-items-center tw-justify-center !tw-rounded-md tw-bg-primary tw-text-white !tw-text-base',
-        text: 'Chờ xử lý '
+        text: 'Trả về '
       }
 
     default:
       return {
         class:
           'tw-px-2 tw-py-2 tw-flex tw-items-center tw-justify-center !tw-rounded-md tw-bg-black/50 tw-text-white !tw-text-base',
-        text: 'Đang xử lý'
+        text: 'Tạo mới'
       }
   }
 }

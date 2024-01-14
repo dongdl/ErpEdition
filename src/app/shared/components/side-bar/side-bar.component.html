@@ -76,19 +76,49 @@
         </a>
 
         <ul class="sub-menu">
-          @for (subItem of item.subMenu; track $index) { @if(!subItem.hidden){
+          @for (subItem of item.subMenu; track $index) { @if(!subItem.hidden){ @if(subItem?.subMenu
+          && subItem!.subMenu!.length >0 ){
+          <li
+            class="nav-item start"
+            [ngClass]="{ open: subItem.open }">
+            <a
+              class="nav-link !tw-px-4"
+              (click)="onClickSubItem(subItem)">
+              <i
+                *ngIf="subItem.icon"
+                [ngClass]="subItem.icon"></i>
+              <span class="title">{{ subItem.name }}</span>
+              <span
+                class="arrow"
+                [ngClass]="{ open: subItem.open }"></span>
+            </a>
+            <ul
+              class="sub-menu"
+              [ngClass]="{ '!tw-hidden': !subItem.open, '!tw-block': subItem.open }">
+              @for(subItem2 of subItem.subMenu; track subItem2.id){
+              <li class="nav-item">
+                <a
+                  routerLinkActive="!tw-bg-black/20"
+                  [routerLink]="subItem2.link">
+                  {{ subItem2.name }}
+                </a>
+              </li>
+              }
+            </ul>
+          </li>
+          } @else {
           <li class="nav-item start">
             <a
               routerLinkActive="!tw-bg-black/20"
               [routerLink]="subItem.link"
-              class="nav-link !tw-px-0">
+              class="nav-link">
               <i
                 *ngIf="subItem.icon"
                 [ngClass]="subItem.icon"></i>
               <span class="title">{{ subItem.name }}</span>
             </a>
           </li>
-          } }
+          } } }
         </ul>
 
         } @else{

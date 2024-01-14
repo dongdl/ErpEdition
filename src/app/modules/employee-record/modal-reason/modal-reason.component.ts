@@ -9,11 +9,12 @@ import { getUserInfoToLS } from '../../../utils/auth'
 import { IUserLogin } from '../../../utils/mock-data'
 import ROLES from '../../../utils/roles'
 import { EmployeeRecordService } from '../employee-record.service'
+import { ModalConfirmComponent } from '../../../shared/components/modal-confirm/modal-confirm.component'
 
 @Component({
   selector: 'app-modal-reason',
   standalone: true,
-  imports: [ModalComponent, ReactiveFormsModule],
+  imports: [ModalComponent, ReactiveFormsModule, ModalConfirmComponent],
   providers: [EmployeeRecordService],
   templateUrl: './modal-reason.component.html',
   styleUrl: './modal-reason.component.css'
@@ -23,6 +24,8 @@ export class ModalReasonComponent implements OnInit {
   @Input() employeeChosen: Employee | null = null
   @Output() close = new EventEmitter<boolean>()
   @Output() changeStatusDone = new EventEmitter<any>()
+  isOpenModalConfirm = false
+  confirmType: 'submit' | 'close' = 'submit'
   form!: FormControl
 
   constructor(private employeeService: EmployeeRecordService, private toast: ToastrService) {}
@@ -51,6 +54,10 @@ export class ModalReasonComponent implements OnInit {
     return roles.includes(ROLES.ADMIN)
   }
 
+  openModalConfirm() {
+    this.isOpenModalConfirm = true
+  }
+
   onSubmit() {
     if (!this.employeeChosen?.id || !this.employeeChosen?.recruitmentUserTaskId) return
     let action
@@ -71,10 +78,15 @@ export class ModalReasonComponent implements OnInit {
       .subscribe((res) => {
         if (!(res instanceof HttpErrorResponse) && !(res instanceof Error)) {
           if (this.isManager2) {
-            this.toast.success('Phê duyệt thành công')
+            if (this.modalType === 'reject') {
+              this.toast.success('Từ chối hồ sơ thành công')
+            } else {
+              this.toast.success('Duyệt hồ sơ thành công')
+            }
           } else {
             this.toast.success('Chuyển duyệt thành công')
           }
+          this.isOpenModalConfirm = false
           this.changeStatusDone.emit()
           this.close.emit(false)
         }

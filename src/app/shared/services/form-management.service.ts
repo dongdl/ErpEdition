@@ -8,7 +8,7 @@ import { SelectInput } from '../model/select-input.model'
 import { TextInput } from '../model/text-input.model'
 import { Employee } from '../../model/record'
 import { CommonService } from './common.service'
-import { map, of, switchMap, tap } from 'rxjs'
+import { BehaviorSubject, map, of, switchMap, tap } from 'rxjs'
 
 @Injectable()
 export class FormManagementService {
@@ -35,13 +35,27 @@ export class FormManagementService {
         order: 2
       },
       {
-        label: 'Mã chức danh',
+        label: 'Chức danh',
         value: '',
         key: 'positionCode',
         // required: true,
         order: 3,
+        // controlType
         controlType: CONTROL_TYPE.SELECT,
-        options: []
+        options: [
+          {
+            title: 'Nhân viên kinh doanh',
+            value: '4'
+          },
+          {
+            title: 'Trưởng phòng hành chính',
+            value: '2'
+          },
+          {
+            title: 'Giám đốc kinh doanh',
+            value: '3'
+          }
+        ]
       },
       {
         label: 'Cấp bậc',
@@ -51,7 +65,7 @@ export class FormManagementService {
         order: 4
       },
       {
-        label: 'Mã trung tâm',
+        label: 'Mã phòng ban',
         value: '',
         key: 'departmentCode',
         // required: true,
@@ -607,13 +621,13 @@ export class FormManagementService {
 
     return this.commonService.getListDepartment().pipe(
       tap<any>((value) => {
+        const listSelect = value.map((x: any) => ({
+          title: x.name,
+          value: x.code
+        }))
+
         const department = generaInfo.find((item) => item.key === 'departmentCode')
-        department?.options?.push(
-          ...value.map((x: any) => ({
-            title: x.name,
-            value: x.code
-          }))
-        )
+        department?.options?.push(...listSelect)
       }),
       switchMap(() => {
         return this.commonService.getEthic()

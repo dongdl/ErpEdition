@@ -70,7 +70,7 @@
     <ng-template
       #actionTemplate
       let-record>
-      <div class="tw-absolute tw-inset-0 tw-flex tw-justify-center tw-items-center">
+      <div class="tw-flex tw-justify-center tw-items-center">
         @if(record.status === employeeStatus.WAIT_PROCESSING){
         <a
           href="javascript:;"
@@ -165,7 +165,7 @@
   <app-modal-reason
     [modalType]="modalType"
     [employeeChosen]="recordChosen"
-    (changeStatusDone)="getListByRoles()"
+    (changeStatusDone)="getListByRoles(status)"
     (close)="isModalOpenComment = $event"></app-modal-reason>
   } @if (isModalEmployee) {
   <app-modal
