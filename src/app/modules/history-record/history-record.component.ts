@@ -25,9 +25,8 @@ export class HistoryRecordComponent {
     },
     {
       name: 'Ghi chú',
-      key: 'assignee',
+      key: 'createdBy',
       width: '30%'
-    },
-    
+    }
   ]
 }
