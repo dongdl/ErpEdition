@@ -58,6 +58,12 @@ export class AddEditRecordComponent implements OnInit {
     this.fmService.createEmployeeRecordFields().subscribe((fields) => {
       this.fieldList = fields
       this.formRecord = this.fmService.toFormGroupEmployeeRecord(this.fieldList)
+       if (this.mode === 'view') {
+         Object.keys(this.formRecord.controls).forEach((field) => {
+           const control = this.formRecord.get(field)
+           control?.disable()
+         })
+       }
       if (this.recordCurrent) {
         this.formRecord.patchValue(this.recordCurrent, { onlySelf: true })
         this.familyList =
@@ -72,12 +78,7 @@ export class AddEditRecordComponent implements OnInit {
       }
     })
 
-    if (this.mode === 'view') {
-      Object.keys(this.formRecord.controls).forEach((field) => {
-        const control = this.formRecord.get(field)
-        control?.disable()
-      })
-    }
+
   }
 
   getFormControl(key: string) {
