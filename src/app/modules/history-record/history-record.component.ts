@@ -19,14 +19,19 @@ export class HistoryRecordComponent {
       width: '40%'
     },
     {
-      name: 'Thời gian',
-      key: 'createdDate',
-      width: '40%'
+      name: 'Ý kiến',
+      key: 'commentDetail',
+      width: '30%'
     },
     {
       name: 'Ghi chú',
       key: 'createdBy',
       width: '30%'
+    },
+    {
+      name: 'Thời gian',
+      key: 'createdDate',
+      width: '40%'
     }
   ]
 }

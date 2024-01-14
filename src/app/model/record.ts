@@ -195,4 +195,5 @@ export interface HistoryEmployeeItem {
   taskId: string
   taskName: string
   assignee: string
+  commentDetail: string
 }
