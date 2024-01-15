@@ -70,30 +70,37 @@
     <ng-template
       #actionTemplate
       let-record>
-      <div class="tw-flex tw-justify-center tw-items-center">
+      <div class="tw-flex tw-justify-center tw-items-center tw-gap-4">
         @if(record.status === employeeStatus.WAIT_PROCESSING){
-        <a
+        <!-- <a
           href="javascript:;"
           class="btn btn-outline !tw-px-2"
-          (click)="openModalComment(record, 'agree')">
+          (click)="openModalComment(record)">
           <i class="fa fa-check"></i>
-        </a>
+        </a> -->
+        <app-button
+          text="Duyệt"
+          (onClick)="openModalComment(record)"></app-button>
         }
-        <a
+        <!-- <a
           (click)="onViewDetail(record)"
           href="javascript:;"
           class="btn btn-outline !tw-px-2">
           <i class="fa fa-eye"></i>
-        </a>
+        </a> -->
 
-        @if((isManager2 || isAdmin) && record.status === employeeStatus.WAIT_PROCESSING){
+        <app-button
+          (onClick)="onViewDetail(record)"
+          text="Chi tiết"></app-button>
+
+        <!-- @if((isManager2) && record.status === employeeStatus.WAIT_PROCESSING){
         <a
           href="javascript:;"
           class="btn btn-outline !tw-px-2"
-          (click)="openModalComment(record, 'reject')">
+          (click)="openModalComment(record)">
           <i class="fa fa-close"></i>
         </a>
-        }
+        } -->
       </div>
     </ng-template>
   </app-record-table>
@@ -161,21 +168,22 @@
       </li>
     </ul>
   </nav>
-  @if (isModalOpenComment) {
-  <app-modal-reason
-    [modalType]="modalType"
-    [employeeChosen]="recordChosen"
-    (changeStatusDone)="getListByRoles(status)"
-    (close)="isModalOpenComment = $event"></app-modal-reason>
-  } @if (isModalEmployee) {
+  @if (isModalEmployee) {
   <app-modal
     [modalTitle]="modalTitle"
     [openModal]="true"
     (changeModal)="isModalEmployee = $event">
     <app-add-edit-record
+      (approve)="openModalComment($event)"
       [mode]="mode"
       (closeModal)="isModalEmployee = $event"
       [recordCurrent]="recordChosen"></app-add-edit-record>
   </app-modal>
+  } @if (isModalOpenComment) {
+  <app-modal-reason
+    [modalType]="modalType"
+    [employeeChosen]="recordChosen"
+    (changeStatusDone)="approveDone()"
+    (close)="isModalOpenComment = $event"></app-modal-reason>
   }
 </div>

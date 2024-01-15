@@ -40,7 +40,7 @@
         </div>
       </ng-template>
     </app-tab-panel>
-    }
+    } @if(renderTab){
     <app-tab-panel title="TT gia đình và quan hệ thân nhân">
       <ng-template tabPanelContent>
         <app-add-edit-family
@@ -51,29 +51,38 @@
           (changeMode)="modeModalFamily = $event"></app-add-edit-family>
       </ng-template>
     </app-tab-panel>
-
-    @if(mode !== 'add'){
+    } @if(mode !== 'add' && renderTab){
     <app-tab-panel title="Lịch sử">
       <ng-template tabPanelContent>
         <app-history-record [history]="history"></app-history-record>
       </ng-template>
     </app-tab-panel>
-    }
-
+    } @if(renderTab){
     <app-tab-panel title="Danh sách tài liệu">
       <ng-template tabPanelContent>
         <app-upload-file-list></app-upload-file-list>
       </ng-template>
     </app-tab-panel>
+    }
   </app-tab-group>
-  @if(this.mode !== 'view'){
-  <div class="tw-flex tw-justify-center">
+  <div class="tw-flex tw-justify-center tw-gap-4">
+    @if(this.mode === 'add' || this.mode === 'edit'){
     <button
       type="submit"
-      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[250px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-4">
-      <i class="fa fa-check"></i>
+      class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[100px] tw-h-16 tw-flex tw-items-center tw-justify-center tw-gap-4">
+      <!-- <i class="fa fa-check"></i> -->
       <span class="tw-leading-none">Lưu</span>
     </button>
+    } @if(this.mode !== 'add' && this.recordCurrent?.status === status.WAIT_PROCESSING){
+    <app-button
+      text="Duyệt"
+      btnClass="!tw-text-md tw-w-[100px] tw-h-16"
+      (onClick)="approveRecord()"></app-button>
+    @if(!isManager1 && !isManager2 ){
+    <app-button
+      text="Đóng"
+      btnClass="!tw-text-md tw-w-[100px] tw-h-16"
+      (onClick)="closeRecord()"></app-button>
+    }}
   </div>
-  }
 </form>

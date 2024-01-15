@@ -17,7 +17,16 @@
       <tbody>
         @for (record of history ; track record.id ) {
         <tr class="odd:tw-bg-white even:tw-bg-gray-50 tw-border tw-text-md">
-          @for(header of tableHeader; track header.key){
+          @for(header of tableHeader; track header.key){ @if(header.key === 'commentDetail'){
+          <td
+            scope="row"
+            class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-h-20">
+            <span class="tw-line-clamp-3 tw-max-w-[300px]">
+              {{ record[header.key] }}
+            </span>
+          </td>
+
+          } @else {
           <td
             scope="row"
             class="tw-px-6 tw-py-4 tw-font-medium tw-text-gray-900 tw-h-20">
@@ -25,7 +34,7 @@
               {{ record[header.key] }}
             </span>
           </td>
-          }
+          } }
         </tr>
         } @empty {
         <tr class="tw-h-[200px]">

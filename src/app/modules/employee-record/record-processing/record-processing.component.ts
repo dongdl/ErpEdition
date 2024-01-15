@@ -12,6 +12,7 @@ import { AddEditRecordComponent } from '../add-edit-record/add-edit-record.compo
 import { EmployeeRecordService } from '../employee-record.service'
 import { RecordTableComponent } from '../record-table/record-table.component'
 import { FormManagementService } from '../../../shared/services/form-management.service'
+import { ButtonComponent } from '../../../shared/components/button/button.component'
 
 @Component({
   selector: 'app-record-processing',
@@ -22,7 +23,8 @@ import { FormManagementService } from '../../../shared/services/form-management.
     FormsModule,
     SharedModule,
     ReactiveFormsModule,
-    RecordTableComponent
+    RecordTableComponent,
+    ButtonComponent
   ],
   providers: [EmployeeRecordService, FormManagementService],
   templateUrl: './record-processing.component.html',

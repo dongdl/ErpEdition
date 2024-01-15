@@ -83,34 +83,49 @@
     <ng-template
       #actionTemplate
       let-record>
-      <div class="tw-absolute tw-inset-0 tw-flex tw-items-center tw-justify-center">
-        <a
+      <div class="tw-absolute tw-inset-0 tw-flex tw-items-center tw-justify-center tw-gap-2">
+        <!-- <a
           (click)="openModalConfirm('submit', record)"
           href="javascript:;"
           class="btn btn-outline !tw-px-2">
           <i class="fas fa-directions"></i>
-        </a>
+        </a> -->
+        <app-button
+          (onClick)="openModalConfirm('submit', record)"
+          text="Duyệt"></app-button>
 
-        <a
+        <!-- <a
           (click)="onViewDetail(record)"
           href="javascript:;"
           class="btn btn-outline !tw-px-2">
           <i class="fa fa-eye"></i>
-        </a>
+        </a> -->
 
-        <a
+        <app-button
+          (onClick)="onViewDetail(record)"
+          text="Chi tiết"></app-button>
+
+        <!-- <a
           (click)="onEditRecord(record)"
           href="javascript:;"
           class="btn btn-outline !tw-px-2">
           <i class="fa fa-edit"></i>
-        </a>
+        </a> -->
 
-        <a
+        <app-button
+          (onClick)="onEditRecord(record)"
+          text="Sửa"></app-button>
+
+        <!-- <a
           (click)="openModalConfirm('close', record)"
           href="javascript:;"
           class="btn btn-outline !tw-px-2">
           <i class="fa fa-close"></i>
-        </a>
+        </a> -->
+
+        <app-button
+          (onClick)="openModalConfirm('close', record)"
+          text="Đóng"></app-button>
 
         <!-- <a
           href="javascript:;"
@@ -190,6 +205,8 @@
     [openModal]="true"
     (changeModal)="closeModal($event)">
     <app-add-edit-record
+      (approve)="openModalConfirm('submit', $event)"
+      (close)="openModalConfirm('close', $event)"
       [mode]="mode"
       (closeModal)="isModalOpen = $event"
       [recordCurrent]="recordEdited"

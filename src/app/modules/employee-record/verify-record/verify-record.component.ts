@@ -14,6 +14,7 @@ import { EmployeeRecordService } from '../employee-record.service'
 import { ModalReasonComponent } from '../modal-reason/modal-reason.component'
 import { RecordTableComponent } from '../record-table/record-table.component'
 import { ModalConfirmComponent } from '../../../shared/components/modal-confirm/modal-confirm.component'
+import { ButtonComponent } from '../../../shared/components/button/button.component'
 
 @Component({
   selector: 'app-verify-record',
@@ -26,7 +27,8 @@ import { ModalConfirmComponent } from '../../../shared/components/modal-confirm/
     ReactiveFormsModule,
     RecordTableComponent,
     ModalReasonComponent,
-    ModalConfirmComponent
+    ModalConfirmComponent,
+    ButtonComponent
   ],
   providers: [EmployeeRecordService],
   templateUrl: './verify-record.component.html',
@@ -92,6 +94,13 @@ export class VerifyRecordComponent implements OnInit, OnDestroy {
 
   closeModal(value: boolean) {
     this.isModalOpenComment = value
+  }
+
+  approveDone() {
+    this.getListByRoles(this.status)
+    if (this.isModalEmployee) {
+      this.isModalEmployee = false
+    }
   }
 
   addNewRecord() {
@@ -176,8 +185,7 @@ export class VerifyRecordComponent implements OnInit, OnDestroy {
     this.recordChosen = record
   }
 
-  openModalComment(record: Employee, type: 'agree' | 'reject') {
-    this.modalType = type
+  openModalComment(record: Employee) {
     this.isModalOpenComment = true
     this.recordChosen = record
   }

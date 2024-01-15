@@ -1,15 +1,15 @@
 import { HttpErrorResponse } from '@angular/common/http'
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms'
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { ToastrService } from 'ngx-toastr'
 import { catchError, of } from 'rxjs'
 import { Employee } from '../../../model/record'
+import { ModalConfirmComponent } from '../../../shared/components/modal-confirm/modal-confirm.component'
 import { ModalComponent } from '../../../shared/components/modal/modal.component'
 import { getUserInfoToLS } from '../../../utils/auth'
 import { IUserLogin } from '../../../utils/mock-data'
 import ROLES from '../../../utils/roles'
 import { EmployeeRecordService } from '../employee-record.service'
-import { ModalConfirmComponent } from '../../../shared/components/modal-confirm/modal-confirm.component'
 
 @Component({
   selector: 'app-modal-reason',
@@ -26,17 +26,50 @@ export class ModalReasonComponent implements OnInit {
   @Output() changeStatusDone = new EventEmitter<any>()
   isOpenModalConfirm = false
   confirmType: 'submit' | 'close' = 'submit'
-  form!: FormControl
+  form: FormGroup = new FormGroup({})
 
-  constructor(private employeeService: EmployeeRecordService, private toast: ToastrService) {}
+  constructor(
+    private employeeService: EmployeeRecordService,
+    private toast: ToastrService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
-    this.form =
-      this.modalType === 'agree' ? new FormControl('') : new FormControl('', Validators.required)
+    if (this.isManager2) {
+      this.form = this.fb.group({
+        type: ['0'],
+        commentDetail: ['']
+      })
+      this.form.valueChanges.subscribe((value) => {
+        if ('type' in value) {
+          if (value.type === '0') {
+            this.form.get('commentDetail')?.setValidators(Validators.required)
+          } else {
+            this.form.get('commentDetail')?.removeValidators(Validators.required)
+          }
+        }
+      })
+    } else {
+      this.form = this.fb.group({
+        commentDetail: ['']
+      })
+    }
   }
 
   closeModal() {
     this.close.emit(false)
+  }
+
+  get modalTitle() {
+    if (this.isManager1) {
+      return 'Bạn có muốn duyệt hồ sơ này ?'
+    } else {
+      if (this.form.get('type')?.value === '0') {
+        return 'Bạn có muốn từ chối hồ sơ này ?'
+      } else {
+        return 'Bạn có muốn duyệt hồ sơ này ?'
+      }
+    }
   }
 
   get isManager1() {
@@ -60,9 +93,12 @@ export class ModalReasonComponent implements OnInit {
 
   onSubmit() {
     if (!this.employeeChosen?.id || !this.employeeChosen?.recruitmentUserTaskId) return
+
+    if (this.form.invalid) return
+
     let action
     if (this.isManager2) {
-      action = this.modalType === 'agree' ? 'APPROVE' : 'REJECT'
+      action = this.form.value.type === '0' ? 'REJECT' : 'APPROVE'
     }
 
     this.employeeService
@@ -71,7 +107,7 @@ export class ModalReasonComponent implements OnInit {
         action: action as any,
         recruitmentUserTaskId: this.employeeChosen?.recruitmentUserTaskId,
         commentCode: '',
-        commentDetail: this.form.value,
+        commentDetail: this.form.value.commentDetail,
         commentTitle: ''
       })
       .pipe(catchError((err) => of(err)))

@@ -5,7 +5,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms'
 import { HttpErrorResponse } from '@angular/common/http'
 import { ToastrService } from 'ngx-toastr'
 import { catchError, of } from 'rxjs'
-import { Employee, Family, HistoryEmployeeItem } from '../../../model/record'
+import { EMPLOYEE_STATUS, Employee, Family, HistoryEmployeeItem } from '../../../model/record'
 import { ModalComponent } from '../../../shared/components/modal/modal.component'
 import { CONTROL_TYPE } from '../../../shared/constant/control-field-type'
 import { FormManagementService } from '../../../shared/services/form-management.service'
@@ -15,6 +15,10 @@ import { AddEditFamilyComponent } from '../add-edit-family/add-edit-family.compo
 import { EmployeeRecordService } from '../employee-record.service'
 import { UploadFileListComponent } from '../upload-file-list/upload-file-list.component'
 import { format } from 'date-fns'
+import { ButtonComponent } from '../../../shared/components/button/button.component'
+import { getUserInfoToLS } from '../../../utils/auth'
+import ROLES from '../../../utils/roles'
+import { IUserLogin } from '../../../utils/mock-data'
 
 @Component({
   selector: 'app-add-edit-record',
@@ -26,7 +30,8 @@ import { format } from 'date-fns'
     SharedModule,
     AddEditFamilyComponent,
     HistoryRecordComponent,
-    UploadFileListComponent
+    UploadFileListComponent,
+    ButtonComponent
   ],
   templateUrl: './add-edit-record.component.html',
   styleUrl: './add-edit-record.component.css',
@@ -37,15 +42,22 @@ export class AddEditRecordComponent implements OnInit {
   @Input() recordCurrent: Employee | null = null
   @Output() closeModal = new EventEmitter<boolean>()
   @Output() changeRecord = new EventEmitter<Employee>()
+  @Output() approve = new EventEmitter<Employee>()
+  @Output() close = new EventEmitter<Employee>()
 
   familyList: Family[] = []
   history: HistoryEmployeeItem[] = []
   modeModalFamily: 'add' | 'edit' = 'add'
   formRecord: FormGroup = new FormGroup({})
   fieldList!: any
+  renderTab = false
 
   get ControlType() {
     return CONTROL_TYPE
+  }
+
+  get status() {
+    return EMPLOYEE_STATUS
   }
 
   constructor(
@@ -58,12 +70,12 @@ export class AddEditRecordComponent implements OnInit {
     this.fmService.createEmployeeRecordFields().subscribe((fields) => {
       this.fieldList = fields
       this.formRecord = this.fmService.toFormGroupEmployeeRecord(this.fieldList)
-       if (this.mode === 'view') {
-         Object.keys(this.formRecord.controls).forEach((field) => {
-           const control = this.formRecord.get(field)
-           control?.disable()
-         })
-       }
+      if (this.mode === 'view') {
+        Object.keys(this.formRecord.controls).forEach((field) => {
+          const control = this.formRecord.get(field)
+          control?.disable()
+        })
+      }
       if (this.recordCurrent) {
         this.formRecord.patchValue(this.recordCurrent, { onlySelf: true })
         this.familyList =
@@ -76,9 +88,18 @@ export class AddEditRecordComponent implements OnInit {
           }))
         })
       }
+      this.renderTab = true
     })
+  }
 
+  get isManager1() {
+    const roles = (getUserInfoToLS() as IUserLogin).role
+    return roles.includes(ROLES.MANAGER_1)
+  }
 
+  get isManager2() {
+    const roles = (getUserInfoToLS() as IUserLogin).role
+    return roles.includes(ROLES.MANAGER_2)
   }
 
   getFormControl(key: string) {
@@ -156,6 +177,16 @@ export class AddEditRecordComponent implements OnInit {
 
   onResetForm() {
     this.formRecord.reset()
+  }
+
+  approveRecord() {
+    if (!this.recordCurrent) return
+    this.approve.emit(this.recordCurrent)
+  }
+
+  closeRecord() {
+    if (!this.recordCurrent) return
+    this.close.emit(this.recordCurrent)
   }
 
   onSend() {

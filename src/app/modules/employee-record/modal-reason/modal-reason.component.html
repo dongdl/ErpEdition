@@ -4,8 +4,45 @@
     wrapperClass="tw-max-w-[50vw] tw-max-h-[70vh]"
     modalTitle="Nhập ý kiến"
     (changeModal)="closeModal()">
-    <div class="tw-px-14 tw-py-8 tw-pt-0">
+    <form
+      class="tw-px-14 tw-py-8 tw-pt-0"
+      [formGroup]="form"
+      (ngSubmit)="openModalConfirm()">
+      @if(isManager2){
       <div>
+        <div class="tw-flex">
+          <div class="tw-flex tw-items-center tw-me-4">
+            <input
+              formControlName="type"
+              id="type1"
+              type="radio"
+              value="0"
+              name="type"
+              class="tw-w-5 tw-h-5 !tw-m-0 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 focus:tw-ring-blue-500" />
+            <label
+              for="type1"
+              class="tw-ms-2 tw-mb-0 !tw-text-md tw-font-medium tw-text-gray-900">
+              Từ chối
+            </label>
+          </div>
+          <div class="tw-flex tw-items-center tw-me-4">
+            <input
+              formControlName="type"
+              id="type2"
+              type="radio"
+              value="1"
+              name="type"
+              class="tw-w-5 tw-h-5 !tw-m-0 tw-text-blue-600 tw-bg-gray-100 tw-border-gray-300 focus:tw-ring-blue-500" />
+            <label
+              for="type2"
+              class="tw-ms-2 tw-mb-0 !tw-text-md tw-font-medium tw-text-gray-900">
+              Phê duyệt
+            </label>
+          </div>
+        </div>
+      </div>
+      }
+      <div class="tw-mt-4">
         <label
           for="description"
           class="tw-block tw-mb-2 tw-font-medium tw-text-gray-900">
@@ -13,42 +50,26 @@
         </label>
         <textarea
           id="description"
-          rows="8"
+          rows="5"
           class="tw-block tw-p-2.5 tw-w-full tw-text-gray-900 tw-bg-gray-50 !tw-rounded-md tw-border tw-border-gray-300 focus:tw-ring-blue-500 focus:tw-border-blue-500"
-          [formControl]="form"></textarea>
-        @if(form.dirty && form.hasError('required')){
-        <p class="tw-my-0 !tw-text-base tw-text-red-600">lý do không được bỏ trống</p>
+          formControlName="commentDetail"></textarea>
+        @if(form.get('commentDetail')?.dirty && form.get('commentDetail')?.hasError("required")){
+        <p class="tw-my-0 !tw-text-base tw-text-red-600">Ý kiến không được bỏ trống</p>
         }
       </div>
       <div class="tw-mt-8 tw-flex tw-justify-center tw-w-full">
         <button
-          type="button"
-          class="tw-text-white tw-inline-flex tw-bg-primary hover:tw-bg-blue-400 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-px-5 tw-py-2.5 tw-text-center tw-w-[120px] tw-justify-center tw-items-center"
-          (click)="openModalConfirm()">
-          <svg
-            class="tw-me-1 -tw-ms-1 tw-w-8 tw-h-8"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              fill-rule="evenodd"
-              d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-              clip-rule="evenodd"></path>
-          </svg>
-          <span class="tw-capitalize">{{ this.modalType === 'agree' ? 'Đồng ý' : 'Từ chối' }}</span>
+          type="submit"
+          class="tw-text-white tw-inline-flex tw-bg-primary hover:tw-bg-blue-400 focus:tw-ring-4 focus:tw-outline-none focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-px-5 tw-py-2.5 tw-text-center tw-w-[120px] tw-justify-center tw-items-center">
+          <span class="tw-capitalize">{{ this.modalType === 'agree' ? 'Duyệt' : 'Duyệt' }}</span>
         </button>
       </div>
-    </div>
+    </form>
   </app-modal>
   @if(isOpenModalConfirm){
   <app-modal-confirm
     (changeModal)="isOpenModalConfirm = $event"
     (confirm)="onSubmit()"
-    [modalTitle]="
-      this.modalType === 'agree'
-        ? 'Bạn có muốn duyệt hồ sơ này'
-        : '
-      Bạn có muốn từ chối hồ sơ này'
-    "></app-modal-confirm>
+    [modalTitle]="modalTitle"></app-modal-confirm>
   }
 </div>

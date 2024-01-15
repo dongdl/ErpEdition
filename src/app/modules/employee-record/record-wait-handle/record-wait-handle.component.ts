@@ -1,19 +1,19 @@
 import { HttpErrorResponse } from '@angular/common/http'
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Router } from '@angular/router'
 import { ToastrService } from 'ngx-toastr'
 import { Subscription, catchError, of } from 'rxjs'
 import { EMPLOYEE_STATUS, Employee, IHrRecord } from '../../../model/record'
+import { ButtonComponent } from '../../../shared/components/button/button.component'
+import { ModalConfirmComponent } from '../../../shared/components/modal-confirm/modal-confirm.component'
 import { ModalComponent } from '../../../shared/components/modal/modal.component'
+import { FormManagementService } from '../../../shared/services/form-management.service'
 import { SharedModule } from '../../../shared/shared.module'
-import { AuthService } from '../../auth/auth.service'
 import { HrRecordsService } from '../../hr-records/hr-records.service'
 import { AddEditRecordComponent } from '../add-edit-record/add-edit-record.component'
 import { EmployeeRecordService } from '../employee-record.service'
 import { RecordTableComponent } from '../record-table/record-table.component'
-import { FormManagementService } from '../../../shared/services/form-management.service'
-import { ModalConfirmComponent } from '../../../shared/components/modal-confirm/modal-confirm.component'
 
 @Component({
   selector: 'app-record-wait-handle',
@@ -25,7 +25,8 @@ import { ModalConfirmComponent } from '../../../shared/components/modal-confirm/
     SharedModule,
     ReactiveFormsModule,
     RecordTableComponent,
-    ModalConfirmComponent
+    ModalConfirmComponent,
+    ButtonComponent
   ],
   providers: [EmployeeRecordService, FormManagementService],
   templateUrl: './record-wait-handle.component.html',
@@ -42,7 +43,7 @@ export class RecordWaitHandleComponent implements OnInit, OnDestroy {
   recordListSubscription: Subscription | null = null
   formSearch!: FormGroup
   recordEdited: Employee | null = null
-  firstRender = true
+  fieldList$: any = []
   tableHeader: { key: keyof Employee; name: string; width?: string }[] = [
     {
       key: 'fullName',
@@ -75,12 +76,9 @@ export class RecordWaitHandleComponent implements OnInit, OnDestroy {
   constructor(
     private hrServices: HrRecordsService,
     private router: Router,
-    private activeRoute: ActivatedRoute,
     private fb: FormBuilder,
-    private auth: AuthService,
     private employeeService: EmployeeRecordService,
-    private toast: ToastrService,
-    private fm: FormManagementService
+    private toast: ToastrService
   ) {}
 
   ngOnInit(): void {
