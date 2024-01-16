@@ -1,5 +1,6 @@
 <div>
   <div class="tw-flex tw-justify-end tw-my-4">
+    @if(this.modeRecord !== 'view'){
     <button
       type="button"
       class="tw-text-md tw-text-white tw-bg-primary hover:tw-bg-blue-800 focus:tw-ring-4 focus:tw-ring-blue-300 tw-font-medium !tw-rounded-lg tw-w-[150px] tw-h-14 tw-flex tw-items-center tw-justify-center tw-gap-4"
@@ -7,6 +8,7 @@
       <i class="fa fa-plus"></i>
       <span class="tw-leading-none">Thêm mới</span>
     </button>
+    }
   </div>
   <div
     class="tw-relative tw-overflow-x-auto sm:tw-rounded-lg tw-scrollbar tw-scrollbar-thumb-gray-300 tw-scrollbar-thumb-rounded-md tw-scrollbar-track-gray-100 tw-scrollbar-h-4">
@@ -20,13 +22,14 @@
             [style.minWidth]="header.width || '200px'">
             {{ header.name }}
           </th>
-          }
+          } @if(this.modeRecord !== 'view'){
           <th
             scope="col"
             class="tw-px-8 tw-py-3 tw-sticky tw-right-0 tw-bg-gray-100 tw-z-10"
             [style.minWidth]="'150px'">
             Hành động
           </th>
+          }
         </tr>
       </thead>
       <tbody>
@@ -42,7 +45,7 @@
               {{ record[header.key] }}
             </span>
           </td>
-          }
+          } @if(this.modeRecord !== 'view'){
           <td
             class="tw-flex tw-flex-nowrap tw-gap-2 tw-sticky tw-right-0 tw-bg-white tw-z-10 tw-h-40">
             <div class="tw-absolute tw-inset-0 tw-flex tw-justify-center tw-items-center">
@@ -61,6 +64,7 @@
               </a>
             </div>
           </td>
+          }
         </tr>
 
         } @empty {

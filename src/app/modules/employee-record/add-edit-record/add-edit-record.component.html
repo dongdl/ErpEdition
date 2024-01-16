@@ -45,6 +45,7 @@
       <ng-template tabPanelContent>
         <app-add-edit-family
           [familyList]="familyList"
+          [modeRecord]="mode"
           [mode]="modeModalFamily"
           (deleteFamily)="deleteFamily($event)"
           (changeFamily)="onChangeFamily($event)"

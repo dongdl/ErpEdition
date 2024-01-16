@@ -44,38 +44,38 @@ const routes: Routes = [
       },
       {
         path: 'quan-ly-nguoi-dung',
-        component: UsersManagementComponent,
-        canActivate: [userGuard]
+        component: UsersManagementComponent
+        // canActivate: [userGuard]
       },
       {
         path: 'thong-tin-tuyen-dung-can-xu-ly',
-        component: RecordWaitHandleComponent,
-        canActivate: [recordListGuard]
+        component: RecordWaitHandleComponent
+        // canActivate: [recordListGuard]
       },
-      {
-        path: 'thong-tin-tuyen-dung-dang-xu-ly',
-        component: RecordProcessingComponent,
-        canActivate: [recordListGuard]
-      },
+      // {
+      //   path: 'thong-tin-tuyen-dung-dang-xu-ly',
+      //   component: RecordProcessingComponent,
+      //   canActivate: [recordListGuard]
+      // },
       {
         path: 'thong-tin-tuyen-dung-hoan-thanh',
-        component: RecordCompleteComponent,
-        canActivate: [recordListGuard]
+        component: RecordCompleteComponent
+        // canActivate: [recordListGuard]
       },
       {
         path: 'duyet-thong-tin-hai-mat-can-xu-ly',
-        component: VerifyRecordWaitToHandleComponent,
-        canActivate: [verifyRecordGuard]
+        component: VerifyRecordWaitToHandleComponent
+        // canActivate: [verifyRecordGuard]
       },
-      {
-        path: 'duyet-thong-tin-hai-mat-dang-xu-ly',
-        component: VerifyRecordProcessComponent,
-        canActivate: [verifyRecordGuard]
-      },
+      // {
+      //   path: 'duyet-thong-tin-hai-mat-dang-xu-ly',
+      //   component: VerifyRecordProcessComponent,
+      //   canActivate: [verifyRecordGuard]
+      // },
       {
         path: 'duyet-thong-tin-hai-mat-hoan-thanh',
-        component: VerifyRecordCompleteComponent,
-        canActivate: [verifyRecordGuard]
+        component: VerifyRecordCompleteComponent
+        // canActivate: [verifyRecordGuard]
       }
     ]
   }

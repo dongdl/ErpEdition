@@ -76,7 +76,7 @@ export class AddEditRecordComponent implements OnInit {
           control?.disable()
         })
       }
-      if (this.recordCurrent) {
+      if (this.mode !== 'add' && this.recordCurrent) {
         this.formRecord.patchValue(this.recordCurrent, { onlySelf: true })
         this.familyList =
           this.recordCurrent?.families?.map((x, idx) => ({ ...x, _id: Date.now() + idx })) || []

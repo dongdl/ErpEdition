@@ -14,6 +14,7 @@ import { RecordTableComponent } from '../record-table/record-table.component'
   styleUrl: './add-edit-family.component.css'
 })
 export class AddEditFamilyComponent implements OnInit {
+  @Input() modeRecord: 'add' | 'view' | 'edit' = 'add'
   tableHeader!: { key: keyof Family; name: string; width?: string }[]
   @Input() familyList: Family[] = []
   @Input() mode: 'add' | 'edit' = 'add'

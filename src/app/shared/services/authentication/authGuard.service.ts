@@ -9,6 +9,8 @@ import { MenuItem } from '../../model/util.model'
 export const AuthGuard: CanActivateFn = (route, state) => {
   const router = inject(Router)
 
+  console.log(getUserInfoToLS())
+
   if (getUserInfoToLS()) {
     return true
   }
@@ -21,12 +23,13 @@ export const AuthGuard: CanActivateFn = (route, state) => {
 export const redirectToMainPage: CanActivateFn = (route, state) => {
   const router = inject(Router)
   const user = getUserInfoToLS() as IUserLogin
+
   if (user) {
     const { role } = user
     if (role.includes(ROLES.USER)) {
       router.navigate(['thong-tin-tuyen-dung-can-xu-ly'])
     } else if (role.includes(ROLES.MANAGER_1) || role.includes(ROLES.MANAGER_2)) {
-      router.navigate(['duyet-thong-tin-hai-mat'])
+      router.navigate(['duyet-thong-tin-hai-mat-can-xu-ly'])
     } else {
       router.navigate(['quan-ly-nguoi-dung'])
     }
@@ -42,9 +45,9 @@ export const userGuard: CanActivateFn = (route, state) => {
 
   if (!role.includes(ROLES.ADMIN)) {
     if (role.includes(ROLES.USER)) {
-      router.navigate(['thong-tin-tuyen-dung'])
+      router.navigate(['thong-tin-tuyen-dung-can-xu-ly'])
     } else if (role.includes(ROLES.MANAGER_1) || role.includes(ROLES.MANAGER_2)) {
-      router.navigate(['duyet-thong-tin-hai-mat'])
+      router.navigate(['duyet-thong-tin-hai-mat-can-xu-ly'])
     }
     return false
   }
@@ -60,7 +63,7 @@ export const redirect: CanActivateFn = (route, state) => {
   } else if (username === 'user') {
     router.navigate(['thong-tin-tuyen-dung-can-xu-ly'])
   } else if (username === 'manager1' || username === 'manager2') {
-    router.navigate(['duyet-thong-tin-hai-mat'])
+    router.navigate(['duyet-thong-tin-hai-mat-can-xu-ly'])
   }
   return false
 }
@@ -70,7 +73,7 @@ export const recordListGuard: CanActivateFn = (route, state) => {
   const user = getUserInfoToLS() as IUserLogin
   const { role } = user
   if (!(role.includes(ROLES.ADMIN) || role.includes(ROLES.USER))) {
-    router.navigate(['duyet-thong-tin-hai-mat'])
+    router.navigate(['duyet-thong-tin-hai-mat-can-xu-ly'])
     return false
   }
   return true

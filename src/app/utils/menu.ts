@@ -38,15 +38,15 @@ export const MENU_FULL: MenuItem[] = [
             roles: [ROLES.ADMIN, ROLES.USER],
             key: 'record-list'
           },
-          {
-            name: 'Yêu cầu đang xử lý',
-            id: '1-0-2',
-            icon: 'icon-add',
-            link: '/thong-tin-tuyen-dung-dang-xu-ly',
-            active: false,
-            roles: [ROLES.ADMIN, ROLES.USER],
-            key: 'record-list'
-          },
+          // {
+          //   name: 'Yêu cầu đang xử lý',
+          //   id: '1-0-2',
+          //   icon: 'icon-add',
+          //   link: '/thong-tin-tuyen-dung-dang-xu-ly',
+          //   active: false,
+          //   roles: [ROLES.ADMIN, ROLES.USER],
+          //   key: 'record-list'
+          // },
           {
             name: 'Yêu cầu đã hoàn thành',
             id: '1-0-3',
@@ -77,15 +77,15 @@ export const MENU_FULL: MenuItem[] = [
             roles: [ROLES.ADMIN, ROLES.MANAGER_1, ROLES.MANAGER_2],
             key: 'verify-record'
           },
-          {
-            name: 'Yêu cầu đang xử lý',
-            id: '1-1-1',
-            icon: 'icon-add',
-            link: '/duyet-thong-tin-hai-mat-dang-xu-ly',
-            active: false,
-            roles: [ROLES.ADMIN, ROLES.MANAGER_1, ROLES.MANAGER_2],
-            key: 'verify-record'
-          },
+          // {
+          //   name: 'Yêu cầu đang xử lý',
+          //   id: '1-1-1',
+          //   icon: 'icon-add',
+          //   link: '/duyet-thong-tin-hai-mat-dang-xu-ly',
+          //   active: false,
+          //   roles: [ROLES.ADMIN, ROLES.MANAGER_1, ROLES.MANAGER_2],
+          //   key: 'verify-record'
+          // },
           {
             name: 'Yêu cầu đã hoàn thành',
             id: '1-1-2',

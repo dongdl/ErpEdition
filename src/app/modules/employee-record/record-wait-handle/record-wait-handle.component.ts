@@ -203,6 +203,7 @@ export class RecordWaitHandleComponent implements OnInit, OnDestroy {
           this.toast.success('Chuyển duyệt thành công')
           this.getListByRoles()
           this.isOpenModalConfirm = false
+          this.isModalOpen = false
         }
       })
   }
@@ -224,6 +225,7 @@ export class RecordWaitHandleComponent implements OnInit, OnDestroy {
           this.toast.success('Đóng hồ sơ thành công')
           this.getListByRoles()
           this.isOpenModalConfirm = false
+          this.isModalOpen = false
         }
       })
   }
